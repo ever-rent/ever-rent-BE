@@ -5,21 +5,18 @@ package com.finalproject.everrent_be.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import com.finalproject.everrent_be.dto.*;
-import com.finalproject.everrent_be.model.Member;
+import com.finalproject.everrent_be.emailverified.service.RegisterMail;
 import com.finalproject.everrent_be.oauth.model.OauthResponseModel;
 import com.finalproject.everrent_be.oauth.service.GoogleService;
 import com.finalproject.everrent_be.repository.MemberRepository;
 import com.finalproject.everrent_be.service.AuthService;
-import com.finalproject.everrent_be.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 
 //회원가입 로그인 로그아웃
@@ -29,6 +26,7 @@ public class AuthController {
     private final AuthService authService;
     private final MemberRepository memberRepository;
     private final GoogleService googleService;
+    private final RegisterMail registerMail;
 
     // 회원가입
     @PostMapping("/members/signups")
@@ -85,5 +83,14 @@ public class AuthController {
         //////수정
         return new ResponseEntity<>(oauthResponseModel, oauthResponseModel.getHttpStatus());
     }
+
+    @PostMapping("members/mailConfirms")
+    String mailConfirm(@RequestParam("email") String email)throws Exception{
+
+        String code=registerMail.sendSimpleMessage(email);
+        System.out.println("인증코드 : "+code);
+        return code;
+    }
+
 
 }
