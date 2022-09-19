@@ -12,6 +12,7 @@ public enum ErrorCode {
     INVALID_TOKEN("INVALID_TOKEN", "Token이 유효하지 않습니다."),
     EXPIRED_TOKEN("EXPIRED_TOKEN", "만료된 토큰입니다."),
     MEMBER_NOT_FOUND("MEMBER_NOT_FOUND", "사용자를 찾을 수 없습니다."),
+    MEMBER_NOT_ALLOWED("MEMBER_NOT_ALLOWED","본인이 작성한 글이 아닙니다."),
 
     //회원가입 관련 오류
     DUPLICATE_EMAIL("DUPLICATE_EMAIL", "중복된 이메일 입니다."),
