@@ -26,7 +26,7 @@ public class MemberService {
 
     public ResponseDto<?> getMemberInfo(String email, HttpServletRequest request)
     {
-        Member member= getMemberfromContext();
+        Member member = getMemberfromContext();
         if(member==null)
         {
             //여기 예외처리 global로 만들 생각중

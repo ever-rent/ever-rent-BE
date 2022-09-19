@@ -29,27 +29,27 @@ public class AuthController {
     private final RegisterMail registerMail;
 
     // 회원가입
-    @PostMapping("/members/signups")
+    @PostMapping("/signups")
     public ResponseDto<?> signup(@RequestBody MemberRequestDto memberRequestDto) {
         return authService.signup(memberRequestDto);
     }
 
     //아이디 중복검사
-    @PostMapping("/members/idchecks")
+    @PostMapping("/idchecks")
     public boolean idcheck(@RequestBody MemberCheckRequestDto checkRequestDto)
     {
         return authService.nicknameCheck(checkRequestDto);
     }
 
     // 이메일 중복검사
-    @PostMapping("/members/emailchecks")
+    @PostMapping("/emailchecks")
     public boolean emailCheck(@RequestBody EmailCheckRequestDto checkRequestDto)
     {
         return authService.emailCheck(checkRequestDto);
     }
 
     // 로그인
-    @PostMapping("/members/logins")
+    @PostMapping("/logins")
     public ResponseDto<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         TokenDto tokenDto = authService.login(loginRequestDto);
         response.setHeader("Authorization", "Bearer " + tokenDto.getAccessToken());
@@ -60,7 +60,7 @@ public class AuthController {
     }
 
     //토큰 재발급
-    @PostMapping("/members/reissues")
+    @PostMapping("/reissues")
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(authService.reissue(tokenRequestDto));
     }
@@ -84,9 +84,8 @@ public class AuthController {
         return new ResponseEntity<>(oauthResponseModel, oauthResponseModel.getHttpStatus());
     }
 
-    @PostMapping("members/mailConfirms")
+    @PostMapping("mailConfirms")
     String mailConfirm(@RequestParam("email") String email)throws Exception{
-
         String code=registerMail.sendSimpleMessage(email);
         System.out.println("인증코드 : "+code);
         return code;
