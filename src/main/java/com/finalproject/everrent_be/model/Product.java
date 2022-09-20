@@ -30,6 +30,14 @@ public class Product extends Timestamped {
     private Member member;
 
 
+    @Column(nullable = false)
+    private String cateName;
+
+    @Column(nullable = false)
+    private String rentStart;
+
+    @Column(nullable = false)
+    private String rentEnd;
 
     @Column(nullable = false)
     private String content;
@@ -43,6 +51,9 @@ public class Product extends Timestamped {
         this.content=productRequestDto.getContent();
         this.imgUrl=url;
         this.member=member;
+        this.cateName=productRequestDto.getCateName();
+        this.rentStart=productRequestDto.getRentStart();
+        this.rentEnd=productRequestDto.getRentEnd();
     }
 
 }

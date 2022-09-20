@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Getter
@@ -24,6 +27,12 @@ public class ProductResponseDto {
 
     private LocalDateTime writeAt;
 
+    private Member member;
+
+    private String cateName;
+    private String rentStart;
+    private String rentEnd;
+
     public ProductResponseDto(Product product)
     {
         this.id=product.getId();
@@ -32,6 +41,9 @@ public class ProductResponseDto {
         this.price=product.getPrice();
         this.imgUrl=product.getImgUrl();
         this.writeAt=product.getModifiedAt();
+        this.cateName=product.getCateName();
+        this.rentStart=product.getRentStart();
+        this.rentEnd=product.getRentEnd();
     }
 
 }
