@@ -100,26 +100,29 @@ public class ProductService {
     }
 
     @Transactional
-    public ResponseDto<?> updateProduct( Long productId, MultipartFile multipartFile, ProductRequestDto requestDto, HttpServletRequest request){
-
-        Product product = productRepository.findById(productId).orElseThrow(
+    public ResponseDto<?> updateProduct(String productId, MultipartFile multipartFile, ProductRequestDto requestDto, HttpServletRequest request){
+        System.out.println(111);
+        Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
+        System.out.println(22);
         Member member = product.getMember();
+        System.out.println(333);
         if(!verifiedMember(request,member)){
             return ResponseDto.is_Fail(MEMBER_NOT_ALLOWED);
         }
-
+        System.out.println(444);
         String url=fileUploadService.uploadImage(multipartFile);
-
+        System.out.println(555);
         product.update(requestDto,member,url);
+        System.out.println(6666);
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }
 
     @Transactional
-    public ResponseDto<?> deleteProduct(Long productId,HttpServletRequest request){
-        Product product = productRepository.findById(productId).orElseThrow(
+    public ResponseDto<?> deleteProduct(String productId,HttpServletRequest request){
+        Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
         Member member = product.getMember();

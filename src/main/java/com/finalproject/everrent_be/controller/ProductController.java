@@ -46,14 +46,14 @@ public class ProductController {
 
     //상세페이지 수정
     @PutMapping("/auth/products/{productId}")
-    public ResponseDto<?> updateProduct(@PathVariable Long productId,@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
         return productService.updateProduct(productId,multipartFile,requestDto,request);
     }
 
 
     //상세페이지 삭제
     @DeleteMapping("/auth/products/{productId}")
-    public ResponseDto<?> deleteProduct(@PathVariable Long productId,HttpServletRequest request){
+    public ResponseDto<?> deleteProduct(@PathVariable String productId,HttpServletRequest request){
         return productService.deleteProduct(productId,request);
     }
 
