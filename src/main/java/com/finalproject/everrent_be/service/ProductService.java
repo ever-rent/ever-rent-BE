@@ -46,7 +46,7 @@ public class ProductService {
     }
 
 
-    public ResponseDto<?> getProduct(Long productId, HttpServletRequest request){
+    public ResponseDto<?> getProduct(Long productId){
         Member member = memberService.getMemberfromContext();
         System.out.println(member.getMemberName());
         Product product = productRepository.findById(productId).orElseThrow(
@@ -55,6 +55,18 @@ public class ProductService {
 
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
+
+    }
+
+    public ResponseDto<?> getFromCategory(String cateName){
+        List<Product> productList=productRepository.findAllByCateName(cateName);
+        List<ProductResponseDto> responseDtos =new ArrayList<>();
+
+
+        for(Product product:productList){
+            responseDtos.add(new ProductResponseDto(product));
+        }
+        return ResponseDto.is_Success(responseDtos);
 
 
     }
@@ -115,10 +127,10 @@ public class ProductService {
         if(!verifiedMember(request,member)){
             return ResponseDto.is_Fail(MEMBER_NOT_ALLOWED);
         }
-            productRepository.delete(product);
 
+        productRepository.delete(product);
 
-    return ResponseDto.is_Success("삭제 완료");
+        return ResponseDto.is_Success("삭제 완료");
     }
 
 

@@ -29,9 +29,13 @@ public class Product extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY) //LAZY: 참조 객체들의 데이터들은 무시하고 해당 엔티티의 데이터만을 가져옴
     private Member member;
 
+    @Column(nullable = false)
+    private String content;
 
     @Column(nullable = false)
     private String cateName;
+    @Column(nullable = false)
+    private String imgUrl;
 
     @Column(nullable = false)
     private String rentStart;
@@ -39,17 +43,15 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private String rentEnd;
 
-    @Column(nullable = false)
-    private String content;
-
-    @Column(nullable = false)
-    private String imgUrl;
 
     public void update(ProductRequestDto productRequestDto,Member member, String url){
         this.productName=productRequestDto.getProductName();
         this.price=productRequestDto.getPrice();
         this.content=productRequestDto.getContent();
         this.imgUrl=url;
+        this.cateName=productRequestDto.getCateName();
+        this.rentStart=productRequestDto.getRentStart();
+        this.rentEnd=productRequestDto.getRentEnd();
         this.member=member;
         this.cateName=productRequestDto.getCateName();
         this.rentStart=productRequestDto.getRentStart();
