@@ -16,6 +16,12 @@ public class ProductController {
 
     private final ProductService productService;
 
+    //메인페이지
+    @GetMapping("/products")
+    public ResponseDto<?> getAllProduct(){
+        return productService.getAllProduct();
+    }
+
 
     //상세페이지 조회
     @GetMapping("/products/{productId}")
@@ -42,6 +48,8 @@ public class ProductController {
     public ResponseDto<?> deleteProduct(@PathVariable Long productId,HttpServletRequest request){
         return productService.deleteProduct(productId,request);
     }
+
+
 
 
 

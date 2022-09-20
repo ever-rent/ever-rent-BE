@@ -17,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.finalproject.everrent_be.exception.ErrorCode.MEMBER_NOT_ALLOWED;
 import static com.finalproject.everrent_be.exception.ErrorCode.NULL_TOKEN;
 
@@ -30,7 +33,22 @@ public class ProductService {
 
     public final TokenProvider tokenProvider;
 
+
+    public ResponseDto<?> getAllProduct() {
+        List<Product> productList=productRepository.findAll();
+        List<ProductResponseDto> responseDtos =new ArrayList<>();
+        for(Product product:productList){
+            responseDtos.add(new ProductResponseDto(product));
+        }
+        return ResponseDto.is_Success(responseDtos);
+
+
+    }
+
+
     public ResponseDto<?> getProduct(Long productId, HttpServletRequest request){
+        Member member = memberService.getMemberfromContext();
+        System.out.println(member.getMemberName());
         Product product = productRepository.findById(productId).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
@@ -60,6 +78,9 @@ public class ProductService {
                 .content(requestDto.getContent())
                 .imgUrl(fileUploadService.uploadImage(multipartFile))
                 .member(member) // member-product OnetoMany
+                .cateName(requestDto.getCateName())
+                .rentStart(requestDto.getRentStart())
+                .rentEnd(requestDto.getRentEnd())
                 .build();
 
         productRepository.save(product);

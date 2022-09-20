@@ -66,7 +66,6 @@ public class MemberService {
     @Transactional
     public Member getMemberfromContext() {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-
         Optional<Member> member = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
         return member.get();
     }
