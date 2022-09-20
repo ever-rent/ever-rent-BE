@@ -20,7 +20,9 @@ public class ProductRequestDto {
     private String productName;
     private String price;
     private String content;
+
     private String cateName;
     private String rentStart;
     private String rentEnd;
+
 }

@@ -16,11 +16,25 @@ public class ProductController {
 
     private final ProductService productService;
 
+    //메인페이지
+    @GetMapping("/products")
+    public ResponseDto<?> getAllProduct(){
+        return productService.getAllProduct();
+    }
+
 
     //상세페이지 조회
     @GetMapping("/products/{productId}")
-    public ResponseDto<?> getProduct(@PathVariable Long productId,HttpServletRequest request){
-        return productService.getProduct(productId,request);
+    public ResponseDto<?> getProduct(@PathVariable Long productId){
+        return productService.getProduct(productId);
+    }
+
+    //카테고리 별 분류
+    @GetMapping("/categories/{categoryId}")
+    public ResponseDto<?> getFromCategory(@PathVariable String categoryId)
+    {
+        return productService.getFromCategory(categoryId);
+
     }
 
     //상세페이지 작성
@@ -42,6 +56,8 @@ public class ProductController {
     public ResponseDto<?> deleteProduct(@PathVariable Long productId,HttpServletRequest request){
         return productService.deleteProduct(productId,request);
     }
+
+
 
 
 

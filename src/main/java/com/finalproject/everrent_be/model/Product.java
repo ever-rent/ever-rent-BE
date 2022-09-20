@@ -53,6 +53,9 @@ public class Product extends Timestamped {
         this.rentStart=productRequestDto.getRentStart();
         this.rentEnd=productRequestDto.getRentEnd();
         this.member=member;
+        this.cateName=productRequestDto.getCateName();
+        this.rentStart=productRequestDto.getRentStart();
+        this.rentEnd=productRequestDto.getRentEnd();
     }
 
 }
