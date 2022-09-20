@@ -38,7 +38,6 @@ public class ProductService {
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
 
-
     }
 
 
@@ -60,6 +59,9 @@ public class ProductService {
                 .content(requestDto.getContent())
                 .imgUrl(fileUploadService.uploadImage(multipartFile))
                 .member(member) // member-product OnetoMany
+                .cateName(requestDto.getCateName())
+                .rentStart(requestDto.getRentStart())
+                .rentEnd(requestDto.getRentEnd())
                 .build();
 
         productRepository.save(product);
@@ -94,10 +96,10 @@ public class ProductService {
         if(!verifiedMember(request,member)){
             return ResponseDto.is_Fail(MEMBER_NOT_ALLOWED);
         }
-            productRepository.delete(product);
 
+        productRepository.delete(product);
 
-    return ResponseDto.is_Success("삭제 완료");
+        return ResponseDto.is_Success("삭제 완료");
     }
 
 

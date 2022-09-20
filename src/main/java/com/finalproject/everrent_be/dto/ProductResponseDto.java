@@ -21,16 +21,21 @@ public class ProductResponseDto {
     private String price;
     private String content;
     private String imgUrl;
-
+    private String cateName;
+    private String rentStart;
+    private String rentEnd;
     private LocalDateTime writeAt;
 
     public ProductResponseDto(Product product)
     {
         this.id=product.getId();
         this.productName=product.getProductName();
-        this.content=product.getContent();
         this.price=product.getPrice();
+        this.content=product.getContent();
         this.imgUrl=product.getImgUrl();
+        this.cateName=product.getCateName();
+        this.rentStart=product.getRentStart();
+        this.rentEnd=product.getRentEnd();
         this.writeAt=product.getModifiedAt();
     }
 

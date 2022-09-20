@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.Column;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +20,7 @@ public class ProductRequestDto {
     private String productName;
     private String price;
     private String content;
+    private String cateName;
+    private String rentStart;
+    private String rentEnd;
 }
