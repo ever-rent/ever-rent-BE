@@ -21,7 +21,7 @@ public class ProductRequestDto {
     private String price;
     private String content;
 
-    private String cateName;
+    private int cateId;
     private String rentStart;
     private String rentEnd;
 

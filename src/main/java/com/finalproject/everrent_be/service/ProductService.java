@@ -58,8 +58,8 @@ public class ProductService {
 
     }
 
-    public ResponseDto<?> getFromCategory(String cateName){
-        List<Product> productList=productRepository.findAllByCateName(cateName);
+    public ResponseDto<?> getFromCategory(int cateId){
+        List<Product> productList=productRepository.findAllByCateId(cateId);
         List<ProductResponseDto> responseDtos =new ArrayList<>();
 
 
@@ -90,7 +90,7 @@ public class ProductService {
                 .content(requestDto.getContent())
                 .imgUrl(fileUploadService.uploadImage(multipartFile))
                 .member(member) // member-product OnetoMany
-                .cateName(requestDto.getCateName())
+                .cateId(requestDto.getCateId())
                 .rentStart(requestDto.getRentStart())
                 .rentEnd(requestDto.getRentEnd())
                 .build();

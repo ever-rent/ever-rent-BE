@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**", "/favicon.ico","/swagger-ui.html/**");
     }
 
-    private static final String[] PERMIT_URL_ARRAY = {
+    private static final String[] PERMIT_URL_SWAGGER = {
             /* swagger v2 */
             "/v2/api-docs",
             "/swagger-resources",
@@ -53,9 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             /* swagger v3 */
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
     };
-
+    private static final String[] PERMIT_URL_ARRAY = {
+            "/members/**",
+            "/products/**",
+            "/products",
+            "/categories/**"
+    };
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(corsConfigurationSource);
@@ -82,14 +87,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
                 .and()
                 .authorizeRequests()
-                .antMatchers("/members/**").permitAll()
-                .antMatchers("/products/**").permitAll()  //인증이 필요한 곳은 auth로 구분했다.
-                .antMatchers("/products").permitAll()  //메인페이지
+                .antMatchers(PERMIT_URL_SWAGGER).permitAll()
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
-//                .antMatchers( "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
-                //.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                //.anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
-                .and()					//추가
+                .and()
                 .oauth2Login()
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용

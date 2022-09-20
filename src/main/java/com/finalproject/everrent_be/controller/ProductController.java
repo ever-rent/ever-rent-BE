@@ -31,28 +31,28 @@ public class ProductController {
 
     //카테고리 별 분류
     @GetMapping("/categories/{categoryId}")
-    public ResponseDto<?> getFromCategory(@PathVariable String categoryId)
+    public ResponseDto<?> getFromCategory(@PathVariable int categoryId)
     {
         return productService.getFromCategory(categoryId);
 
     }
 
     //상세페이지 작성
-    @PostMapping("/products")
+    @PostMapping("/auth/products")
     public ResponseDto<?> createProduct(@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto requestDto,
                                      HttpServletRequest request) {
         return productService.createProduct(multipartFile, requestDto, request);
     }
 
     //상세페이지 수정
-    @PutMapping("/products/{productId}")
+    @PutMapping("/auth/products/{productId}")
     public ResponseDto<?> updateProduct(@PathVariable Long productId,@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
         return productService.updateProduct(productId,multipartFile,requestDto,request);
     }
 
 
     //상세페이지 삭제
-    @DeleteMapping("/products/{productId}")
+    @DeleteMapping("/auth/products/auth/{productId}")
     public ResponseDto<?> deleteProduct(@PathVariable Long productId,HttpServletRequest request){
         return productService.deleteProduct(productId,request);
     }

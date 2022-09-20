@@ -25,7 +25,7 @@ public class ProductResponseDto {
     private String price;
     private String content;
     private String imgUrl;
-    private String cateName;
+    private int cateId;
     private String rentStart;
     private String rentEnd;
     private LocalDateTime writeAt;
@@ -40,11 +40,8 @@ public class ProductResponseDto {
         this.price=product.getPrice();
         this.content=product.getContent();
         this.imgUrl=product.getImgUrl();
-        this.cateName=product.getCateName();
-        this.rentStart=product.getRentStart();
-        this.rentEnd=product.getRentEnd();
+        this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
-        this.cateName=product.getCateName();
         this.rentStart=product.getRentStart();
         this.rentEnd=product.getRentEnd();
     }

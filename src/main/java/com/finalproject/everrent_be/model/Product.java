@@ -33,7 +33,7 @@ public class Product extends Timestamped {
     private String content;
 
     @Column(nullable = false)
-    private String cateName;
+    private int cateId;
     @Column(nullable = false)
     private String imgUrl;
 
@@ -49,13 +49,10 @@ public class Product extends Timestamped {
         this.price=productRequestDto.getPrice();
         this.content=productRequestDto.getContent();
         this.imgUrl=url;
-        this.cateName=productRequestDto.getCateName();
+        this.cateId=productRequestDto.getCateId();
         this.rentStart=productRequestDto.getRentStart();
         this.rentEnd=productRequestDto.getRentEnd();
         this.member=member;
-        this.cateName=productRequestDto.getCateName();
-        this.rentStart=productRequestDto.getRentStart();
-        this.rentEnd=productRequestDto.getRentEnd();
     }
 
 }
