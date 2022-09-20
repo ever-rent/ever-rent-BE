@@ -46,10 +46,9 @@ public class ProductService {
     }
 
 
-    public ResponseDto<?> getProduct(Long productId){
-        Member member = memberService.getMemberfromContext();
-        System.out.println(member.getMemberName());
-        Product product = productRepository.findById(productId).orElseThrow(
+    public ResponseDto<?> getProduct(String productId){
+
+        Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
 
@@ -58,7 +57,7 @@ public class ProductService {
 
     }
 
-    public ResponseDto<?> getFromCategory(int cateId){
+    public ResponseDto<?> getFromCategory(String cateId){
         List<Product> productList=productRepository.findAllByCateId(cateId);
         List<ProductResponseDto> responseDtos =new ArrayList<>();
 

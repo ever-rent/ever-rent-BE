@@ -25,7 +25,7 @@ public class ProductResponseDto {
     private String price;
     private String content;
     private String imgUrl;
-    private int cateId;
+    private String cateId;
     private String rentStart;
     private String rentEnd;
     private LocalDateTime writeAt;

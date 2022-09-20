@@ -19,6 +19,8 @@ public class Product extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+
     @Column(nullable = false)
     private String productName;
 
@@ -33,7 +35,7 @@ public class Product extends Timestamped {
     private String content;
 
     @Column(nullable = false)
-    private int cateId;
+    private String cateId;
     @Column(nullable = false)
     private String imgUrl;
 
