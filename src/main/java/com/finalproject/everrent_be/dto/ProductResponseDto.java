@@ -20,6 +20,7 @@ public class ProductResponseDto {
 
     private Long id;
 
+    private String memberName;
     private String productName;
     private String price;
     private String content;
@@ -27,15 +28,15 @@ public class ProductResponseDto {
 
     private LocalDateTime writeAt;
 
-    private Member member;
-
     private String cateName;
     private String rentStart;
     private String rentEnd;
 
+
     public ProductResponseDto(Product product)
     {
         this.id=product.getId();
+        this.memberName=product.getMember().getMemberName();
         this.productName=product.getProductName();
         this.content=product.getContent();
         this.price=product.getPrice();

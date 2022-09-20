@@ -33,29 +33,22 @@ public class ProductService {
 
     public final TokenProvider tokenProvider;
 
-    @Transactional
+
     public ResponseDto<?> getAllProduct() {
-        Member member= memberService.getMemberfromContext();
         List<Product> productList=productRepository.findAll();
         List<ProductResponseDto> responseDtos =new ArrayList<>();
         for(Product product:productList){
-            responseDtos.add(ProductResponseDto.builder()
-                    .productName(product.getProductName())
-                    .price(product.getPrice())
-                    .content(product.getContent())
-                    .imgUrl(product.getImgUrl())
-                    .member(product.getMember()) // member-product OnetoMany
-                    .cateName(product.getCateName())
-                    .rentStart(product.getRentStart())
-                    .rentEnd(product.getRentEnd())
-                    .build()
-            );
+            responseDtos.add(new ProductResponseDto(product));
         }
         return ResponseDto.is_Success(responseDtos);
 
 
     }
+
+
     public ResponseDto<?> getProduct(Long productId, HttpServletRequest request){
+        Member member = memberService.getMemberfromContext();
+        System.out.println(member.getMemberName());
         Product product = productRepository.findById(productId).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );

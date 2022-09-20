@@ -53,8 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             /* swagger v3 */
             "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/products"//메인페이지(인증필요x)
+            "/swagger-ui/**"
     };
 
     @Override
@@ -85,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/members/**").permitAll()
                 .antMatchers("/products/**").permitAll()  //인증이 필요한 곳은 auth로 구분했다.
+                .antMatchers("/products").permitAll()  //메인페이지
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
 //                .antMatchers( "/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**")
                 //.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
