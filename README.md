@@ -70,5 +70,4 @@
 
 
 ## 🔨 API 설계 
-[https://lemon-tilapia-801.notion.site/12-f3d23c59e4294acaa294353920df1b10](https://peach-ferryboat-24d.notion.site/EVER-RENT-4cfbf7de283d418da269c95af4cd2cd7)
-
+https://peach-ferryboat-24d.notion.site/1e33d05726a04dc9a04111747ffa20ba?v=c2c2651800c34a75b91dd751650e389e
