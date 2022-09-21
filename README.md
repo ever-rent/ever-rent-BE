@@ -40,3 +40,37 @@
 `Rename:` 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우
  
 `Remove:` 파일을 삭제하는 작업만 수행한 경우
+
+
+## 🍇 구현 기능
+* 회원가입
+* 로그인
+* 메인 페이지
+* 상세 페이지
+* 장바구니
+
+## 👻 팀 소개
+#### `Backend`
+- 안재원
+- 정수민
+- 이수민
+- 배상훈
+
+## 📜 기술스택
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+<img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
+<img src="https://img.shields.io/badge/apache tomcat-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+
+## 🐳  ERD
+
+
+## 🏹 Trouble Shooting
+
+
+## 🔨 API 설계 
+https://lemon-tilapia-801.notion.site/12-f3d23c59e4294acaa294353920df1b10
+
