@@ -64,7 +64,7 @@
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 
 ## 🐳  ERD
-![image](https://user-images.githubusercontent.com/62826521/191676344-f45a2dd1-94b6-43cf-a619-b0f89fadefe6.png)
+![image](https://user-images.githubusercontent.com/62826521/191678047-a2e36f21-7673-4bec-87c3-dd4d14fce7d6.png)
 
 
 ## 🏹 Trouble Shooting
