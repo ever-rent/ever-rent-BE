@@ -1,9 +1,6 @@
 package com.finalproject.everrent_be.service;
 
-import com.finalproject.everrent_be.dto.OrderRequestDto;
-import com.finalproject.everrent_be.dto.ProductRequestDto;
-import com.finalproject.everrent_be.dto.ProductResponseDto;
-import com.finalproject.everrent_be.dto.ResponseDto;
+import com.finalproject.everrent_be.dto.*;
 import com.finalproject.everrent_be.exception.ErrorCode;
 import com.finalproject.everrent_be.jwt.TokenProvider;
 import com.finalproject.everrent_be.model.Member;
@@ -41,57 +38,9 @@ public class ProductService {
     public final TokenProvider tokenProvider;
 
 
-    public ResponseDto<?> creatOrder(String productId, OrderRequestDto orderRequestDto)
-    {
-        Member member=memberService.getMemberfromContext();
-        Product product=productRepository.findById(Long.valueOf(productId)).orElseThrow(
-                () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
-        );
-        List<Order> orders=orderRepository.findAllByProductId(Long.valueOf(productId));
-
-        if(member.getMemberName()==product.getMember().getMemberName())
-        {
-            return ResponseDto.is_Fail(ErrorCode.INVALID_CREATE);
-        }
-
-        /////////////
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date rentStart = null;
-        Date rentEnd = null;
-        Date buyStart = null;
-        Date buyEnd = null;
-        try {
-            rentStart = sdf.parse(product.getRentStart());
-            rentEnd = sdf.parse(product.getRentEnd());
-            buyStart = sdf.parse(orderRequestDto.getBuyStart());
-            buyEnd = sdf.parse(orderRequestDto.getBuyEnd());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if(!rentStart.before(buyStart)){
-            return ResponseDto.is_Fail(ErrorCode.INVALID_START_DATE);
-        }
-        if(!rentEnd.after(buyEnd)){
-            return ResponseDto.is_Fail(ErrorCode.INVALID_END_DATE);
-        }
 
 
 
-
-
-
-        Order order= Order.builder()
-                .member(member)
-                .product(product)
-                .buyStart(orderRequestDto.getBuyStart())
-                .buyEnd(orderRequestDto.getBuyEnd())
-                .confirm("1")
-                .build();
-
-        return ResponseDto.is_Success("수정");
-
-    }
     public ResponseDto<?> getAllProduct() {
         List<Product> productList=productRepository.findAll();
         List<ProductResponseDto> responseDtos =new ArrayList<>();
