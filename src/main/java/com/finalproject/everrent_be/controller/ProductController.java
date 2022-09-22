@@ -1,5 +1,6 @@
 package com.finalproject.everrent_be.controller;
 
+import com.finalproject.everrent_be.dto.OrderRequestDto;
 import com.finalproject.everrent_be.dto.ProductRequestDto;
 import com.finalproject.everrent_be.dto.ResponseDto;
 import com.finalproject.everrent_be.service.ProductService;
@@ -15,6 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 public class ProductController {
 
     private final ProductService productService;
+
+
+    @PostMapping("/auth/orders/{productId}")
+    public ResponseDto<?> creatOrder(@PathVariable String productId, OrderRequestDto orderRequestDto)
+    {
+        return productService.creatOrder(productId,orderRequestDto);
+    }
+    /*@GetMapping("/auth/orders/{productId}")
+    public ResponseDto<?> confirmOrder(@PathVariable String productId)
+    {
+        return productService.confirmOrder(productId);
+    }*/
+
 
     //메인페이지
     @GetMapping("/products")
@@ -46,14 +60,14 @@ public class ProductController {
 
     //상세페이지 수정
     @PutMapping("/auth/products/{productId}")
-    public ResponseDto<?> updateProduct(@PathVariable Long productId,@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
         return productService.updateProduct(productId,multipartFile,requestDto,request);
     }
 
 
     //상세페이지 삭제
     @DeleteMapping("/auth/products/{productId}")
-    public ResponseDto<?> deleteProduct(@PathVariable Long productId,HttpServletRequest request){
+    public ResponseDto<?> deleteProduct(@PathVariable String productId,HttpServletRequest request){
         return productService.deleteProduct(productId,request);
     }
 

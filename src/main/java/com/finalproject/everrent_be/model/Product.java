@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -19,8 +20,6 @@ public class Product extends Timestamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
     @Column(nullable = false)
     private String productName;
 
@@ -30,6 +29,9 @@ public class Product extends Timestamped {
     @JoinColumn(name = "member_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY) //LAZY: 참조 객체들의 데이터들은 무시하고 해당 엔티티의 데이터만을 가져옴
     private Member member;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders;
 
     @Column(nullable = false)
     private String content;
@@ -44,6 +46,11 @@ public class Product extends Timestamped {
 
     @Column(nullable = false)
     private String rentEnd;
+
+    @Column(nullable = false)
+    private String confirm;
+
+
 
 
     public void update(ProductRequestDto productRequestDto,Member member, String url){
