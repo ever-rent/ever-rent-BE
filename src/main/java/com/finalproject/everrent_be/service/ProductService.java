@@ -1,27 +1,19 @@
 package com.finalproject.everrent_be.service;
 
 import com.finalproject.everrent_be.dto.*;
-import com.finalproject.everrent_be.exception.ErrorCode;
 import com.finalproject.everrent_be.jwt.TokenProvider;
 import com.finalproject.everrent_be.model.Member;
-import com.finalproject.everrent_be.model.Order;
 import com.finalproject.everrent_be.model.Product;
-import com.finalproject.everrent_be.repository.OrderRepository;
 import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.finalproject.everrent_be.exception.ErrorCode.*;
@@ -94,6 +86,7 @@ public class ProductService {
                 .cateId(requestDto.getCateId())
                 .rentStart(requestDto.getRentStart())
                 .rentEnd(requestDto.getRentEnd())
+                .confirm("1")
                 .build();
 
         productRepository.save(product);

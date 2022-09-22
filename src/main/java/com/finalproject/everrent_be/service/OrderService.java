@@ -7,9 +7,9 @@ import com.finalproject.everrent_be.dto.ResponseDto;
 import com.finalproject.everrent_be.exception.ErrorCode;
 
 import com.finalproject.everrent_be.model.Member;
-import com.finalproject.everrent_be.model.Order;
+import com.finalproject.everrent_be.model.OrderList;
 import com.finalproject.everrent_be.model.Product;
-import com.finalproject.everrent_be.repository.OrderRepository;
+import com.finalproject.everrent_be.repository.OrderListRepository;
 import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class OrderService {
 
     private final MemberService memberService;
     private final ProductRepository productRepository;
-    private final OrderRepository orderRepository;
+    private final OrderListRepository orderListRepository;
     public ResponseDto<?> creatOrder(String productId, OrderRequestDto orderRequestDto)
     {
         Member member=memberService.getMemberfromContext();
@@ -46,7 +46,7 @@ public class OrderService {
             return ResponseDto.is_Fail(INVALID_TIMESETTING);
         }
 
-        Order order= Order.builder()
+        OrderList orderList = OrderList.builder()
                 .member(member)
                 .product(product)
                 .buyStart(orderRequestDto.getBuyStart())
@@ -54,14 +54,15 @@ public class OrderService {
                 .confirm("1")
                 .build();
 
-        orderRepository.save(order);
+        orderListRepository.save(orderList);
 
         OrderResponseDto orderResponseDto=OrderResponseDto.builder()
-                .memberName(order.getMember().getMemberName())
-                .productName(order.getProduct().getProductName())
-                .buyStart(order.getBuyStart())
-                .buyEnd(order.getBuyEnd())
-                .confirm(order.getConfirm())
+                .id(orderList.getId())
+                .memberName(orderList.getMember().getMemberName())
+                .productName(orderList.getProduct().getProductName())
+                .buyStart(orderList.getBuyStart())
+                .buyEnd(orderList.getBuyEnd())
+                .confirm(orderList.getConfirm())
                 .build();
 
         return ResponseDto.is_Success(orderResponseDto);
@@ -71,15 +72,15 @@ public class OrderService {
 
     public ResponseDto<?> confirmOrder(String orderId)
     {
-        Optional<Order> optionalOrder=orderRepository.findById(Long.valueOf(orderId));
-        Order order=optionalOrder.get();
+        Optional<OrderList> optionalOrder= orderListRepository.findById(Long.valueOf(orderId));
+        OrderList orderList =optionalOrder.get();
 
         OrderResponseDto orderResponseDto=OrderResponseDto.builder()
-                .id(order.getId())
-                .memberName(order.getMember().getMemberName())
-                .productName(order.getProduct().getProductName())
-                .buyStart(order.getBuyStart())
-                .buyEnd(order.getBuyEnd())
+                .id(orderList.getId())
+                .memberName(orderList.getMember().getMemberName())
+                .productName(orderList.getProduct().getProductName())
+                .buyStart(orderList.getBuyStart())
+                .buyEnd(orderList.getBuyEnd())
                 .build();
 
         return ResponseDto.is_Success(orderResponseDto);
@@ -91,15 +92,16 @@ public class OrderService {
 
     public boolean checkDuplicate(Product product,OrderRequestDto orderRequestDto)
     {
-        List<Order> orders=orderRepository.findAllByProductId(Long.valueOf(product.getId()));
+        List<OrderList> orderLists = orderListRepository.findAllByProduct(product);
 
+        System.out.println(111);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date rentStart = null;
         Date rentEnd = null;
         Date buyStart = null;  //지금 보내는거
         Date buyEnd = null;
-        Date orderStart=null;  //order entity에 해당되는 product 시간들(예약된 시간들)
-        Date orderEnd=null;
+
+        System.out.println(222);
         try {
             rentStart = sdf.parse(product.getRentStart());
             rentEnd = sdf.parse(product.getRentEnd());
@@ -108,28 +110,41 @@ public class OrderService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println(333);
 
         if(!rentStart.before(buyStart)){
+            System.out.println(000000000000);
             return false;
         }
         if(!rentEnd.after(buyEnd)){
+            System.out.println(11111);
             return false;
         }
         if(!buyStart.before(buyEnd)){
+            System.out.println(22222222);
             return false;
         }
 
-        for(Order order:orders)
+        for(OrderList orderList : orderLists)
         {
+            Date orderStart=null;  //order entity에 해당되는 product 시간들(예약된 시간들)
+            Date orderEnd=null;
+
             try{
-                orderStart = sdf.parse(order.getBuyStart());
-                orderEnd = sdf.parse(order.getBuyEnd());
-                if(!buyEnd.before(orderStart))
+                orderStart = sdf.parse(orderList.getBuyStart());
+                orderEnd = sdf.parse(orderList.getBuyEnd());
+                if(orderStart.after(buyEnd)) //orderStart 2022-09-21, "buyEnd":"2022-09-30"
                 {
+                    System.out.println(orderStart);
+                    System.out.println(buyEnd);
+                    System.out.println(33333);
                     return false;
                 }
-                if(!buyStart.after(orderEnd))
+                if(orderEnd.before(buyStart))
                 {
+                    System.out.println(orderEnd);
+                    System.out.println(buyStart);
+                    System.out.println(444444);
                     return false;
                 }
             }catch (ParseException e) {

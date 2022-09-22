@@ -28,6 +28,8 @@ public class ProductResponseDto {
     private String cateId;
     private String rentStart;
     private String rentEnd;
+
+    private String confirm;
     private LocalDateTime writeAt;
 
 
@@ -43,6 +45,7 @@ public class ProductResponseDto {
         this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
         this.rentStart=product.getRentStart();
+        this.confirm=product.getConfirm();
         this.rentEnd=product.getRentEnd();
     }
 

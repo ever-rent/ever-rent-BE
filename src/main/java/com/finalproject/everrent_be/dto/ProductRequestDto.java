@@ -24,5 +24,6 @@ public class ProductRequestDto {
     private String cateId;
     private String rentStart;
     private String rentEnd;
+    private String confirm;
 
 }

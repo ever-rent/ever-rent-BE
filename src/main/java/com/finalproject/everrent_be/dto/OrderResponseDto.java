@@ -1,8 +1,7 @@
 package com.finalproject.everrent_be.dto;
 
 
-import com.finalproject.everrent_be.model.Order;
-import com.finalproject.everrent_be.model.Product;
+import com.finalproject.everrent_be.model.OrderList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,11 +20,11 @@ public class OrderResponseDto {
     private String buyEnd;
     private String confirm;
 
-    public OrderResponseDto(Order order)
+    public OrderResponseDto(OrderList orderList)
     {
-        this.buyStart=order.getBuyStart();
-        this.buyEnd=order.getBuyEnd();
-        this.confirm=order.getConfirm();
+        this.buyStart= orderList.getBuyStart();
+        this.buyEnd= orderList.getBuyEnd();
+        this.confirm= orderList.getConfirm();
     }
 
 }

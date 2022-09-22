@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @AllArgsConstructor
-public class Order {
+public class OrderList extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

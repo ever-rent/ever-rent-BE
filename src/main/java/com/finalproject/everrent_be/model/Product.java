@@ -30,8 +30,8 @@ public class Product extends Timestamped {
     @ManyToOne(fetch = FetchType.LAZY) //LAZY: 참조 객체들의 데이터들은 무시하고 해당 엔티티의 데이터만을 가져옴
     private Member member;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
+//    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Order> orders;
 
     @Column(nullable = false)
     private String content;
@@ -61,6 +61,7 @@ public class Product extends Timestamped {
         this.cateId=productRequestDto.getCateId();
         this.rentStart=productRequestDto.getRentStart();
         this.rentEnd=productRequestDto.getRentEnd();
+        this.confirm=productRequestDto.getConfirm();
         this.member=member;
     }
 
