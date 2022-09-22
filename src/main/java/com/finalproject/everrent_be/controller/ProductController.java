@@ -1,5 +1,6 @@
 package com.finalproject.everrent_be.controller;
 
+import com.finalproject.everrent_be.dto.OrderRequestDto;
 import com.finalproject.everrent_be.dto.ProductRequestDto;
 import com.finalproject.everrent_be.dto.ResponseDto;
 import com.finalproject.everrent_be.service.ProductService;
@@ -15,6 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 public class ProductController {
 
     private final ProductService productService;
+
+
+    @PostMapping("/auth/orders/{productId}")
+    public ResponseDto<?> creatOrder(@PathVariable String productId, OrderRequestDto orderRequestDto)
+    {
+        return productService.creatOrder(productId,orderRequestDto);
+    }
+    /*@GetMapping("/auth/orders/{productId}")
+    public ResponseDto<?> confirmOrder(@PathVariable String productId)
+    {
+        return productService.confirmOrder(productId);
+    }*/
+
 
     //메인페이지
     @GetMapping("/products")

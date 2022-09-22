@@ -20,12 +20,13 @@ public enum ErrorCode {
     //즐겨찾기 관련 오류
     DUPLICATE_FAVORITE("DUPLICATE_FAVORITE", "이미 즐겨찾기에 등록되었습니다."),
 
-    INVAILID_CONDITION("INVAILID_CONDITION","닉네임 또는 패스워드의 조건을 확인하세요."),
+    INVALID_CONDITION("INVALID_CONDITION","닉네임 또는 패스워드의 조건을 확인하세요."),
 
     FAVORITE_NOT_FOUND("FAVORITE_NOT_FOUND", "등록되지 않은 즐겨찾기입니다."),
 
-    //레스토랑(맛집) 관련 오류
-    RESTAURANT_NOT_FOUND("RESTAURANT_NOT_FOUND", "식당을 찾을 수 없습니다."),
+    INVALID_START_DATE("INVALID_START_DATE","렌트 시작일을 확인해 주세요."),
+    INVALID_END_DATE("INVALID_END_DATE","렌트 반납일을 확인해 주세요."),
+    INVALID_CREATE("INVALID_CREATE", "본인이 작성한 상품은 구매할 수 없습니다."),
 
     //댓글 관련 오류
     COMMENT_NOT_FOUND("COMMENT_NOT_FOUND", "댓글을 찾을 수 없습니다."),

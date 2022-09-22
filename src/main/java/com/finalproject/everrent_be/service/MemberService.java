@@ -4,9 +4,11 @@ package com.finalproject.everrent_be.service;
 
 import com.finalproject.everrent_be.dto.MemberResponseDto;
 import com.finalproject.everrent_be.dto.ResponseDto;
+import com.finalproject.everrent_be.exception.ErrorCode;
 import com.finalproject.everrent_be.model.Authority;
 import com.finalproject.everrent_be.model.Member;
 
+import com.finalproject.everrent_be.model.Product;
 import com.finalproject.everrent_be.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,21 +40,18 @@ public class MemberService {
         return ResponseDto.is_Success(memberResponseDto);
     }
 
-    ////////////////이거 수정 필요
-
-
-
-
-    /*@Transactional
-    public Member validateMember(HttpServletRequest request) {
-        System.out.println("2-1");
-        if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
-            System.out.println("2-2");
-            return null;
+    /*public ResponseDto<?> getMyPage()
+    {
+        Member member = getMemberfromContext();
+        if(member==null)
+        {
+            ResponseDto.is_Fail(ErrorCode.NULL_TOKEN);
         }
-        System.out.println("2-3");
-        return tokenProvider.getMemberFromAuthentication();
+
+
     }*/
+
+
 
     public Member findPresentMember(String email)
     {
