@@ -18,18 +18,6 @@ public class ProductController {
     private final ProductService productService;
 
 
-    @PostMapping("/auth/orders/{productId}")
-    public ResponseDto<?> creatOrder(@PathVariable String productId, OrderRequestDto orderRequestDto)
-    {
-        return productService.creatOrder(productId,orderRequestDto);
-    }
-    /*@GetMapping("/auth/orders/{productId}")
-    public ResponseDto<?> confirmOrder(@PathVariable String productId)
-    {
-        return productService.confirmOrder(productId);
-    }*/
-
-
     //메인페이지
     @GetMapping("/products")
     public ResponseDto<?> getAllProduct(){
@@ -70,6 +58,8 @@ public class ProductController {
     public ResponseDto<?> deleteProduct(@PathVariable String productId,HttpServletRequest request){
         return productService.deleteProduct(productId,request);
     }
+
+
 
 
 
