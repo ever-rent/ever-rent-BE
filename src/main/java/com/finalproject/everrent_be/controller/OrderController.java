@@ -16,8 +16,16 @@ public class OrderController {
 
     //예약 작성
     @PostMapping("/auth/orders/{productId}")
-    public ResponseDto<?> createOrder(@PathVariable String productId, @RequestPart OrderRequestDto orderRequestDto, HttpServletRequest request){
-        return orderService.creatOrder(productId,orderRequestDto,request);
+    public ResponseDto<?> createOrder(@PathVariable String productId, @RequestBody OrderRequestDto orderRequestDto)
+    {
+        return orderService.creatOrder(productId,orderRequestDto);
+    }
+
+    @GetMapping("/auth/orders/{orderId}")
+    public ResponseDto<?> confirmOrder(@PathVariable String orderId)
+    {
+        return orderService.confirmOrder(orderId);
     }
 
 }
+

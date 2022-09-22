@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.finalproject.everrent_be.exception.ErrorCode.MEMBER_NOT_ALLOWED;
-import static com.finalproject.everrent_be.exception.ErrorCode.NULL_TOKEN;
+import static com.finalproject.everrent_be.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,11 +33,7 @@ public class ProductService {
     public final ProductRepository productRepository;
     public final MemberService memberService;
     public final FileUploadService fileUploadService;
-    public final OrderRepository orderRepository;
     public final TokenProvider tokenProvider;
-
-
-
 
 
     public ResponseDto<?> getAllProduct() {
@@ -156,5 +151,7 @@ public class ProductService {
         }
         return true;
     }
+
+
 
 }

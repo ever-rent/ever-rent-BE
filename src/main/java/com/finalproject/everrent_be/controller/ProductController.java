@@ -17,7 +17,6 @@ public class ProductController {
 
     private final ProductService productService;
 
-
     //메인페이지
     @GetMapping("/products")
     public ResponseDto<?> getAllProduct(){

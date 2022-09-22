@@ -1,5 +1,6 @@
 package com.finalproject.everrent_be.dto;
 
+
 import com.finalproject.everrent_be.model.Order;
 import com.finalproject.everrent_be.model.Product;
 import lombok.AllArgsConstructor;
@@ -7,17 +8,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class OrderResponseDto {
+
+    private Long id;
+    private String memberName;
+    private String productName;
     private String buyStart;
     private String buyEnd;
     private String confirm;
-
 
     public OrderResponseDto(Order order)
     {
@@ -25,4 +27,5 @@ public class OrderResponseDto {
         this.buyEnd=order.getBuyEnd();
         this.confirm=order.getConfirm();
     }
+
 }
