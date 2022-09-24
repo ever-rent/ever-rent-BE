@@ -1,6 +1,7 @@
 package com.finalproject.everrent_be.service;
 
 import com.finalproject.everrent_be.dto.*;
+import com.finalproject.everrent_be.exception.ErrorCode;
 import com.finalproject.everrent_be.jwt.TokenProvider;
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.Product;
@@ -100,9 +101,14 @@ public class ProductService {
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
         Member member = product.getMember();
+        if (product.getConfirm()!="1")
+        {
+            return ResponseDto.is_Fail(INVALID_CONFIRM);
+        }
         if(!verifiedMember(request,member)){
             return ResponseDto.is_Fail(MEMBER_NOT_ALLOWED);
         }
+
         String url=fileUploadService.uploadImage(multipartFile);
         product.update(requestDto,member,url);
         ProductResponseDto productResponseDto=new ProductResponseDto(product);

@@ -28,6 +28,7 @@ public enum ErrorCode {
     INVALID_START_DATE("INVALID_START_DATE","렌트 시작일을 확인해 주세요."),
     INVALID_END_DATE("INVALID_END_DATE","렌트 반납일을 확인해 주세요."),
     INVALID_CREATE("INVALID_CREATE", "본인이 작성한 상품은 구매할 수 없습니다."),
+    INVALID_CONFIRM("INVALID_CONFIRM","상품 상태를 업데이트할 수 없습니다."),
 
     //댓글 관련 오류
     COMMENT_NOT_FOUND("COMMENT_NOT_FOUND", "댓글을 찾을 수 없습니다."),

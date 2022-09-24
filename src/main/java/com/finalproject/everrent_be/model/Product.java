@@ -61,8 +61,12 @@ public class Product extends Timestamped {
         this.cateId=productRequestDto.getCateId();
         this.rentStart=productRequestDto.getRentStart();
         this.rentEnd=productRequestDto.getRentEnd();
-        this.confirm=productRequestDto.getConfirm();
+        this.confirm="1";
         this.member=member;
+    }
+    public void updateConfirm(String confirm)
+    {
+        this.confirm=confirm;
     }
 
 }

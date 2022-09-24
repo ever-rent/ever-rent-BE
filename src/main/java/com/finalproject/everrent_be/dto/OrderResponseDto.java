@@ -22,6 +22,8 @@ public class OrderResponseDto {
 
     public OrderResponseDto(OrderList orderList)
     {
+        this.memberName=orderList.getMember().getMemberName();
+        this.productName=orderList.getProduct().getProductName();
         this.buyStart= orderList.getBuyStart();
         this.buyEnd= orderList.getBuyEnd();
         this.confirm= orderList.getConfirm();

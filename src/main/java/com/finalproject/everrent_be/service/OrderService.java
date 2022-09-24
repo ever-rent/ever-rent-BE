@@ -13,6 +13,8 @@ import com.finalproject.everrent_be.repository.OrderListRepository;
 import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +30,8 @@ public class OrderService {
     private final MemberService memberService;
     private final ProductRepository productRepository;
     private final OrderListRepository orderListRepository;
+
+    @Transactional
     public ResponseDto<?> creatOrder(String productId, OrderRequestDto orderRequestDto)
     {
         Member member=memberService.getMemberfromContext();
@@ -56,14 +60,7 @@ public class OrderService {
 
         orderListRepository.save(orderList);
 
-        OrderResponseDto orderResponseDto=OrderResponseDto.builder()
-                .id(orderList.getId())
-                .memberName(orderList.getMember().getMemberName())
-                .productName(orderList.getProduct().getProductName())
-                .buyStart(orderList.getBuyStart())
-                .buyEnd(orderList.getBuyEnd())
-                .confirm(orderList.getConfirm())
-                .build();
+        OrderResponseDto orderResponseDto=new OrderResponseDto(orderList);
 
         return ResponseDto.is_Success(orderResponseDto);
 
@@ -75,13 +72,7 @@ public class OrderService {
         Optional<OrderList> optionalOrder= orderListRepository.findById(Long.valueOf(orderId));
         OrderList orderList =optionalOrder.get();
 
-        OrderResponseDto orderResponseDto=OrderResponseDto.builder()
-                .id(orderList.getId())
-                .memberName(orderList.getMember().getMemberName())
-                .productName(orderList.getProduct().getProductName())
-                .buyStart(orderList.getBuyStart())
-                .buyEnd(orderList.getBuyEnd())
-                .build();
+        OrderResponseDto orderResponseDto=new OrderResponseDto(orderList);
 
         return ResponseDto.is_Success(orderResponseDto);
     }

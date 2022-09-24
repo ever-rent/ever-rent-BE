@@ -1,5 +1,6 @@
 package com.finalproject.everrent_be.repository;
 
+import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.Product;
 import jdk.jfr.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,5 +13,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAllByCateId(String cateId);
+    List<Product> findAllByMember(Member member);
+
 
 }

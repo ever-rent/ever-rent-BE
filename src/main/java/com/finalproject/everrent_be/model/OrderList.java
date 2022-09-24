@@ -37,4 +37,11 @@ public class OrderList extends Timestamped {
     @Column(nullable = false)
     private String confirm;
 
+
+    public void updateConfirm(String confirm)
+    {
+        this.confirm=confirm;
+
+    }
+
 }
