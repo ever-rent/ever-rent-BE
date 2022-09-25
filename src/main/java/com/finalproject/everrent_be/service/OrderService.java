@@ -13,6 +13,8 @@ import com.finalproject.everrent_be.repository.OrderListRepository;
 import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +30,8 @@ public class OrderService {
     private final MemberService memberService;
     private final ProductRepository productRepository;
     private final OrderListRepository orderListRepository;
+
+    @Transactional
     public ResponseDto<?> creatOrder(String productId, OrderRequestDto orderRequestDto)
     {
         Member member=memberService.getMemberfromContext();
@@ -56,14 +60,7 @@ public class OrderService {
 
         orderListRepository.save(orderList);
 
-        OrderResponseDto orderResponseDto=OrderResponseDto.builder()
-                .id(orderList.getId())
-                .memberName(orderList.getMember().getMemberName())
-                .productName(orderList.getProduct().getProductName())
-                .buyStart(orderList.getBuyStart())
-                .buyEnd(orderList.getBuyEnd())
-                .confirm(orderList.getConfirm())
-                .build();
+        OrderResponseDto orderResponseDto=new OrderResponseDto(orderList);
 
         return ResponseDto.is_Success(orderResponseDto);
 
@@ -75,13 +72,7 @@ public class OrderService {
         Optional<OrderList> optionalOrder= orderListRepository.findById(Long.valueOf(orderId));
         OrderList orderList =optionalOrder.get();
 
-        OrderResponseDto orderResponseDto=OrderResponseDto.builder()
-                .id(orderList.getId())
-                .memberName(orderList.getMember().getMemberName())
-                .productName(orderList.getProduct().getProductName())
-                .buyStart(orderList.getBuyStart())
-                .buyEnd(orderList.getBuyEnd())
-                .build();
+        OrderResponseDto orderResponseDto=new OrderResponseDto(orderList);
 
         return ResponseDto.is_Success(orderResponseDto);
     }
@@ -92,16 +83,16 @@ public class OrderService {
 
     public boolean checkDuplicate(Product product,OrderRequestDto orderRequestDto)
     {
-        List<OrderList> orderLists = orderListRepository.findAllByProduct(product);
+        List<OrderList> orderLists = product.getOrderLists();
 
-        System.out.println(111);
+        int size=orderLists.size();
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date rentStart = null;
         Date rentEnd = null;
         Date buyStart = null;  //지금 보내는거
         Date buyEnd = null;
 
-        System.out.println(222);
         try {
             rentStart = sdf.parse(product.getRentStart());
             rentEnd = sdf.parse(product.getRentEnd());
@@ -110,48 +101,37 @@ public class OrderService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println(333);
 
-        if(!rentStart.before(buyStart)){
-            System.out.println(000000000000);
-            return false;
-        }
-        if(!rentEnd.after(buyEnd)){
-            System.out.println(11111);
+        if(!rentStart.before(buyStart)||!rentEnd.after(buyEnd)){
             return false;
         }
         if(!buyStart.before(buyEnd)){
-            System.out.println(22222222);
             return false;
         }
 
-        for(OrderList orderList : orderLists)
+        //order entity에 해당되는 product 시간들(예약된 시간들)
+        Date orderStart=null;
+        Date orderEnd=null;
+        Date ordernextStart=null;
+
+        if(size>0)
         {
-            Date orderStart=null;  //order entity에 해당되는 product 시간들(예약된 시간들)
-            Date orderEnd=null;
+            for(int i=0;i<size;i++)
+            {
+                try{
+                    orderStart=sdf.parse(orderLists.get(i).getBuyStart());
+                    orderEnd = sdf.parse(orderLists.get(i).getBuyEnd());
+                    if(!(buyStart.after(orderEnd)||buyEnd.before(orderStart)))
+                    {
+                        return false;
+                    }
 
-            try{
-                orderStart = sdf.parse(orderList.getBuyStart());
-                orderEnd = sdf.parse(orderList.getBuyEnd());
-                if(orderStart.after(buyEnd)) //orderStart 2022-09-21, "buyEnd":"2022-09-30"
-                {
-                    System.out.println(orderStart);
-                    System.out.println(buyEnd);
-                    System.out.println(33333);
-                    return false;
+                }catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                if(orderEnd.before(buyStart))
-                {
-                    System.out.println(orderEnd);
-                    System.out.println(buyStart);
-                    System.out.println(444444);
-                    return false;
-                }
-            }catch (ParseException e) {
-                e.printStackTrace();
             }
-
         }
+
         return true;
     }
 }

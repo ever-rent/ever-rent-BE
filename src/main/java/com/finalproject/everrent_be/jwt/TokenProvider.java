@@ -36,11 +36,6 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // 토큰에서 회원 정보 추출
-    public String getUserPk(String token) {
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
-    }
-
 
     public TokenDto generateTokenDto(Authentication authentication) {
         // 권한들 가져오기
