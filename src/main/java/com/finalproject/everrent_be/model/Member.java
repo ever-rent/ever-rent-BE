@@ -39,10 +39,10 @@ public class Member extends Timestamped {
     @JsonIgnore
     @Column(nullable = false)
     private String password;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderList> orderLists;
     @Column

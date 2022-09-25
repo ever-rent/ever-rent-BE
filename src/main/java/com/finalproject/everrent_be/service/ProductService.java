@@ -101,7 +101,7 @@ public class ProductService {
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
         Member member = product.getMember();
-        if (product.getConfirm()!="1")
+        if (!product.getConfirm().equals("1"))
         {
             return ResponseDto.is_Fail(INVALID_CONFIRM);
         }

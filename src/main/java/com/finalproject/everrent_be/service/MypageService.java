@@ -56,15 +56,21 @@ public class MypageService {
     public ResponseDto<?> getMypgWait()
     {
         Member member=memberService.getMemberfromContext();
-        List<OrderList> orderLists=member.getOrderLists();
+        List<Product> products=member.getProducts();
         List<OrderResponseDto> orderResponseDtos=new ArrayList<>();
-        for(OrderList orderList:orderLists)
+        for(Product product:products)
         {
-            if(orderList.getConfirm()=="1")
+            List<OrderList> orderLists=product.getOrderLists();
+            for(OrderList orderList:orderLists)
             {
-                orderResponseDtos.add(new OrderResponseDto(orderList));
+                if(orderList.getConfirm()=="1")
+                {
+                    orderResponseDtos.add(new OrderResponseDto(orderList));
+                }
             }
+
         }
+
         return ResponseDto.is_Success(orderResponseDtos);
     }
 
