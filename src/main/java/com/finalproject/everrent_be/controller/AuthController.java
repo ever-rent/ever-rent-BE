@@ -84,7 +84,7 @@ public class AuthController {
         return new ResponseEntity<>(oauthResponseModel, oauthResponseModel.getHttpStatus());
     }
 
-    @PostMapping("mailConfirms")
+    @PostMapping("/mailConfirms")
     String mailConfirm(@RequestParam("email") String email)throws Exception{
         String code=registerMail.sendSimpleMessage(email);
         System.out.println("인증코드 : "+code);
