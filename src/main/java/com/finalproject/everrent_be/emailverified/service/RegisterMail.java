@@ -1,6 +1,7 @@
 package com.finalproject.everrent_be.emailverified.service;
 
 import com.nimbusds.oauth2.sdk.auth.Secret;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,12 +16,13 @@ import java.util.Random;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class RegisterMail {
 
-    @Autowired
-    JavaMailSender emailsender;
 
-    private final String ePw=createKey(); //인증번호 생성, ePw가 불러와지면 createkey 실행
+    private final JavaMailSender emailsender;
+
+    private String ePw; //인증번호 생성, createKey를 바로 넣어주면 런 타임시 ePw의 키를 생성해버리기 때문에 따로 뺌
     private MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
 
         MimeMessage message = emailsender.createMimeMessage();
@@ -47,6 +49,7 @@ public class RegisterMail {
             {
                 case 0:
                     key.append((char)((int)(rnd.nextInt(26))+97));//영어 소문자
+
                     //a-z 1+97='b'
                     break;
                 case 1:
@@ -63,6 +66,7 @@ public class RegisterMail {
     }
 
     public String sendSimpleMessage(String to)  throws Exception {
+        ePw=createKey();
         MimeMessage message=createMessage(to);
 
         try{
