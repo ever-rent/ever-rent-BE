@@ -5,6 +5,7 @@ import com.finalproject.everrent_be.exception.ErrorCode;
 import com.finalproject.everrent_be.jwt.TokenProvider;
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.Product;
+import com.finalproject.everrent_be.model.Status;
 import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -87,7 +88,7 @@ public class ProductService {
                 .cateId(requestDto.getCateId())
                 .rentStart(requestDto.getRentStart())
                 .rentEnd(requestDto.getRentEnd())
-                .confirm("1")
+                .status(Status.WAITING)
                 .build();
 
         productRepository.save(product);
@@ -101,7 +102,7 @@ public class ProductService {
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
         Member member = product.getMember();
-        if (!product.getConfirm().equals("1"))
+        if (!product.getStatus().equals(Status.WAITING))
         {
             return ResponseDto.is_Fail(INVALID_CONFIRM);
         }

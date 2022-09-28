@@ -57,6 +57,11 @@ dependencies {
 	//email인증
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+
+	//websocket
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 }
 
 tasks.named('test') {

@@ -34,13 +34,14 @@ public class OrderList extends Timestamped {
     @Column(nullable = false)
     private String buyEnd;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String confirm;
+    private Status status;
 
 
-    public void updateConfirm(String confirm)
+    public void updateStatus(Status status)
     {
-        this.confirm=confirm;
+        this.status=status;
 
     }
 

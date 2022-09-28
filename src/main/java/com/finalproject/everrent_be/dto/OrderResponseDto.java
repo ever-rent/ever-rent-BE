@@ -2,6 +2,7 @@ package com.finalproject.everrent_be.dto;
 
 
 import com.finalproject.everrent_be.model.OrderList;
+import com.finalproject.everrent_be.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,15 +19,16 @@ public class OrderResponseDto {
     private String productName;
     private String buyStart;
     private String buyEnd;
-    private String confirm;
+    private Status status;
 
     public OrderResponseDto(OrderList orderList)
     {
+        this.id=orderList.getId();
         this.memberName=orderList.getMember().getMemberName();
         this.productName=orderList.getProduct().getProductName();
         this.buyStart= orderList.getBuyStart();
         this.buyEnd= orderList.getBuyEnd();
-        this.confirm= orderList.getConfirm();
+        this.status= orderList.getStatus();
     }
 
 }

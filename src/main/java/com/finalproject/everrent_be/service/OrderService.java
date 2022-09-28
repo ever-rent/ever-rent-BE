@@ -9,6 +9,7 @@ import com.finalproject.everrent_be.exception.ErrorCode;
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.OrderList;
 import com.finalproject.everrent_be.model.Product;
+import com.finalproject.everrent_be.model.Status;
 import com.finalproject.everrent_be.repository.OrderListRepository;
 import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +56,7 @@ public class OrderService {
                 .product(product)
                 .buyStart(orderRequestDto.getBuyStart())
                 .buyEnd(orderRequestDto.getBuyEnd())
-                .confirm("1")
+                .status(Status.WAITING)
                 .build();
 
         orderListRepository.save(orderList);
