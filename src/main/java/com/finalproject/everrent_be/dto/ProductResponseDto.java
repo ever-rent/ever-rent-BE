@@ -2,6 +2,7 @@ package com.finalproject.everrent_be.dto;
 
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.Product;
+import com.finalproject.everrent_be.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class ProductResponseDto {
     private String cateId;
     private String rentStart;
     private String rentEnd;
-    private String confirm;
+    private Status status;
 
     private LocalDateTime writeAt;
 
@@ -46,7 +47,7 @@ public class ProductResponseDto {
         this.writeAt=product.getModifiedAt();
         this.rentStart=product.getRentStart();
         this.rentEnd=product.getRentEnd();
-        this.confirm=product.getConfirm();
+        this.status=product.getStatus();
     }
 
 }
