@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -28,10 +29,12 @@ public class ProductResponseDto {
     private String imgUrl;
     private String cateId;
     private String rentStart;
-    private String rentEnd;
+    private String  rentEnd;
     private Status status;
 
     private LocalDateTime writeAt;
+
+    private String[] imgUrlArray;
 
 
 
@@ -42,12 +45,20 @@ public class ProductResponseDto {
         this.productName=product.getProductName();
         this.price=product.getPrice();
         this.content=product.getContent();
-        this.imgUrl=product.getImgUrl();
+        this.imgUrlArray=StringUrlToArray(product.getImgUrl());
         this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
         this.rentStart=product.getRentStart();
         this.rentEnd=product.getRentEnd();
         this.status=product.getStatus();
     }
+
+    public String[] StringUrlToArray(String s){
+        imgUrlArray=s.split(" ");
+        return imgUrlArray;
+    }
+
+
+
 
 }

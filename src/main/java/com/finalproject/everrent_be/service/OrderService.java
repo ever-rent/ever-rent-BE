@@ -94,14 +94,14 @@ public class OrderService {
         Date buyStart = null;  //지금 보내는거
         Date buyEnd = null;
 
-        try {
-            rentStart = sdf.parse(product.getRentStart());
-            rentEnd = sdf.parse(product.getRentEnd());
-            buyStart = sdf.parse(orderRequestDto.getBuyStart());
-            buyEnd = sdf.parse(orderRequestDto.getBuyEnd());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            rentStart = sdf.parse(product.getRentStart());
+//            rentEnd = sdf.parse(product.getRentEnd());
+//            buyStart = sdf.parse(orderRequestDto.getBuyStart());
+//            buyEnd = sdf.parse(orderRequestDto.getBuyEnd());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
         if(!rentStart.before(buyStart)||!rentEnd.after(buyEnd)){
             return false;

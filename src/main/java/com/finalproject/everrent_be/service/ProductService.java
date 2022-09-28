@@ -10,6 +10,7 @@ import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +70,7 @@ public class ProductService {
 
 
     @Transactional
-    public ResponseDto<?> createProduct(MultipartFile multipartFile, ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> createProduct(List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
 
 
         Member member= memberService.getMemberfromContext();
@@ -79,25 +80,30 @@ public class ProductService {
             return ResponseDto.is_Fail(NULL_TOKEN);
         }
 
+        String bucket="";
+        for(MultipartFile multipartFile:multipartFiles){
+            bucket+=fileUploadService.uploadImage(multipartFile)+' ';
+        }
+
+
         Product product= Product.builder()
                 .productName(requestDto.getProductName())
                 .price(requestDto.getPrice())
                 .content(requestDto.getContent())
-                .imgUrl(fileUploadService.uploadImage(multipartFile))
+                .imgUrl(bucket)
                 .member(member) // member-product OnetoMany
                 .cateId(requestDto.getCateId())
                 .rentStart(requestDto.getRentStart())
                 .rentEnd(requestDto.getRentEnd())
                 .status(Status.WAITING)
                 .build();
-
         productRepository.save(product);
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }
 
     @Transactional
-    public ResponseDto<?> updateProduct(String productId, MultipartFile multipartFile, ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> updateProduct(String productId, List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
         Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
@@ -110,8 +116,11 @@ public class ProductService {
             return ResponseDto.is_Fail(MEMBER_NOT_ALLOWED);
         }
 
-        String url=fileUploadService.uploadImage(multipartFile);
-        product.update(requestDto,member,url);
+        String bucket="";
+        for(MultipartFile multipartFile:multipartFiles){
+            bucket+=fileUploadService.uploadImage(multipartFile)+' ';
+        }
+        product.update(requestDto,member,bucket);
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }

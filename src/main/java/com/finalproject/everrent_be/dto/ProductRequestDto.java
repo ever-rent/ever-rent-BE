@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -20,7 +21,6 @@ public class ProductRequestDto {
     private String productName;
     private String price;
     private String content;
-
     private String cateId;
     private String rentStart;
     private String rentEnd;
