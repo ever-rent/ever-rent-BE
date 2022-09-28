@@ -47,9 +47,8 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private String rentEnd;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Status status;
+    private String confirm;
 
 
 
@@ -62,12 +61,12 @@ public class Product extends Timestamped {
         this.cateId=productRequestDto.getCateId();
         this.rentStart=productRequestDto.getRentStart();
         this.rentEnd=productRequestDto.getRentEnd();
-        this.status=Status.WAITING;
+        this.confirm="1";
         this.member=member;
     }
-    public void updateStatus(Status status)
+    public void updateConfirm(String confirm)
     {
-        this.status=status;
+        this.confirm=confirm;
     }
 
 }

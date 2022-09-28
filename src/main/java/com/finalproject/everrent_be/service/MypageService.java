@@ -7,7 +7,6 @@ import com.finalproject.everrent_be.dto.ResponseDto;
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.OrderList;
 import com.finalproject.everrent_be.model.Product;
-import com.finalproject.everrent_be.model.Status;
 import com.finalproject.everrent_be.repository.OrderListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class MypageService {
         List<ProductResponseDto> productResponseDtos=new ArrayList<>();
         for(Product product:products)
         {
-            if(product.getStatus().equals(Status.EXPIRATION))
+            if(product.getConfirm().equals("2"))
             {
                 productResponseDtos.add(new ProductResponseDto(product));
             }
@@ -64,7 +63,7 @@ public class MypageService {
             List<OrderList> orderLists=product.getOrderLists();
             for(OrderList orderList:orderLists)
             {
-                if(orderList.getStatus().equals(Status.WAITING))
+                if(orderList.getConfirm().equals("1"))
                 {
                     orderResponseDtos.add(new OrderResponseDto(orderList));
                 }
@@ -85,30 +84,11 @@ public class MypageService {
             List<OrderList> orderLists=product.getOrderLists();
             for(OrderList orderList:orderLists)
             {
-                if(orderList.getStatus().equals(Status.CONFIRMATION))
+                if(orderList.getConfirm().equals("2"))
                 {
                     orderResponseDtos.add(new OrderResponseDto(orderList));
                 }
             }
-
-        }
-
-        return ResponseDto.is_Success(orderResponseDtos);
-    }
-
-
-    public ResponseDto<?> getMypgMyRent()
-    {
-        Member member=memberService.getMemberfromContext();
-        List<OrderList> orderLists=member.getOrderLists();
-        List<OrderResponseDto> orderResponseDtos=new ArrayList<>();
-        for(OrderList orderList:orderLists)
-        {
-            if(orderList.getStatus().equals(Status.CONFIRMATION))
-            {
-                orderResponseDtos.add(new OrderResponseDto(orderList));
-            }
-
 
         }
 
@@ -122,7 +102,7 @@ public class MypageService {
     {
         Optional<OrderList> optionalOrderList=orderListRepository.findById(Long.valueOf(orderId));
         OrderList orderList=optionalOrderList.get();
-        orderList.updateStatus(Status.CONFIRMATION);
+        orderList.updateConfirm("2");
         OrderResponseDto orderResponseDto=new OrderResponseDto(orderList);
 
         return ResponseDto.is_Success(orderResponseDto);

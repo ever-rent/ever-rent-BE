@@ -2,7 +2,6 @@ package com.finalproject.everrent_be.service;
 
 
 import com.finalproject.everrent_be.model.Product;
-import com.finalproject.everrent_be.model.Status;
 import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -41,7 +40,7 @@ public class Scheduler {
 
                 if(expired.before(nowDate))
                 {
-                    product.updateStatus(Status.EXPIRATION);
+                    product.updateConfirm("2");
                     productRepository.save(product);
                     check=true;
                 }
