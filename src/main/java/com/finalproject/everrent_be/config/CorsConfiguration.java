@@ -15,7 +15,6 @@ public class CorsConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(final CorsRegistry registry) {
 
         registry.addMapping("/**")
-
                 .allowedMethods("*")
                 .allowedHeaders("*")
                 .allowedOrigins("http://localhost:3000","https://ever-rent.vercel.app")

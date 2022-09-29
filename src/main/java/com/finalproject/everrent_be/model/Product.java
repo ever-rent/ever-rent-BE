@@ -54,11 +54,11 @@ public class Product extends Timestamped {
 
 
 
-    public void update(ProductRequestDto productRequestDto,Member member, String url){
+    public void update(ProductRequestDto productRequestDto,Member member, String bucket){
         this.productName=productRequestDto.getProductName();
         this.price=productRequestDto.getPrice();
         this.content=productRequestDto.getContent();
-        this.imgUrl=url;
+        this.imgUrl=bucket;
         this.cateId=productRequestDto.getCateId();
         this.rentStart=productRequestDto.getRentStart();
         this.rentEnd=productRequestDto.getRentEnd();

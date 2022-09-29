@@ -1,20 +1,18 @@
 package com.finalproject.everrent_be.controller;
 
-import com.finalproject.everrent_be.dto.OrderRequestDto;
 import com.finalproject.everrent_be.dto.ProductRequestDto;
 import com.finalproject.everrent_be.dto.ResponseDto;
 import com.finalproject.everrent_be.service.ProductService;
-import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
-
     private final ProductService productService;
 
     //메인페이지
@@ -40,15 +38,15 @@ public class ProductController {
 
     //상세페이지 작성
     @PostMapping("/auth/products")
-    public ResponseDto<?> createProduct(@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto requestDto,
-                                     HttpServletRequest request) {
-        return productService.createProduct(multipartFile, requestDto, request);
+    public ResponseDto<?> createProduct(@RequestPart List<MultipartFile> multipartFiles, @RequestPart ProductRequestDto requestDto,
+                                        HttpServletRequest request) {
+        return productService.createProduct(multipartFiles, requestDto, request);
     }
 
     //상세페이지 수정
     @PutMapping("/auth/products/{productId}")
-    public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart MultipartFile multipartFile, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
-        return productService.updateProduct(productId,multipartFile,requestDto,request);
+    public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart List<MultipartFile> multipartFiles, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
+        return productService.updateProduct(productId,multipartFiles,requestDto,request);
     }
 
 
