@@ -31,6 +31,7 @@ public class ProductService {
     public final TokenProvider tokenProvider;
 
 
+
     public ResponseDto<?> getAllProduct() {
         List<Product> productList=productRepository.findAll();
         List<ProductResponseDto> responseDtos =new ArrayList<>();
@@ -86,15 +87,16 @@ public class ProductService {
         }
 
 
-        Product product= Product.builder()
+        Product product=new Product();
+        product= Product.builder()
                 .productName(requestDto.getProductName())
                 .price(requestDto.getPrice())
                 .content(requestDto.getContent())
                 .imgUrl(bucket)
                 .member(member) // member-product OnetoMany
                 .cateId(requestDto.getCateId())
-                .rentStart(requestDto.getRentStart())
-                .rentEnd(requestDto.getRentEnd())
+                .rentStart(product.StrToLocalDate(requestDto.getRentStart()))
+                .rentEnd(product.StrToLocalDate(requestDto.getRentEnd()))
                 .status(Status.WAITING)
                 .build();
         productRepository.save(product);

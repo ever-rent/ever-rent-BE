@@ -22,36 +22,36 @@ public class Scheduler {
 
 
     // 초, 분, 시, 일, 월, 주 순서
-    @Scheduled(cron = "0 01 00 * * *")
-    public void deleteEmptyComment() throws InterruptedException {
-
-        List<Product> products = productRepository.findAll();
-        LocalDate now = LocalDate.now();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date nowDate= null;
-        Date expired = null;
-
-        boolean check=false;
-        for(Product product:products)
-        {
-            try{
-                nowDate = sdf.parse(String.valueOf(now));
-                expired = sdf.parse(product.getRentEnd());
-
-
-                if(expired.before(nowDate))
-                {
-                    product.updateStatus(Status.EXPIRATION);
-                    productRepository.save(product);
-                    check=true;
-                }
-            }catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        if(check==false){
-            System.out.println("만료된 게시글이 없습니다.");
-        }
-
-    }
+//    @Scheduled(cron = "0 01 00 * * *")
+//    public void deleteEmptyComment() throws InterruptedException {
+//
+//        List<Product> products = productRepository.findAll();
+//        LocalDate now = LocalDate.now();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date nowDate= null;
+//        Date expired = null;
+//
+//        boolean check=false;
+//        for(Product product:products)
+//        {
+//            try{
+//                nowDate = sdf.parse(String.valueOf(now));
+//                expired = sdf.parse(product.getRentEnd());
+//
+//
+//                if(expired.before(nowDate))
+//                {
+//                    product.updateStatus(Status.EXPIRATION);
+//                    productRepository.save(product);
+//                    check=true;
+//                }
+//            }catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if(check==false){
+//            System.out.println("만료된 게시글이 없습니다.");
+//        }
+//
+//    }
 }

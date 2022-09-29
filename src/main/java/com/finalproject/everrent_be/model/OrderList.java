@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @Getter
@@ -29,10 +31,10 @@ public class OrderList extends Timestamped {
     private Product product;
 
     @Column(nullable = false)
-    private String buyStart;
+    private LocalDate buyStart;
 
     @Column(nullable = false)
-    private String buyEnd;
+    private LocalDate buyEnd;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -44,5 +46,13 @@ public class OrderList extends Timestamped {
         this.status=status;
 
     }
+
+    public LocalDate StrToLocalDate(String string){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(string,formatter);
+        return date;
+    }
+
+
 
 }
