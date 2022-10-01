@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -48,8 +50,8 @@ public class ProductResponseDto {
         this.imgUrlArray=StringUrlToArray(product.getImgUrl());
         this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
-        this.rentStart=product.getRentStart();
-        this.rentEnd=product.getRentEnd();
+        this.rentStart=LocalDateToStr(product.getRentStart());
+        this.rentEnd=LocalDateToStr(product.getRentEnd());
         this.status=product.getStatus();
     }
 
@@ -58,6 +60,9 @@ public class ProductResponseDto {
         return imgUrlArray;
     }
 
+    public String LocalDateToStr(LocalDate localDate){
+        return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
 
 
 

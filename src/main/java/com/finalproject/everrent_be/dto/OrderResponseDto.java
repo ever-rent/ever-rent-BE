@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -26,9 +29,12 @@ public class OrderResponseDto {
         this.id=orderList.getId();
         this.memberName=orderList.getMember().getMemberName();
         this.productName=orderList.getProduct().getProductName();
-        this.buyStart= orderList.getBuyStart();
-        this.buyEnd= orderList.getBuyEnd();
+        this.buyStart= LocalDateToStr(orderList.getBuyStart());
+        this.buyEnd= LocalDateToStr(orderList.getBuyEnd());
         this.status= orderList.getStatus();
+    }
+    public String LocalDateToStr(LocalDate localDate){
+        return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
 }

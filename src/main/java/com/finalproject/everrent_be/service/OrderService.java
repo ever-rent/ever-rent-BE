@@ -16,13 +16,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static com.finalproject.everrent_be.exception.ErrorCode.INVALID_TIMESETTING;
+import static com.finalproject.everrent_be.exception.ErrorCode.*;
 
 @RequiredArgsConstructor
 @Service
@@ -45,17 +44,43 @@ public class OrderService {
             return ResponseDto.is_Fail(ErrorCode.INVALID_CREATE);
         }
 
+        ///예외처리, 나중에 함수로 빼기
+        List<OrderList> orderLists = product.getOrderLists();
 
-        if(!checkDuplicate(product,orderRequestDto))
-        {
-            return ResponseDto.is_Fail(INVALID_TIMESETTING);
+        int size=orderLists.size();
+
+        LocalDate rentStart=product.getRentStart();
+        LocalDate rentEnd=product.getRentEnd();
+        LocalDate buyStart=StrToLocalDate(orderRequestDto.getBuyStart());
+        LocalDate buyEnd=StrToLocalDate(orderRequestDto.getBuyEnd());
+
+        //판매자가 작성한 렌트가능시간과 order시간과 맞지 않을 때
+        if(!rentStart.isBefore(buyStart)||!rentEnd.isAfter(buyEnd)){
+            return ResponseDto.is_Fail(INVALID_ORDER_IN);
+        }
+        //order start,end 시간순서가 맞지 않을 때
+        if(!buyStart.isBefore(buyEnd)){
+            return ResponseDto.is_Fail(INVALID_TIME_SEQUENCE);
         }
 
-        OrderList orderList = OrderList.builder()
+        //해당 product에 예약되어있는 시간들 중복 확인
+        if(size>0){
+            for(OrderList orderList:orderLists){
+                LocalDate orderStart=orderList.getBuyStart();
+                LocalDate orderEnd=orderList.getBuyEnd();
+                if(!(buyStart.isAfter(orderEnd)||buyEnd.isBefore(orderStart)))
+                {
+                    return ResponseDto.is_Fail(INVALID_ORDER);
+                }
+            }
+        }
+
+        OrderList orderList = new OrderList();
+        orderList = OrderList.builder()
                 .member(member)
                 .product(product)
-                .buyStart(orderRequestDto.getBuyStart())
-                .buyEnd(orderRequestDto.getBuyEnd())
+                .buyStart(orderList.StrToLocalDate(orderRequestDto.getBuyStart()))
+                .buyEnd(orderList.StrToLocalDate(orderRequestDto.getBuyEnd()))
                 .status(Status.WAITING)
                 .build();
 
@@ -79,60 +104,9 @@ public class OrderService {
     }
 
 
-
-
-
-    public boolean checkDuplicate(Product product,OrderRequestDto orderRequestDto)
-    {
-        List<OrderList> orderLists = product.getOrderLists();
-
-        int size=orderLists.size();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date rentStart = null;
-        Date rentEnd = null;
-        Date buyStart = null;  //지금 보내는거
-        Date buyEnd = null;
-
-//        try {
-//            rentStart = sdf.parse(product.getRentStart());
-//            rentEnd = sdf.parse(product.getRentEnd());
-//            buyStart = sdf.parse(orderRequestDto.getBuyStart());
-//            buyEnd = sdf.parse(orderRequestDto.getBuyEnd());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
-        if(!rentStart.before(buyStart)||!rentEnd.after(buyEnd)){
-            return false;
-        }
-        if(!buyStart.before(buyEnd)){
-            return false;
-        }
-
-        //order entity에 해당되는 product 시간들(예약된 시간들)
-        Date orderStart=null;
-        Date orderEnd=null;
-        Date ordernextStart=null;
-
-        if(size>0)
-        {
-            for(int i=0;i<size;i++)
-            {
-                try{
-                    orderStart=sdf.parse(orderLists.get(i).getBuyStart());
-                    orderEnd = sdf.parse(orderLists.get(i).getBuyEnd());
-                    if(!(buyStart.after(orderEnd)||buyEnd.before(orderStart)))
-                    {
-                        return false;
-                    }
-
-                }catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return true;
+    public LocalDate StrToLocalDate(String string){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(string,formatter);
+        return date;
     }
 }

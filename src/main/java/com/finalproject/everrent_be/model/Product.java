@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @NoArgsConstructor
@@ -42,10 +43,10 @@ public class Product extends Timestamped {
     private String imgUrl;
 
     @Column(nullable = false)
-    private String rentStart;
+    private LocalDate rentStart;
 
     @Column(nullable = false)
-    private String rentEnd;
+    private LocalDate rentEnd;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -60,14 +61,23 @@ public class Product extends Timestamped {
         this.content=productRequestDto.getContent();
         this.imgUrl=bucket;
         this.cateId=productRequestDto.getCateId();
-        this.rentStart=productRequestDto.getRentStart();
-        this.rentEnd=productRequestDto.getRentEnd();
+        this.rentStart=StrToLocalDate(productRequestDto.getRentStart());
+        this.rentEnd=StrToLocalDate(productRequestDto.getRentEnd());
         this.status=Status.WAITING;
         this.member=member;
     }
     public void updateStatus(Status status)
     {
         this.status=status;
+    }
+
+    public LocalDate StrToLocalDate(String string){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(string,formatter);
+        return date;
+    }
+    public String LocalDateToStr(LocalDate localDate){
+        return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
 }
