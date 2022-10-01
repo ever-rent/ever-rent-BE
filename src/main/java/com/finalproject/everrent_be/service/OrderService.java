@@ -16,15 +16,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static com.finalproject.everrent_be.exception.ErrorCode.INVALID_TIMESETTING;
+import static com.finalproject.everrent_be.exception.ErrorCode.*;
 
 @RequiredArgsConstructor
 @Service
@@ -47,10 +44,35 @@ public class OrderService {
             return ResponseDto.is_Fail(ErrorCode.INVALID_CREATE);
         }
 
+        ///예외처리, 나중에 함수로 빼기
+        List<OrderList> orderLists = product.getOrderLists();
 
-        if(!checkDuplicate(product,orderRequestDto))
-        {
-            return ResponseDto.is_Fail(INVALID_TIMESETTING);
+        int size=orderLists.size();
+
+        LocalDate rentStart=product.getRentStart();
+        LocalDate rentEnd=product.getRentEnd();
+        LocalDate buyStart=StrToLocalDate(orderRequestDto.getBuyStart());
+        LocalDate buyEnd=StrToLocalDate(orderRequestDto.getBuyEnd());
+
+        //판매자가 작성한 렌트가능시간과 order시간과 맞지 않을 때
+        if(!rentStart.isBefore(buyStart)||!rentEnd.isAfter(buyEnd)){
+            return ResponseDto.is_Fail(INVALID_ORDER_IN);
+        }
+        //order start,end 시간순서가 맞지 않을 때
+        if(!buyStart.isBefore(buyEnd)){
+            return ResponseDto.is_Fail(INVALID_TIME_SEQUENCE);
+        }
+
+        //해당 product에 예약되어있는 시간들 중복 확인
+        if(size>0){
+            for(OrderList orderList:orderLists){
+                LocalDate orderStart=orderList.getBuyStart();
+                LocalDate orderEnd=orderList.getBuyEnd();
+                if(!(buyStart.isAfter(orderEnd)||buyEnd.isBefore(orderStart)))
+                {
+                    return ResponseDto.is_Fail(INVALID_ORDER);
+                }
+            }
         }
 
         OrderList orderList = new OrderList();
@@ -82,43 +104,6 @@ public class OrderService {
     }
 
 
-
-
-
-    public boolean checkDuplicate(Product product,OrderRequestDto orderRequestDto)
-    {
-        List<OrderList> orderLists = product.getOrderLists();
-
-        int size=orderLists.size();
-
-        LocalDate rentStart=product.getRentStart();
-        LocalDate rentEnd=product.getRentEnd();
-        LocalDate buyStart=StrToLocalDate(orderRequestDto.getBuyStart());
-        LocalDate buyEnd=StrToLocalDate(orderRequestDto.getBuyEnd());
-
-        //판매자가 작성한 렌트가능시간과 order시간과 맞지 않을 때
-        if(!rentStart.isBefore(buyStart)||!rentEnd.isAfter(buyEnd)){
-            return false;
-        }
-        //order start,end 시간순서가 맞지 않을 때
-        if(!buyStart.isBefore(buyEnd)){
-            return false;
-        }
-
-        //해당 product에 예약되어있는 시간들 중복 확인
-        if(size>0){
-            for(OrderList orderList:orderLists){
-                LocalDate orderStart=orderList.getBuyStart();
-                LocalDate orderEnd=orderList.getBuyEnd();
-                    if(!(buyStart.isAfter(orderEnd)||buyEnd.isBefore(orderStart)))
-                    {
-                        return false;
-                    }
-            }
-        }
-
-        return true;
-    }
     public LocalDate StrToLocalDate(String string){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(string,formatter);

@@ -20,8 +20,17 @@ public enum ErrorCode {
     //즐겨찾기 관련 오류
     DUPLICATE_FAVORITE("DUPLICATE_FAVORITE", "이미 즐겨찾기에 등록되었습니다."),
 
-    INVALID_TIMESETTING("INVALID_TIMESETTING","기간 설정이 올바르지 않습니다."),
+
+    //주문 관련 오류
+    //INVALID_TIMESETTING("INVALID_TIMESETTING","기간 설정이 올바르지 않습니다."),
+    INVALID_ORDER_IN("INVALID_ORDER_IN","판매자가 작성한 렌트기간 안에 있지 않습니다."),
+    INVALID_TIME_SEQUENCE("INVALID_TIME_SEQUENCE","렌트 시작시간과 끝시간 순서가 올바르지 않습니다."),
+    INVALID_ORDER("INVALID_ORDER","선택한 기간 안에 확정된 예약이 있습니다."),
+
     INVALID_CONDITION("INVALID_CONDITION","닉네임 또는 패스워드의 조건을 확인하세요."),
+
+
+
 
     FAVORITE_NOT_FOUND("FAVORITE_NOT_FOUND", "등록되지 않은 즐겨찾기입니다."),
 
