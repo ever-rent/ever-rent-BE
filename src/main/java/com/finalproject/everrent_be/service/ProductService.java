@@ -87,18 +87,7 @@ public class ProductService {
         }
 
 
-        Product product=new Product();
-        product= Product.builder()
-                .productName(requestDto.getProductName())
-                .price(requestDto.getPrice())
-                .content(requestDto.getContent())
-                .imgUrl(bucket)
-                .member(member) // member-product OnetoMany
-                .cateId(requestDto.getCateId())
-                .rentStart(StrToLocalDate(requestDto.getRentStart()))
-                .rentEnd(StrToLocalDate(requestDto.getRentEnd()))
-                .status(Status.WAITING)
-                .build();
+        Product product=new Product(requestDto,member,bucket,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
         productRepository.save(product);
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
@@ -122,7 +111,7 @@ public class ProductService {
         for(MultipartFile multipartFile:multipartFiles){
             bucket+=fileUploadService.uploadImage(multipartFile)+' ';
         }
-        product.update(requestDto,member,bucket);
+        product.update(requestDto,member,bucket,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }
@@ -167,6 +156,8 @@ public class ProductService {
         LocalDate date = LocalDate.parse(string,formatter);
         return date;
     }
-
+    public String LocalDateToStr(LocalDate localDate){
+        return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
 
 }

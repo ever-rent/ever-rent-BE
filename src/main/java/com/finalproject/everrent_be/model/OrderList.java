@@ -41,17 +41,20 @@ public class OrderList extends Timestamped {
     private Status status;
 
 
+    public OrderList(Member member,Product product,LocalDate buyStart,LocalDate buyEnd,Status status){
+        this.member=member;
+        this.product=product;
+        this.buyStart=buyStart;
+        this.buyEnd=buyEnd;
+        this.status=status;
+    };
     public void updateStatus(Status status)
     {
         this.status=status;
 
     }
 
-    public LocalDate StrToLocalDate(String string){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(string,formatter);
-        return date;
-    }
+
 
 
 

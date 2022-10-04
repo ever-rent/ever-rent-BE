@@ -54,15 +54,25 @@ public class Product extends Timestamped {
 
 
 
-
-    public void update(ProductRequestDto productRequestDto,Member member, String bucket){
+    public Product(ProductRequestDto productRequestDto,Member member, String bucket,LocalDate rentStart,LocalDate rentEnd){
         this.productName=productRequestDto.getProductName();
         this.price=productRequestDto.getPrice();
         this.content=productRequestDto.getContent();
         this.imgUrl=bucket;
         this.cateId=productRequestDto.getCateId();
-        this.rentStart=StrToLocalDate(productRequestDto.getRentStart());
-        this.rentEnd=StrToLocalDate(productRequestDto.getRentEnd());
+        this.rentStart=rentStart;
+        this.rentEnd=rentEnd;
+        this.status=Status.WAITING;
+        this.member=member;
+    }
+    public void update(ProductRequestDto productRequestDto,Member member, String bucket,LocalDate rentStart,LocalDate rentEnd){
+        this.productName=productRequestDto.getProductName();
+        this.price=productRequestDto.getPrice();
+        this.content=productRequestDto.getContent();
+        this.imgUrl=bucket;
+        this.cateId=productRequestDto.getCateId();
+        this.rentStart=rentStart;
+        this.rentEnd=rentEnd;
         this.status=Status.WAITING;
         this.member=member;
     }
@@ -71,13 +81,5 @@ public class Product extends Timestamped {
         this.status=status;
     }
 
-    public LocalDate StrToLocalDate(String string){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(string,formatter);
-        return date;
-    }
-    public String LocalDateToStr(LocalDate localDate){
-        return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    }
 
 }
