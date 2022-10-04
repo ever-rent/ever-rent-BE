@@ -17,8 +17,8 @@ public class ProductController {
 
     //메인페이지
     @GetMapping("/products")
-    public ResponseDto<?> getAllProduct(){
-        return productService.getAllProduct();
+    public ResponseDto<?> getAllProduct(@RequestParam String page){
+        return productService.getAllProduct(page);
     }
 
 
@@ -30,10 +30,9 @@ public class ProductController {
 
     //카테고리 별 분류
     @GetMapping("/categories/{categoryId}")
-    public ResponseDto<?> getFromCategory(@PathVariable String categoryId)
+    public ResponseDto<?> getFromCategory(@PathVariable String categoryId,@RequestParam String page)
     {
-        return productService.getFromCategory(categoryId);
-
+        return productService.getFromCategory(categoryId,page);
     }
 
     //상세페이지 작성

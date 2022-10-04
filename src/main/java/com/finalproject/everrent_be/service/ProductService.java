@@ -32,15 +32,17 @@ public class ProductService {
 
 
 
-    public ResponseDto<?> getAllProduct() {
+    public ResponseDto<?> getAllProduct(String page) {
+
         List<Product> productList=productRepository.findAll();
         List<ProductResponseDto> responseDtos =new ArrayList<>();
-        for(Product product:productList){
-            responseDtos.add(new ProductResponseDto(product));
+        int startIdx=(Integer.valueOf(page)-1)*12;
+        int lastIdx=Integer.valueOf(page)*12;
+        for(int i=startIdx;i<lastIdx;i++){
+            responseDtos.add(new ProductResponseDto(productList.get(i)));
         }
+
         return ResponseDto.is_Success(responseDtos);
-
-
     }
 
 
@@ -55,17 +57,17 @@ public class ProductService {
 
     }
 
-    public ResponseDto<?> getFromCategory(String cateId){
+    public ResponseDto<?> getFromCategory(String cateId,String page){
         List<Product> productList=productRepository.findAllByCateId(cateId);
         List<ProductResponseDto> responseDtos =new ArrayList<>();
 
-
-        for(Product product:productList){
-            responseDtos.add(new ProductResponseDto(product));
+        int startIdx=(Integer.valueOf(page)-1)*12;
+        int lastIdx=Integer.valueOf(page)*12;
+        for(int i=startIdx;i<lastIdx;i++){
+            responseDtos.add(new ProductResponseDto(productList.get(i)));
         }
+
         return ResponseDto.is_Success(responseDtos);
-
-
     }
 
 
