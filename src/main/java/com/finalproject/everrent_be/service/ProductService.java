@@ -2,10 +2,13 @@ package com.finalproject.everrent_be.service;
 
 import com.finalproject.everrent_be.dto.*;
 import com.finalproject.everrent_be.jwt.TokenProvider;
+import com.finalproject.everrent_be.jwt.exception.ErrorCode;
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.Product;
 import com.finalproject.everrent_be.model.Status;
+import com.finalproject.everrent_be.model.WishList;
 import com.finalproject.everrent_be.repository.ProductRepository;
+import com.finalproject.everrent_be.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.finalproject.everrent_be.jwt.exception.ErrorCode.*;
 
@@ -30,12 +34,13 @@ public class ProductService {
     public final FileUploadService fileUploadService;
     public final TokenProvider tokenProvider;
 
-
+    public final WishListRepository wishListRepository;
 
     public ResponseDto<?> getAllProduct(String page) {
 
         List<Product> productList=productRepository.findAll();
         List<ProductResponseDto> responseDtos =new ArrayList<>();
+
         int startIdx=(Integer.valueOf(page)-1)*12;
         int lastIdx=Integer.valueOf(page)*12;
         for(int i=startIdx;i<lastIdx;i++){
@@ -132,7 +137,33 @@ public class ProductService {
 
         return ResponseDto.is_Success("삭제 완료");
     }
+    @Transactional
+    public ResponseDto<?> putWishList(String productId)
+    {
+        Member member=memberService.getMemberfromContext();
+        WishList wishList=wishListRepository.findByMemberIdAndProductId(member.getId(), Long.valueOf(productId));
+        Optional<Product> optionalProduct=productRepository.findById(Long.valueOf(productId));
+        Product product=optionalProduct.get();
+        if(product.getMember().equals(member))
+        {
+            return ResponseDto.is_Fail(INVALID_WISH);
+        }
+        if(wishList!=null)
+        {
+            wishListRepository.delete(wishList);
+            return ResponseDto.is_Success("찜 등록이 취소되었습니다.");
+        }
+        else
+        {
+            wishListRepository.save(WishList.builder()
+                    .member(member)
+                    .product(product)
+                    .build());
+            return ResponseDto.is_Success("찜 등록이 완료되었습니다.");
+        }
 
+
+    }
 
     /**
      * 토큰받아 본인확인 메서드

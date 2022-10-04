@@ -30,7 +30,7 @@ public enum ErrorCode {
     INVALID_CONDITION("INVALID_CONDITION","닉네임 또는 패스워드의 조건을 확인하세요."),
 
 
-
+    INVALID_WISH("INVALID_WISH","자신의 게시글은 찜 할 수 없습니다."),
 
     FAVORITE_NOT_FOUND("FAVORITE_NOT_FOUND", "등록되지 않은 즐겨찾기입니다."),
 

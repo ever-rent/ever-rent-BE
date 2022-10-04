@@ -37,13 +37,25 @@ public class MypageController {
     {
         return mypageService.getMypgConfirm();
     }
-
     @GetMapping("/mypages/myrent")
     public ResponseDto<?> getMypgMyRent()
     {
         return mypageService.getMypgMyRent();
     }
 
+    @GetMapping("/mypages/myinfos")
+    public ResponseDto<?> getMyInfo()
+    {
+        return mypageService.getMyInfo();
+
+    }
+
+    @GetMapping("/mypages/myWishs")
+    public ResponseDto<?> getMyWishs()
+    {
+        return mypageService.getMyWishs();
+
+    }
 
     @PutMapping("/mypages/confirms/{orderId}")
     public ResponseDto<?> allowOrder(@PathVariable String orderId)

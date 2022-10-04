@@ -15,13 +15,13 @@ public class OrderController {
     private final OrderService orderService;
 
     //예약 작성
-    @PostMapping("/auth/orders/{productId}")
+    @PostMapping("/orders/{productId}")
     public ResponseDto<?> createOrder(@PathVariable String productId, @RequestBody OrderRequestDto orderRequestDto)
     {
         return orderService.creatOrder(productId,orderRequestDto);
     }
 
-    @GetMapping("/auth/orders/{orderId}")
+    @GetMapping("/orders/{orderId}")
     public ResponseDto<?> confirmOrder(@PathVariable String orderId)
     {
         return orderService.confirmOrder(orderId);

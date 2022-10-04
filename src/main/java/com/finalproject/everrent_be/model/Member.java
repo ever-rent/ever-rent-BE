@@ -45,6 +45,11 @@ public class Member extends Timestamped {
     @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderList> orderLists;
+    @JsonIgnore
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WishList> wishLists;
+
+
     @Column
     private String mainAddress;
     @Column
