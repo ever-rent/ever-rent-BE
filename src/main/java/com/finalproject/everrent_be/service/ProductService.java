@@ -1,7 +1,6 @@
 package com.finalproject.everrent_be.service;
 
 import com.finalproject.everrent_be.dto.*;
-import com.finalproject.everrent_be.exception.ErrorCode;
 import com.finalproject.everrent_be.jwt.TokenProvider;
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.Product;
@@ -10,16 +9,17 @@ import com.finalproject.everrent_be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.finalproject.everrent_be.exception.ErrorCode.*;
+import static com.finalproject.everrent_be.jwt.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -95,8 +95,8 @@ public class ProductService {
                 .imgUrl(bucket)
                 .member(member) // member-product OnetoMany
                 .cateId(requestDto.getCateId())
-                .rentStart(product.StrToLocalDate(requestDto.getRentStart()))
-                .rentEnd(product.StrToLocalDate(requestDto.getRentEnd()))
+                .rentStart(StrToLocalDate(requestDto.getRentStart()))
+                .rentEnd(StrToLocalDate(requestDto.getRentEnd()))
                 .status(Status.WAITING)
                 .build();
         productRepository.save(product);
@@ -162,7 +162,11 @@ public class ProductService {
         }
         return true;
     }
-
+    public LocalDate StrToLocalDate(String string){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(string,formatter);
+        return date;
+    }
 
 
 }

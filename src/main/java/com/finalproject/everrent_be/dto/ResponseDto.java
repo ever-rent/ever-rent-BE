@@ -1,6 +1,6 @@
 package com.finalproject.everrent_be.dto;
 
-import com.finalproject.everrent_be.exception.ErrorCode;
+import com.finalproject.everrent_be.jwt.exception.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

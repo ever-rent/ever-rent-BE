@@ -4,7 +4,7 @@ import com.finalproject.everrent_be.dto.OrderRequestDto;
 import com.finalproject.everrent_be.dto.OrderResponseDto;
 
 import com.finalproject.everrent_be.dto.ResponseDto;
-import com.finalproject.everrent_be.exception.ErrorCode;
+import com.finalproject.everrent_be.jwt.exception.ErrorCode;
 
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.OrderList;
@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static com.finalproject.everrent_be.exception.ErrorCode.*;
+import static com.finalproject.everrent_be.jwt.exception.ErrorCode.*;
 
 @RequiredArgsConstructor
 @Service
