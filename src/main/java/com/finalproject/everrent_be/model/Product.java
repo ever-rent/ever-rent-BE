@@ -48,6 +48,9 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private LocalDate rentEnd;
 
+    @Column(nullable = false)
+    private String location;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
@@ -62,6 +65,7 @@ public class Product extends Timestamped {
         this.cateId=productRequestDto.getCateId();
         this.rentStart=rentStart;
         this.rentEnd=rentEnd;
+        this.location=productRequestDto.getLocation();
         this.status=Status.WAITING;
         this.member=member;
     }
@@ -73,6 +77,7 @@ public class Product extends Timestamped {
         this.cateId=productRequestDto.getCateId();
         this.rentStart=rentStart;
         this.rentEnd=rentEnd;
+        this.location=productRequestDto.getLocation();
         this.status=Status.WAITING;
         this.member=member;
     }

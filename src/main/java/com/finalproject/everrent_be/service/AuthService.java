@@ -68,7 +68,10 @@ public class AuthService {
         Member member = memberRequestDto.toMember(passwordEncoder);
         memberRepository.save(member);
 
-        return ResponseDto.is_Success(member);
+        MemberResponseDto memberResponseDto=new MemberResponseDto(member);
+
+
+        return ResponseDto.is_Success(memberResponseDto);
     }
 
 

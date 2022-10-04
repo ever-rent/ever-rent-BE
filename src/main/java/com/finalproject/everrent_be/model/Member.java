@@ -46,22 +46,25 @@ public class Member extends Timestamped {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderList> orderLists;
     @Column
-    private String address;
+    private String mainAddress;
+    @Column
+    private String subAddress;
     @Column
     private boolean policy;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
-//
 
-    public Member(String memberName, String password, String email, String address,
+
+    public Member(String memberName, String password, String email, String mainAddress,String subAddress,
                    boolean policy) {
 
         this.memberName = memberName;
 
         this.password = password;
         this.email = email;
-        this.address = address;
+        this.mainAddress = mainAddress;
+        this.subAddress=subAddress;
         this.policy = policy;
     }
 
@@ -79,7 +82,7 @@ public class Member extends Timestamped {
 
     @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
     public Member(String memberId, String password, String email, String provider, String providerId) {
-        this.memberName = memberName;
+        this.memberName = memberId;
         this.password = password;
         this.email = email;
         this.provider = provider;
