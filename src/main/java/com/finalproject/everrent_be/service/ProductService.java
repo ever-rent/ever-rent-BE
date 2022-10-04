@@ -81,13 +81,12 @@ public class ProductService {
             return ResponseDto.is_Fail(NULL_TOKEN);
         }
 
-        String bucket="";
+        StringBuffer sb=new StringBuffer();
         for(MultipartFile multipartFile:multipartFiles){
-            bucket+=fileUploadService.uploadImage(multipartFile)+' ';
+            sb.append(fileUploadService.uploadImage(multipartFile)+' ');
         }
 
-
-        Product product=new Product(requestDto,member,bucket,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
+        Product product=new Product(requestDto,member,sb,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
         productRepository.save(product);
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
@@ -107,11 +106,11 @@ public class ProductService {
             return ResponseDto.is_Fail(MEMBER_NOT_ALLOWED);
         }
 
-        String bucket="";
+        StringBuffer sb=new StringBuffer();
         for(MultipartFile multipartFile:multipartFiles){
-            bucket+=fileUploadService.uploadImage(multipartFile)+' ';
+            sb.append(fileUploadService.uploadImage(multipartFile)+' ');
         }
-        product.update(requestDto,member,bucket,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
+        product.update(requestDto,member,sb,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }
