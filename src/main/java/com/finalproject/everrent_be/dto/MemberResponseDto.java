@@ -19,7 +19,8 @@ public class MemberResponseDto {
     private String memberName;
     private String password;
 
-    private String address;
+    private String maidAddress;
+    private String subAddress;
     private boolean policy;
 
     public MemberResponseDto(Member member)
@@ -27,7 +28,8 @@ public class MemberResponseDto {
         this.id=member.getId();
         this.memberName=member.getMemberName();
         this.email=member.getEmail();
-        this.address=member.getAddress();
+        this.maidAddress=member.getMainAddress();
+        this.subAddress=member.getSubAddress();
         this.policy= member.isPolicy();
     }
     public MemberResponseDto(String memberName){
