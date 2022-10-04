@@ -3,14 +3,13 @@ package com.finalproject.everrent_be.service;
 
 
 import com.finalproject.everrent_be.dto.*;
-import com.finalproject.everrent_be.exception.ErrorCode;
+import com.finalproject.everrent_be.jwt.exception.ErrorCode;
 import com.finalproject.everrent_be.jwt.TokenProvider;
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.RefreshToken;
 import com.finalproject.everrent_be.repository.MemberRepository;
 import com.finalproject.everrent_be.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -18,8 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 @Service
@@ -63,7 +60,7 @@ public class AuthService {
         {
             return ResponseDto.is_Fail(ErrorCode.DUPLICATE_EMAIL);
         }
-        if(!(Pattern.matches("[a-zA-Z0-9]*$",memberRequestDto.getMemberName()) && (memberRequestDto.getMemberName().length() > 1 && memberRequestDto.getMemberName().length() <15)
+        if(!(Pattern.matches("[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]*$",memberRequestDto.getMemberName()) && (memberRequestDto.getMemberName().length() > 1 && memberRequestDto.getMemberName().length() <15)
                 && Pattern.matches("[a-zA-Z0-9]*$",memberRequestDto.getPassword()) && (memberRequestDto.getPassword().length() > 7 && memberRequestDto.getPassword().length() <33))){
 
             throw new IllegalArgumentException("닉네임 혹은 비밀번호 조건을 확인해주세요.");
@@ -71,7 +68,10 @@ public class AuthService {
         Member member = memberRequestDto.toMember(passwordEncoder);
         memberRepository.save(member);
 
-        return ResponseDto.is_Success(member);
+        MemberResponseDto memberResponseDto=new MemberResponseDto(member);
+
+
+        return ResponseDto.is_Success(memberResponseDto);
     }
 
 

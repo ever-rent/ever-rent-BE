@@ -24,8 +24,9 @@ public class MemberRequestDto {
 
     private String password;
 
-    private String address;
+    private String mainAddress;
 
+    private String subAddress;
 
 
 
@@ -34,7 +35,8 @@ public class MemberRequestDto {
                 .memberName(memberName)
                 .password(passwordEncoder.encode(password))
                 .email(email)
-                .address(address)
+                .mainAddress(mainAddress)
+                .subAddress(subAddress)
                 .authority(Authority.ROLE_USER)
                 .build();
     }

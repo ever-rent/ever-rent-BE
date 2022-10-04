@@ -4,11 +4,8 @@ package com.finalproject.everrent_be.service;
 
 import com.finalproject.everrent_be.dto.MemberResponseDto;
 import com.finalproject.everrent_be.dto.ResponseDto;
-import com.finalproject.everrent_be.exception.ErrorCode;
-import com.finalproject.everrent_be.model.Authority;
 import com.finalproject.everrent_be.model.Member;
 
-import com.finalproject.everrent_be.model.Product;
 import com.finalproject.everrent_be.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

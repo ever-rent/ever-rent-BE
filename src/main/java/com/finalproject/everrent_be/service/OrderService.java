@@ -4,7 +4,7 @@ import com.finalproject.everrent_be.dto.OrderRequestDto;
 import com.finalproject.everrent_be.dto.OrderResponseDto;
 
 import com.finalproject.everrent_be.dto.ResponseDto;
-import com.finalproject.everrent_be.exception.ErrorCode;
+import com.finalproject.everrent_be.jwt.exception.ErrorCode;
 
 import com.finalproject.everrent_be.model.Member;
 import com.finalproject.everrent_be.model.OrderList;
@@ -21,12 +21,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static com.finalproject.everrent_be.exception.ErrorCode.*;
+import static com.finalproject.everrent_be.jwt.exception.ErrorCode.*;
 
 @RequiredArgsConstructor
 @Service
 public class OrderService {
 
+    private final ProductService productService;
     private final MemberService memberService;
     private final ProductRepository productRepository;
     private final OrderListRepository orderListRepository;
@@ -51,8 +52,8 @@ public class OrderService {
 
         LocalDate rentStart=product.getRentStart();
         LocalDate rentEnd=product.getRentEnd();
-        LocalDate buyStart=StrToLocalDate(orderRequestDto.getBuyStart());
-        LocalDate buyEnd=StrToLocalDate(orderRequestDto.getBuyEnd());
+        LocalDate buyStart=productService.StrToLocalDate(orderRequestDto.getBuyStart());
+        LocalDate buyEnd=productService.StrToLocalDate(orderRequestDto.getBuyEnd());
 
         //판매자가 작성한 렌트가능시간과 order시간과 맞지 않을 때
         if(!rentStart.isBefore(buyStart)||!rentEnd.isAfter(buyEnd)){
@@ -75,14 +76,8 @@ public class OrderService {
             }
         }
 
-        OrderList orderList = new OrderList();
-        orderList = OrderList.builder()
-                .member(member)
-                .product(product)
-                .buyStart(orderList.StrToLocalDate(orderRequestDto.getBuyStart()))
-                .buyEnd(orderList.StrToLocalDate(orderRequestDto.getBuyEnd()))
-                .status(Status.WAITING)
-                .build();
+        OrderList orderList = new OrderList(member,product,productService.StrToLocalDate(orderRequestDto.getBuyStart()),productService.StrToLocalDate(orderRequestDto.getBuyEnd()),Status.WAITING);
+
 
         orderListRepository.save(orderList);
 
@@ -103,10 +98,4 @@ public class OrderService {
         return ResponseDto.is_Success(orderResponseDto);
     }
 
-
-    public LocalDate StrToLocalDate(String string){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate date = LocalDate.parse(string,formatter);
-        return date;
-    }
 }
