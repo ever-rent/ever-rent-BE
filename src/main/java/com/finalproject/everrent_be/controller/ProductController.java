@@ -36,26 +36,30 @@ public class ProductController {
     }
 
     //상세페이지 작성
-    @PostMapping("/auth/products")
+    @PostMapping("/products")
     public ResponseDto<?> createProduct(@RequestPart List<MultipartFile> multipartFiles, @RequestPart ProductRequestDto requestDto,
                                         HttpServletRequest request) {
         return productService.createProduct(multipartFiles, requestDto, request);
     }
 
     //상세페이지 수정
-    @PutMapping("/auth/products/{productId}")
+    @PutMapping("/products/{productId}")
     public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart List<MultipartFile> multipartFiles, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
         return productService.updateProduct(productId,multipartFiles,requestDto,request);
     }
 
 
     //상세페이지 삭제
-    @DeleteMapping("/auth/products/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ResponseDto<?> deleteProduct(@PathVariable String productId,HttpServletRequest request){
         return productService.deleteProduct(productId,request);
     }
 
-
+    @PostMapping("/products/wishlists/{productId}")
+    public ResponseDto<?> putWishList(@PathVariable String productId)
+    {
+        return productService.putWishList(productId);
+    }
 
 
 

@@ -1,14 +1,10 @@
 package com.finalproject.everrent_be.service;
 
 
-import com.finalproject.everrent_be.dto.OrderResponseDto;
-import com.finalproject.everrent_be.dto.ProductResponseDto;
-import com.finalproject.everrent_be.dto.ResponseDto;
-import com.finalproject.everrent_be.model.Member;
-import com.finalproject.everrent_be.model.OrderList;
-import com.finalproject.everrent_be.model.Product;
-import com.finalproject.everrent_be.model.Status;
+import com.finalproject.everrent_be.dto.*;
+import com.finalproject.everrent_be.model.*;
 import com.finalproject.everrent_be.repository.OrderListRepository;
+import com.finalproject.everrent_be.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +19,7 @@ public class MypageService {
 
     private final MemberService memberService;
     private final OrderListRepository orderListRepository;
+    public final WishListRepository wishListRepository;
 
 
     public ResponseDto<?> getMypgLists()
@@ -115,6 +112,18 @@ public class MypageService {
         return ResponseDto.is_Success(orderResponseDtos);
     }
 
+    public ResponseDto<?> getMyWishs()
+    {
+        Member member=memberService.getMemberfromContext();
+        List<WishList> wishLists=member.getWishLists();
+        List<WishListResponseDto> wishListResponseDtos=new ArrayList<>();
+        for(WishList wishList:wishLists)
+        {
+            wishListResponseDtos.add(new WishListResponseDto(wishList));
+        }
+
+        return ResponseDto.is_Success(wishListResponseDtos);
+    }
 
 
     @Transactional
@@ -128,9 +137,12 @@ public class MypageService {
         return ResponseDto.is_Success(orderResponseDto);
     }
 
-
-
-
+    public ResponseDto<?> getMyInfo()
+    {
+        Member member=memberService.getMemberfromContext();
+        MypageResponseDto mypageResponseDto=new MypageResponseDto(member);
+        return ResponseDto.is_Success(mypageResponseDto);
+    }
 
 
 }
