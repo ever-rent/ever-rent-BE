@@ -39,7 +39,7 @@ public class OrderService {
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
 
-        if(member.getMemberName()==product.getMember().getMemberName())
+        if(member.getMemberName().equals(product.getMember().getMemberName()))
         {
             return ResponseDto.is_Fail(ErrorCode.INVALID_CREATE);
         }
