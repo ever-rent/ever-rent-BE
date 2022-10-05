@@ -46,6 +46,11 @@ public class ProductService {
 
         int startIdx=(Integer.valueOf(page)-1)*12;
         int lastIdx=Integer.valueOf(page)*12;
+        try{
+            Product product=productList.get(lastIdx);
+        }catch (Exception e){
+            lastIdx=productList.size();
+        }
         for(int i=startIdx;i<lastIdx;i++){
             responseDtos.add(new ProductResponseDto(productList.get(i)));
         }
