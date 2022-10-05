@@ -86,7 +86,7 @@ public class ProductService {
 
 
     @Transactional
-    public ResponseDto<?> createProduct(List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> createProduct(MultipartFile[] multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
 
 
         Member member= memberService.getMemberfromContext();
@@ -107,7 +107,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ResponseDto<?> updateProduct(String productId, List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> updateProduct(String productId, MultipartFile[] multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
         Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
