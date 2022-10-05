@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.gloabl.common;
+package com.finalproject.everrent_be.global.common;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

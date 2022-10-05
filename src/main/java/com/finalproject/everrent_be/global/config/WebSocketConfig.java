@@ -1,6 +1,6 @@
-package com.finalproject.everrent_be.gloabl.config;
+package com.finalproject.everrent_be.global.config;
 
-import com.finalproject.everrent_be.gloabl.websocket.ChatHandler;
+import com.finalproject.everrent_be.global.websocket.ChatHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;

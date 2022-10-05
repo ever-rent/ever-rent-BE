@@ -1,10 +1,10 @@
-package com.finalproject.everrent_be.gloabl.config;
+package com.finalproject.everrent_be.global.config;
 
 
 
 
-import com.finalproject.everrent_be.gloabl.jwt.JwtFilter;
-import com.finalproject.everrent_be.gloabl.jwt.TokenProvider;
+import com.finalproject.everrent_be.global.jwt.JwtFilter;
+import com.finalproject.everrent_be.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

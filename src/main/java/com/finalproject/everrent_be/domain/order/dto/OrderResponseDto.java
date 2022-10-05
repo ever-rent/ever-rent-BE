@@ -2,7 +2,7 @@ package com.finalproject.everrent_be.domain.order.dto;
 
 
 import com.finalproject.everrent_be.domain.order.model.OrderList;
-import com.finalproject.everrent_be.gloabl.common.Status;
+import com.finalproject.everrent_be.global.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

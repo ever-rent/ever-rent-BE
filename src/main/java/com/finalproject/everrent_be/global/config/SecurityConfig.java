@@ -1,8 +1,8 @@
-package com.finalproject.everrent_be.gloabl.config;
+package com.finalproject.everrent_be.global.config;
 
-import com.finalproject.everrent_be.gloabl.jwt.JwtAccessDeniedHandler;
-import com.finalproject.everrent_be.gloabl.jwt.JwtAuthenticationEntryPoint;
-import com.finalproject.everrent_be.gloabl.jwt.TokenProvider;
+import com.finalproject.everrent_be.global.jwt.JwtAccessDeniedHandler;
+import com.finalproject.everrent_be.global.jwt.JwtAuthenticationEntryPoint;
+import com.finalproject.everrent_be.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,7 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/products/**",
             "/products",
             "/categories/**",
-            "/mailConfirms"
+            "/mailConfirms",
+            "/searchs"
     };
     @Override
     protected void configure(HttpSecurity http) throws Exception {

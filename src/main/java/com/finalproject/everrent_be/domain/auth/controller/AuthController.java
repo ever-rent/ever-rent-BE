@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.domain.member.controller;
+package com.finalproject.everrent_be.domain.auth.controller;
 
 
 
@@ -10,7 +10,7 @@ import com.finalproject.everrent_be.domain.member.dto.MemberCheckRequestDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenRequestDto;
 import com.finalproject.everrent_be.domain.auth.emailverified.service.RegisterMail;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
+import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.domain.member.dto.MemberRequestDto;
 import com.finalproject.everrent_be.domain.oauth.model.OauthResponseModel;
 import com.finalproject.everrent_be.domain.oauth.service.GoogleService;

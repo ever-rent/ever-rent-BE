@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.gloabl.jwt;
+package com.finalproject.everrent_be.global.jwt;
 
 
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -8,7 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
+
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 

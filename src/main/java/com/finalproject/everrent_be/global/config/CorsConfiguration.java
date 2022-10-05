@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.gloabl.config;
+package com.finalproject.everrent_be.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
