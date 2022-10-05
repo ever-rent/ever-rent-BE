@@ -57,11 +57,11 @@ public class Product extends Timestamped {
 
 
 
-    public Product(ProductRequestDto productRequestDto,Member member, String bucket,LocalDate rentStart,LocalDate rentEnd){
+    public Product(ProductRequestDto productRequestDto,Member member, StringBuffer sb,LocalDate rentStart,LocalDate rentEnd){
         this.productName=productRequestDto.getProductName();
         this.price=productRequestDto.getPrice();
         this.content=productRequestDto.getContent();
-        this.imgUrl=bucket;
+        this.imgUrl=sb.toString();
         this.cateId=productRequestDto.getCateId();
         this.rentStart=rentStart;
         this.rentEnd=rentEnd;
@@ -69,11 +69,11 @@ public class Product extends Timestamped {
         this.status=Status.WAITING;
         this.member=member;
     }
-    public void update(ProductRequestDto productRequestDto,Member member, String bucket,LocalDate rentStart,LocalDate rentEnd){
+    public void update(ProductRequestDto productRequestDto,Member member, StringBuffer sb,LocalDate rentStart,LocalDate rentEnd){
         this.productName=productRequestDto.getProductName();
         this.price=productRequestDto.getPrice();
         this.content=productRequestDto.getContent();
-        this.imgUrl=bucket;
+        this.imgUrl=sb.toString();
         this.cateId=productRequestDto.getCateId();
         this.rentStart=rentStart;
         this.rentEnd=rentEnd;
