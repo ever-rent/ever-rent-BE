@@ -3,7 +3,7 @@ package com.finalproject.everrent_be.domain.member.service;
 
 
 import com.finalproject.everrent_be.domain.member.dto.MemberResponseDto;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
+import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.domain.member.model.Member;
 
 import com.finalproject.everrent_be.domain.member.repository.MemberRepository;

@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.gloabl.util;
+package com.finalproject.everrent_be.global.util;
 
 
 import com.finalproject.everrent_be.domain.member.model.Authority;

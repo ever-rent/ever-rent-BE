@@ -1,7 +1,7 @@
 package com.finalproject.everrent_be.domain.product.dto;
 
 import com.finalproject.everrent_be.domain.product.model.Product;
-import com.finalproject.everrent_be.gloabl.common.Status;
+import com.finalproject.everrent_be.global.common.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

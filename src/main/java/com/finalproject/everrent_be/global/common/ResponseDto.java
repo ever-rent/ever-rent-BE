@@ -1,6 +1,6 @@
-package com.finalproject.everrent_be.gloabl.common;
+package com.finalproject.everrent_be.global.common;
 
-import com.finalproject.everrent_be.gloabl.error.ErrorCode;
+import com.finalproject.everrent_be.global.error.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

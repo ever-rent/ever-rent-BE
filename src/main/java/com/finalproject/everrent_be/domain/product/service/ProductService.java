@@ -1,11 +1,11 @@
 package com.finalproject.everrent_be.domain.product.service;
 
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
-import com.finalproject.everrent_be.gloabl.jwt.TokenProvider;
+import com.finalproject.everrent_be.global.common.ResponseDto;
+import com.finalproject.everrent_be.global.jwt.TokenProvider;
 import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.member.service.MemberService;
 import com.finalproject.everrent_be.domain.product.model.Product;
-import com.finalproject.everrent_be.gloabl.common.Status;
+import com.finalproject.everrent_be.global.common.Status;
 import com.finalproject.everrent_be.domain.wishlist.model.WishList;
 import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
 import com.finalproject.everrent_be.domain.product.dto.ProductResponseDto;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.finalproject.everrent_be.gloabl.error.ErrorCode.*;
+import static com.finalproject.everrent_be.global.error.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +46,11 @@ public class ProductService {
 
         int startIdx=(Integer.valueOf(page)-1)*12;
         int lastIdx=Integer.valueOf(page)*12;
+        try{
+            Product product=productList.get(lastIdx);
+        }catch (Exception e){
+            lastIdx=productList.size();
+        }
         for(int i=startIdx;i<lastIdx;i++){
             responseDtos.add(new ProductResponseDto(productList.get(i)));
         }
@@ -85,7 +90,6 @@ public class ProductService {
 
 
         Member member= memberService.getMemberfromContext();
-
         if(member==null)
         {
             return ResponseDto.is_Fail(NULL_TOKEN);

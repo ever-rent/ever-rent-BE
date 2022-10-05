@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.gloabl.util;
+package com.finalproject.everrent_be.global.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

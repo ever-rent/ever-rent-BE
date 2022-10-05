@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.gloabl.jwt;
+package com.finalproject.everrent_be.global.jwt;
 
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import io.jsonwebtoken.*;

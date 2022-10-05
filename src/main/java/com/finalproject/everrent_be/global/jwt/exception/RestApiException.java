@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.gloabl.jwt.exception;
+package com.finalproject.everrent_be.global.jwt.exception;
 
 
 import lombok.Getter;

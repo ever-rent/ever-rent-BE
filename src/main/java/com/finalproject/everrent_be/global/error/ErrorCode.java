@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.gloabl.error;
+package com.finalproject.everrent_be.global.error;
 
 
 import lombok.AllArgsConstructor;
