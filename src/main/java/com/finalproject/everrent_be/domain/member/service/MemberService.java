@@ -1,12 +1,12 @@
-package com.finalproject.everrent_be.domain.imageupload.member.service;
+package com.finalproject.everrent_be.domain.member.service;
 
 
 
-import com.finalproject.everrent_be.domain.imageupload.member.dto.MemberResponseDto;
+import com.finalproject.everrent_be.domain.member.dto.MemberResponseDto;
 import com.finalproject.everrent_be.gloabl.common.ResponseDto;
-import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
+import com.finalproject.everrent_be.domain.member.model.Member;
 
-import com.finalproject.everrent_be.domain.imageupload.member.repository.MemberRepository;
+import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

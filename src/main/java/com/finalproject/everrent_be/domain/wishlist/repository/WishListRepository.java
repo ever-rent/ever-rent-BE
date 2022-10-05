@@ -1,6 +1,6 @@
 package com.finalproject.everrent_be.domain.wishlist.repository;
 
-import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
+import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.wishlist.model.WishList;
 import org.springframework.data.jpa.repository.JpaRepository;
 

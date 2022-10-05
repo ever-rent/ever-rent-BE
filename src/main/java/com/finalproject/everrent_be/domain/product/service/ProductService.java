@@ -2,8 +2,8 @@ package com.finalproject.everrent_be.domain.product.service;
 
 import com.finalproject.everrent_be.gloabl.common.ResponseDto;
 import com.finalproject.everrent_be.gloabl.jwt.TokenProvider;
-import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
-import com.finalproject.everrent_be.domain.imageupload.member.service.MemberService;
+import com.finalproject.everrent_be.domain.member.model.Member;
+import com.finalproject.everrent_be.domain.member.service.MemberService;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.gloabl.common.Status;
 import com.finalproject.everrent_be.domain.wishlist.model.WishList;

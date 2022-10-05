@@ -1,6 +1,6 @@
 package com.finalproject.everrent_be.domain.wishlist.model;
 
-import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
+import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

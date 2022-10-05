@@ -1,8 +1,8 @@
 package com.finalproject.everrent_be.gloabl.util;
 
 
-import com.finalproject.everrent_be.domain.imageupload.member.model.Authority;
-import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
+import com.finalproject.everrent_be.domain.member.model.Authority;
+import com.finalproject.everrent_be.domain.member.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

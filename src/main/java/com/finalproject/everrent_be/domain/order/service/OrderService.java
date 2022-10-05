@@ -7,8 +7,8 @@ import com.finalproject.everrent_be.domain.order.repository.OrderListRepository;
 import com.finalproject.everrent_be.gloabl.common.ResponseDto;
 import com.finalproject.everrent_be.gloabl.error.ErrorCode;
 
-import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
-import com.finalproject.everrent_be.domain.imageupload.member.service.MemberService;
+import com.finalproject.everrent_be.domain.member.model.Member;
+import com.finalproject.everrent_be.domain.member.service.MemberService;
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.gloabl.common.Status;

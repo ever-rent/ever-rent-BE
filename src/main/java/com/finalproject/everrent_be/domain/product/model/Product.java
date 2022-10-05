@@ -2,7 +2,7 @@ package com.finalproject.everrent_be.domain.product.model;
 
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
-import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
+import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.gloabl.common.Status;
 import com.finalproject.everrent_be.gloabl.common.Timestamped;
 import lombok.AllArgsConstructor;
