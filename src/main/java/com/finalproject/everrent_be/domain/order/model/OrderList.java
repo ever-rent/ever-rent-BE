@@ -1,7 +1,7 @@
 package com.finalproject.everrent_be.domain.order.model;
 
 
-import com.finalproject.everrent_be.domain.member.model.Member;
+import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.gloabl.common.Status;
 import com.finalproject.everrent_be.gloabl.common.Timestamped;

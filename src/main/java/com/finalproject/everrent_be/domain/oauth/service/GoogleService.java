@@ -2,7 +2,7 @@ package com.finalproject.everrent_be.domain.oauth.service;
 
 
 
-import com.finalproject.everrent_be.domain.member.dto.MemberRequestDto;
+import com.finalproject.everrent_be.domain.imageupload.member.dto.MemberRequestDto;
 import com.finalproject.everrent_be.domain.oauth.dto.GoogleUser;
 import com.finalproject.everrent_be.domain.oauth.dto.OAuthResponseDto;
 import com.finalproject.everrent_be.domain.oauth.dto.OAuthToken;
@@ -10,9 +10,9 @@ import com.finalproject.everrent_be.domain.oauth.model.OauthResponseModel;
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import com.finalproject.everrent_be.gloabl.jwt.TokenProvider;
 
-import com.finalproject.everrent_be.domain.member.model.Member;
+import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
 import com.finalproject.everrent_be.domain.token.model.RefreshToken;
-import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
+import com.finalproject.everrent_be.domain.imageupload.member.repository.MemberRepository;
 import com.finalproject.everrent_be.domain.token.model.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

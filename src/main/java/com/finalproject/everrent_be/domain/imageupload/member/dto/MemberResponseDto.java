@@ -1,6 +1,6 @@
-package com.finalproject.everrent_be.domain.member.dto;
+package com.finalproject.everrent_be.domain.imageupload.member.dto;
 
-import com.finalproject.everrent_be.domain.member.model.Member;
+import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

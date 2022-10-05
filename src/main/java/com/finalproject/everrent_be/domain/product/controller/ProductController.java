@@ -37,14 +37,14 @@ public class ProductController {
 
     //상세페이지 작성
     @PostMapping("/products")
-    public ResponseDto<?> createProduct(@RequestPart List<MultipartFile> multipartFiles, @RequestPart ProductRequestDto requestDto,
+    public ResponseDto<?> createProduct(@RequestPart MultipartFile[] multipartFiles, @RequestPart ProductRequestDto requestDto,
                                         HttpServletRequest request) {
         return productService.createProduct(multipartFiles, requestDto, request);
     }
 
     //상세페이지 수정
     @PutMapping("/products/{productId}")
-    public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart List<MultipartFile> multipartFiles, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart MultipartFile[] multipartFiles, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
         return productService.updateProduct(productId,multipartFiles,requestDto,request);
     }
 

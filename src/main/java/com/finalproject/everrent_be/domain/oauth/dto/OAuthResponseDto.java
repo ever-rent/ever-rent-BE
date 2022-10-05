@@ -1,7 +1,7 @@
 package com.finalproject.everrent_be.domain.oauth.dto;
 
 
-import com.finalproject.everrent_be.domain.member.model.Member;
+import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
 import lombok.Getter;
 import lombok.Setter;
 

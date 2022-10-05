@@ -2,8 +2,8 @@ package com.finalproject.everrent_be.domain.product.service;
 
 import com.finalproject.everrent_be.gloabl.common.ResponseDto;
 import com.finalproject.everrent_be.gloabl.jwt.TokenProvider;
-import com.finalproject.everrent_be.domain.member.model.Member;
-import com.finalproject.everrent_be.domain.member.service.MemberService;
+import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
+import com.finalproject.everrent_be.domain.imageupload.member.service.MemberService;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.gloabl.common.Status;
 import com.finalproject.everrent_be.domain.wishlist.model.WishList;
@@ -81,7 +81,7 @@ public class ProductService {
 
 
     @Transactional
-    public ResponseDto<?> createProduct(List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> createProduct(MultipartFile[] multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
 
 
         Member member= memberService.getMemberfromContext();
@@ -103,7 +103,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ResponseDto<?> updateProduct(String productId, List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> updateProduct(String productId, MultipartFile[] multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
         Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );

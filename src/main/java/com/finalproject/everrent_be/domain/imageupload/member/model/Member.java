@@ -1,4 +1,4 @@
-package com.finalproject.everrent_be.domain.member.model;
+package com.finalproject.everrent_be.domain.imageupload.member.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

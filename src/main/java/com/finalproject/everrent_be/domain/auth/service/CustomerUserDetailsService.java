@@ -3,8 +3,8 @@ package com.finalproject.everrent_be.domain.auth.service;
 
 
 
-import com.finalproject.everrent_be.domain.member.model.Member;
-import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
+import com.finalproject.everrent_be.domain.imageupload.member.model.Member;
+import com.finalproject.everrent_be.domain.imageupload.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
