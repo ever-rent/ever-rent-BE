@@ -1,11 +1,12 @@
 package com.finalproject.everrent_be.domain.product.service;
 
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
-import com.finalproject.everrent_be.gloabl.jwt.TokenProvider;
+import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
+import com.finalproject.everrent_be.global.common.ResponseDto;
+import com.finalproject.everrent_be.global.jwt.TokenProvider;
 import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.member.service.MemberService;
 import com.finalproject.everrent_be.domain.product.model.Product;
-import com.finalproject.everrent_be.gloabl.common.Status;
+import com.finalproject.everrent_be.global.common.Status;
 import com.finalproject.everrent_be.domain.wishlist.model.WishList;
 import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
 import com.finalproject.everrent_be.domain.product.dto.ProductResponseDto;
@@ -14,6 +15,7 @@ import com.finalproject.everrent_be.domain.wishlist.repository.WishListRepositor
 import com.finalproject.everrent_be.domain.imageupload.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.finalproject.everrent_be.gloabl.error.ErrorCode.*;
+import static com.finalproject.everrent_be.global.error.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +36,7 @@ public class ProductService {
 
     public final ProductRepository productRepository;
     public final MemberService memberService;
+    public final MemberRepository memberRepository;
     public final FileUploadService fileUploadService;
     public final TokenProvider tokenProvider;
 
@@ -41,11 +44,27 @@ public class ProductService {
 
     public ResponseDto<?> getAllProduct(String page) {
 
-        List<Product> productList=productRepository.findAll();
         List<ProductResponseDto> responseDtos =new ArrayList<>();
+        List<Product> productList;
+
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (userId.equals("anonymousUser")){
+            productList=productRepository.findAll();
+        }
+        else {
+            Optional<Member> optionalMember = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
+            Member member=optionalMember.get();
+            productList=productRepository.findAllByLocationOrLocation(member.getMainAddress(), member.getSubAddress());
+        }
 
         int startIdx=(Integer.valueOf(page)-1)*12;
         int lastIdx=Integer.valueOf(page)*12;
+        try{
+            Product product=productList.get(lastIdx);
+        }catch (Exception e){
+            lastIdx=productList.size();
+        }
         for(int i=startIdx;i<lastIdx;i++){
             responseDtos.add(new ProductResponseDto(productList.get(i)));
         }
@@ -79,13 +98,11 @@ public class ProductService {
     }
 
 
-
     @Transactional
     public ResponseDto<?> createProduct(List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
 
 
         Member member= memberService.getMemberfromContext();
-
         if(member==null)
         {
             return ResponseDto.is_Fail(NULL_TOKEN);
@@ -93,17 +110,17 @@ public class ProductService {
 
         StringBuffer sb=new StringBuffer();
         for(MultipartFile multipartFile:multipartFiles){
-            sb.append(fileUploadService.uploadImage(multipartFile)+' ');
+            String onestr=fileUploadService.uploadImage(multipartFile);
+            sb.append(onestr.substring(onestr.lastIndexOf("/")+1)+' ');
         }
-
-        Product product=new Product(requestDto,member,sb,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
+        Product product=new Product(requestDto,member,sb.toString(),StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
         productRepository.save(product);
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }
 
     @Transactional
-    public ResponseDto<?> updateProduct(String productId, List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> updateProduct(String productId, MultipartFile[] multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
         Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
@@ -118,9 +135,10 @@ public class ProductService {
 
         StringBuffer sb=new StringBuffer();
         for(MultipartFile multipartFile:multipartFiles){
-            sb.append(fileUploadService.uploadImage(multipartFile)+' ');
+            String onestr=fileUploadService.uploadImage(multipartFile);
+            sb.append(onestr.substring(onestr.lastIndexOf("/")+1)+' ');
         }
-        product.update(requestDto,member,sb,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
+        product.update(requestDto,member,sb.toString(),StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }

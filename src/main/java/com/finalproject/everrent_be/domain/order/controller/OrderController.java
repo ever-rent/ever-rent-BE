@@ -1,7 +1,7 @@
 package com.finalproject.everrent_be.domain.order.controller;
 
 import com.finalproject.everrent_be.domain.order.dto.OrderRequestDto;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
+import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.domain.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

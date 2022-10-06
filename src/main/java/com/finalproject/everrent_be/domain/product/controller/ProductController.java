@@ -2,7 +2,7 @@ package com.finalproject.everrent_be.domain.product.controller;
 
 import com.finalproject.everrent_be.domain.product.service.ProductService;
 import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
+import com.finalproject.everrent_be.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +44,7 @@ public class ProductController {
 
     //상세페이지 수정
     @PutMapping("/products/{productId}")
-    public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart List<MultipartFile> multipartFiles, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart MultipartFile[] multipartFiles, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
         return productService.updateProduct(productId,multipartFiles,requestDto,request);
     }
 

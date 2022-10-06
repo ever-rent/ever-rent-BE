@@ -8,7 +8,7 @@ import com.finalproject.everrent_be.domain.oauth.dto.OAuthResponseDto;
 import com.finalproject.everrent_be.domain.oauth.dto.OAuthToken;
 import com.finalproject.everrent_be.domain.oauth.model.OauthResponseModel;
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
-import com.finalproject.everrent_be.gloabl.jwt.TokenProvider;
+import com.finalproject.everrent_be.global.jwt.TokenProvider;
 
 import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.token.model.RefreshToken;

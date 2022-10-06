@@ -4,7 +4,7 @@ package com.finalproject.everrent_be.domain.product.service;
 import com.finalproject.everrent_be.domain.order.service.OrderService;
 import com.finalproject.everrent_be.domain.product.repository.ProductRepository;
 import com.finalproject.everrent_be.domain.product.model.Product;
-import com.finalproject.everrent_be.gloabl.common.Status;
+import com.finalproject.everrent_be.global.common.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

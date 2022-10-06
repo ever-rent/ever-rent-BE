@@ -3,8 +3,8 @@ package com.finalproject.everrent_be.domain.product.model;
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
 import com.finalproject.everrent_be.domain.member.model.Member;
-import com.finalproject.everrent_be.gloabl.common.Status;
-import com.finalproject.everrent_be.gloabl.common.Timestamped;
+import com.finalproject.everrent_be.global.common.Status;
+import com.finalproject.everrent_be.global.common.Timestamped;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -60,11 +60,11 @@ public class Product extends Timestamped {
 
 
 
-    public Product(ProductRequestDto productRequestDto,Member member, StringBuffer sb,LocalDate rentStart,LocalDate rentEnd){
+    public Product(ProductRequestDto productRequestDto,Member member,String imageUrl,LocalDate rentStart,LocalDate rentEnd){
         this.productName=productRequestDto.getProductName();
         this.price=productRequestDto.getPrice();
         this.content=productRequestDto.getContent();
-        this.imgUrl=sb.toString();
+        this.imgUrl=imageUrl;
         this.cateId=productRequestDto.getCateId();
         this.rentStart=rentStart;
         this.rentEnd=rentEnd;
@@ -72,11 +72,11 @@ public class Product extends Timestamped {
         this.status=Status.WAITING;
         this.member=member;
     }
-    public void update(ProductRequestDto productRequestDto,Member member, StringBuffer sb,LocalDate rentStart,LocalDate rentEnd){
+    public void update(ProductRequestDto productRequestDto,Member member, String imgUrl,LocalDate rentStart,LocalDate rentEnd){
         this.productName=productRequestDto.getProductName();
         this.price=productRequestDto.getPrice();
         this.content=productRequestDto.getContent();
-        this.imgUrl=sb.toString();
+        this.imgUrl=imgUrl;
         this.cateId=productRequestDto.getCateId();
         this.rentStart=rentStart;
         this.rentEnd=rentEnd;

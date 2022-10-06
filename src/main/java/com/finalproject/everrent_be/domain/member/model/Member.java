@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.domain.wishlist.model.WishList;
-import com.finalproject.everrent_be.gloabl.common.Timestamped;
+import com.finalproject.everrent_be.global.common.Timestamped;
 import com.finalproject.everrent_be.domain.oauth.dto.GoogleUser;
 import lombok.*;
 
@@ -40,16 +40,21 @@ public class Member extends Timestamped {
     @JsonIgnore
     @Column(nullable = false)
     private String password;
+
     @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
+
     @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderList> orderLists;
+
     @JsonIgnore
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WishList> wishLists;
 
+    @Column
+    private String imgUrl;
 
     @Column
     private String mainAddress;

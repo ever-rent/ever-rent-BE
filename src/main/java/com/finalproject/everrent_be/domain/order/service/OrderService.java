@@ -4,14 +4,14 @@ import com.finalproject.everrent_be.domain.order.dto.OrderRequestDto;
 import com.finalproject.everrent_be.domain.order.dto.OrderResponseDto;
 
 import com.finalproject.everrent_be.domain.order.repository.OrderListRepository;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
-import com.finalproject.everrent_be.gloabl.error.ErrorCode;
+import com.finalproject.everrent_be.global.common.ResponseDto;
+import com.finalproject.everrent_be.global.error.ErrorCode;
 
 import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.member.service.MemberService;
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.model.Product;
-import com.finalproject.everrent_be.gloabl.common.Status;
+import com.finalproject.everrent_be.global.common.Status;
 import com.finalproject.everrent_be.domain.product.service.ProductService;
 import com.finalproject.everrent_be.domain.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static com.finalproject.everrent_be.gloabl.error.ErrorCode.*;
+import static com.finalproject.everrent_be.global.error.ErrorCode.*;
 
 @RequiredArgsConstructor
 @Service

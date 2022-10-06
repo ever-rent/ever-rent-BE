@@ -3,7 +3,7 @@ package com.finalproject.everrent_be.domain.member.service;
 
 
 import com.finalproject.everrent_be.domain.member.dto.MemberResponseDto;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
+import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.domain.member.model.Member;
 
 import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
@@ -62,7 +62,9 @@ public class MemberService {
     @Transactional
     public Member getMemberfromContext() {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(userId);
         Optional<Member> member = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
+        System.out.println(member.get());
         return member.get();
     }
 

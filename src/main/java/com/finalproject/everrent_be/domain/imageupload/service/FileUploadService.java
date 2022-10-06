@@ -31,12 +31,13 @@ public class FileUploadService {
 
 
     private String createFileName(String originalFileName){
-        return UUID.randomUUID().toString().concat((getFileExtension(originalFileName)));
+        return UUID.randomUUID().toString().substring(25).concat((getFileExtension(originalFileName)));
     }
     private String getFileExtension(String fileName)
     {
         try {
-            return fileName.substring(fileName.lastIndexOf("."));
+            String str=fileName.substring(fileName.lastIndexOf(".")); //파일.png -> 파일
+            return str;
         }catch (StringIndexOutOfBoundsException e){
             throw new IllegalArgumentException(String.format("잘못된 형식의 파일 (%s) 입니다."));
         }
