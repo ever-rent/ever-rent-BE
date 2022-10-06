@@ -1,5 +1,6 @@
 package com.finalproject.everrent_be.domain.product.service;
 
+import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
 import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.global.jwt.TokenProvider;
 import com.finalproject.everrent_be.domain.member.model.Member;
@@ -14,6 +15,7 @@ import com.finalproject.everrent_be.domain.wishlist.repository.WishListRepositor
 import com.finalproject.everrent_be.domain.imageupload.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,21 +36,25 @@ public class ProductService {
 
     public final ProductRepository productRepository;
     public final MemberService memberService;
+    public final MemberRepository memberRepository;
     public final FileUploadService fileUploadService;
     public final TokenProvider tokenProvider;
 
     public final WishListRepository wishListRepository;
 
-    public ResponseDto<?> getAllProduct(String page,HttpServletRequest request) {
+    public ResponseDto<?> getAllProduct(String page) {
+
         List<ProductResponseDto> responseDtos =new ArrayList<>();
-        String token = request.getHeader("Authorization").substring((7));
         List<Product> productList;
 
-        if (token == null || !tokenProvider.validateToken(token)){
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (userId.equals("anonymousUser")){
             productList=productRepository.findAll();
         }
         else {
-            Member member=memberService.getMemberfromContext();
+            Optional<Member> optionalMember = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
+            Member member=optionalMember.get();
             productList=productRepository.findAllByLocationOrLocation(member.getMainAddress(), member.getSubAddress());
         }
 

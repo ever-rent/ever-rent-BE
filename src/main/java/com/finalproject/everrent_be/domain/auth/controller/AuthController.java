@@ -36,7 +36,7 @@ public class AuthController {
 
     // 회원가입
     @PostMapping("/signups")
-    public ResponseDto<?> signup(@RequestPart MultipartFile multipartFile, @RequestBody MemberRequestDto memberRequestDto) {
+    public ResponseDto<?> signup(@RequestPart MultipartFile multipartFile, @RequestPart MemberRequestDto memberRequestDto) {
         return authService.signup(multipartFile,memberRequestDto);
     }
 
