@@ -31,7 +31,7 @@ public class FileUploadService {
 
 
     private String createFileName(String originalFileName){
-        return UUID.randomUUID().toString().concat((getFileExtension(originalFileName)));
+        return UUID.randomUUID().toString().substring(25).concat((getFileExtension(originalFileName)));
     }
     private String getFileExtension(String fileName)
     {

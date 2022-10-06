@@ -17,8 +17,8 @@ public class ProductController {
 
     //메인페이지
     @GetMapping("/products")
-    public ResponseDto<?> getAllProduct(@RequestParam String page){
-        return productService.getAllProduct(page);
+    public ResponseDto<?> getAllProduct(@RequestParam String page,HttpServletRequest request){
+        return productService.getAllProduct(page,request);
     }
 
 

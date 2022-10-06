@@ -10,7 +10,7 @@ import com.finalproject.everrent_be.domain.member.dto.MemberCheckRequestDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenRequestDto;
 import com.finalproject.everrent_be.domain.auth.emailverified.service.RegisterMail;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
+import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.domain.member.dto.MemberRequestDto;
 import com.finalproject.everrent_be.domain.oauth.model.OauthResponseModel;
 import com.finalproject.everrent_be.domain.oauth.service.GoogleService;
@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,8 +36,8 @@ public class AuthController {
 
     // 회원가입
     @PostMapping("/signups")
-    public ResponseDto<?> signup(@RequestBody MemberRequestDto memberRequestDto) {
-        return authService.signup(memberRequestDto);
+    public ResponseDto<?> signup(@RequestPart MultipartFile multipartFile, @RequestBody MemberRequestDto memberRequestDto) {
+        return authService.signup(multipartFile,memberRequestDto);
     }
 
     //아이디 중복검사

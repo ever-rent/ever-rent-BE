@@ -4,6 +4,8 @@ package com.finalproject.everrent_be.domain.auth.service;
 
 import com.finalproject.everrent_be.domain.auth.dto.EmailCheckRequestDto;
 import com.finalproject.everrent_be.domain.auth.dto.LoginRequestDto;
+import com.finalproject.everrent_be.domain.imageupload.service.AWSS3UploadService;
+import com.finalproject.everrent_be.domain.imageupload.service.FileUploadService;
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenRequestDto;
 import com.finalproject.everrent_be.global.common.ResponseDto;
@@ -23,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.regex.Pattern;
 
@@ -33,6 +36,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
+    private final FileUploadService fileUploadService;
     private final RefreshTokenRepository refreshTokenRepository;
 
 
@@ -56,7 +60,7 @@ public class AuthService {
     }
 
     @Transactional
-    public ResponseDto signup(MemberRequestDto memberRequestDto) {
+    public ResponseDto signup(MultipartFile multipartFile,MemberRequestDto memberRequestDto) {
 
 
         if(memberRepository.existsByMemberName(memberRequestDto.getMemberName()))
@@ -72,7 +76,8 @@ public class AuthService {
 
             throw new IllegalArgumentException("닉네임 혹은 비밀번호 조건을 확인해주세요.");
         }
-        Member member = memberRequestDto.toMember(passwordEncoder);
+        String imgUrl=fileUploadService.uploadImage(multipartFile);
+        Member member = memberRequestDto.toMember(imgUrl,passwordEncoder);
         memberRepository.save(member);
 
         MemberResponseDto memberResponseDto=new MemberResponseDto(member);
