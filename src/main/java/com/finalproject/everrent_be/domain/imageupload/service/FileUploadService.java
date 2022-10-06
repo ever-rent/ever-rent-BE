@@ -31,7 +31,7 @@ public class FileUploadService {
 
 
     private String createFileName(String originalFileName){
-        return UUID.randomUUID().toString().substring(25).concat((getFileExtension(originalFileName))); //2e13cab45-ca57-467e-9868-338e4467994d.PNG
+        return UUID.randomUUID().toString().substring(25).concat((getFileExtension(originalFileName)));
     }
     private String getFileExtension(String fileName)
     {

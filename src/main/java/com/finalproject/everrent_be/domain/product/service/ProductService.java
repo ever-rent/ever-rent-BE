@@ -39,10 +39,18 @@ public class ProductService {
 
     public final WishListRepository wishListRepository;
 
-    public ResponseDto<?> getAllProduct(String page) {
-
-        List<Product> productList=productRepository.findAll();
+    public ResponseDto<?> getAllProduct(String page,HttpServletRequest request) {
         List<ProductResponseDto> responseDtos =new ArrayList<>();
+        String token = request.getHeader("Authorization").substring((7));
+        List<Product> productList;
+
+        if (token == null || !tokenProvider.validateToken(token)){
+            productList=productRepository.findAll();
+        }
+        else {
+            Member member=memberService.getMemberfromContext();
+            productList=productRepository.findAllByLocationOrLocation(member.getMainAddress(), member.getSubAddress());
+        }
 
         int startIdx=(Integer.valueOf(page)-1)*12;
         int lastIdx=Integer.valueOf(page)*12;
