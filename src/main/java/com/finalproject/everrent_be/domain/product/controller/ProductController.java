@@ -37,7 +37,7 @@ public class ProductController {
 
     //상세페이지 작성
     @PostMapping("/products")
-    public ResponseDto<?> createProduct(@RequestPart MultipartFile[] multipartFiles, @RequestPart ProductRequestDto requestDto,
+    public ResponseDto<?> createProduct(@RequestPart List<MultipartFile> multipartFiles, @RequestPart ProductRequestDto requestDto,
                                         HttpServletRequest request) {
         return productService.createProduct(multipartFiles, requestDto, request);
     }

@@ -84,9 +84,8 @@ public class ProductService {
     }
 
 
-
     @Transactional
-    public ResponseDto<?> createProduct(MultipartFile[] multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
+    public ResponseDto<?> createProduct(List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
 
 
         Member member= memberService.getMemberfromContext();
@@ -97,10 +96,10 @@ public class ProductService {
 
         StringBuffer sb=new StringBuffer();
         for(MultipartFile multipartFile:multipartFiles){
-            sb.append(fileUploadService.uploadImage(multipartFile)+' ');
+            String onestr=fileUploadService.uploadImage(multipartFile);
+            sb.append(onestr.substring(onestr.lastIndexOf("/")+1)+' ');
         }
-
-        Product product=new Product(requestDto,member,sb,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
+        Product product=new Product(requestDto,member,sb.toString(),StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
         productRepository.save(product);
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
@@ -122,9 +121,10 @@ public class ProductService {
 
         StringBuffer sb=new StringBuffer();
         for(MultipartFile multipartFile:multipartFiles){
-            sb.append(fileUploadService.uploadImage(multipartFile)+' ');
+            String onestr=fileUploadService.uploadImage(multipartFile);
+            sb.append(onestr.substring(onestr.lastIndexOf("/")+1)+' ');
         }
-        product.update(requestDto,member,sb,StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
+        product.update(requestDto,member,sb.toString(),StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }

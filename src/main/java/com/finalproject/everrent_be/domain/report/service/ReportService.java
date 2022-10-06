@@ -7,7 +7,7 @@ import com.finalproject.everrent_be.domain.product.repository.ProductRepository;
 import com.finalproject.everrent_be.domain.report.dto.ReportRequestDto;
 import com.finalproject.everrent_be.domain.report.model.Report;
 import com.finalproject.everrent_be.domain.report.repository.ReportRepository;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
+import com.finalproject.everrent_be.global.common.ResponseDto;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional

@@ -2,7 +2,7 @@ package com.finalproject.everrent_be.domain.report.controller;
 
 import com.finalproject.everrent_be.domain.report.dto.ReportRequestDto;
 import com.finalproject.everrent_be.domain.report.service.ReportService;
-import com.finalproject.everrent_be.gloabl.common.ResponseDto;
+import com.finalproject.everrent_be.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
