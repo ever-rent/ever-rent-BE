@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RpResponseDto {
     private String rpreason;
+    private Long rpPostuser;
     public RpResponseDto(RpPost rpPost){
+        this.rpPostuser=rpPost.getRpproduct().getMember().getId();
         this.rpreason=rpPost.getRpreason();
     }
     public RpResponseDto(RpUser rpUser){
