@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReportRequestDto {
-    private String rtreason;
-    private String rtemail;
+public class RpRequestDto {
+    private String rpreason;
 }
