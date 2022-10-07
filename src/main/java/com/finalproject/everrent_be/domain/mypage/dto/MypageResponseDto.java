@@ -17,7 +17,7 @@ public class MypageResponseDto {
     private String memberName;
     private String mainAddress;
     private String subAddress;
-
+    private String imgUrl;
     public MypageResponseDto(Member member)
     {
         this.id= member.getId();
@@ -25,6 +25,7 @@ public class MypageResponseDto {
         this.memberName=member.getMemberName();
         this.mainAddress=member.getMainAddress();
         this.subAddress=member.getSubAddress();
+        this.imgUrl=member.getImgUrl();
     }
 
 }

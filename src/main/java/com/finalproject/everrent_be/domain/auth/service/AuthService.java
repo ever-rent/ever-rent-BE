@@ -60,7 +60,7 @@ public class AuthService {
     }
 
     @Transactional
-    public ResponseDto signup(MultipartFile multipartFile,MemberRequestDto memberRequestDto) {
+    public ResponseDto signup(MemberRequestDto memberRequestDto) {
 
 
         if(memberRepository.existsByMemberName(memberRequestDto.getMemberName()))
@@ -76,8 +76,8 @@ public class AuthService {
 
             throw new IllegalArgumentException("닉네임 혹은 비밀번호 조건을 확인해주세요.");
         }
-        String imgUrl=fileUploadService.uploadImage(multipartFile);
-        Member member = memberRequestDto.toMember(imgUrl,passwordEncoder);
+
+        Member member = memberRequestDto.toMember(passwordEncoder);
         memberRepository.save(member);
 
         MemberResponseDto memberResponseDto=new MemberResponseDto(member);

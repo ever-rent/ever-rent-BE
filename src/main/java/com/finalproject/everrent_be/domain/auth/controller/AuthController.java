@@ -36,8 +36,8 @@ public class AuthController {
 
     // 회원가입
     @PostMapping("/signups")
-    public ResponseDto<?> signup(@RequestPart MultipartFile multipartFile, @RequestPart MemberRequestDto memberRequestDto) {
-        return authService.signup(multipartFile,memberRequestDto);
+    public ResponseDto<?> signup(@RequestBody MemberRequestDto memberRequestDto) {
+        return authService.signup(memberRequestDto);
     }
 
     //아이디 중복검사
