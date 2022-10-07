@@ -1,6 +1,7 @@
 package com.finalproject.everrent_be.domain.product.service;
 
 import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
+import com.finalproject.everrent_be.domain.wishlist.repository.WishListRepository;
 import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.global.jwt.TokenProvider;
 import com.finalproject.everrent_be.domain.member.model.Member;
@@ -35,6 +36,7 @@ public class ProductService {
     public final ProductRepository productRepository;
     public final MemberService memberService;
     public final MemberRepository memberRepository;
+    public final WishListRepository wishListRepository;
     public final FileUploadService fileUploadService;
     public final TokenProvider tokenProvider;
 
@@ -70,14 +72,21 @@ public class ProductService {
 
 
     public ResponseDto<?> getProduct(String productId){
-
         Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
-
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
-        return ResponseDto.is_Success(productResponseDto);
 
+        //현재 product에서 꺼낸 멤버id에 context홀더에서 꺼낸 멤버id가 있음
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (userId.equals("anonymousUser")){
+            return ResponseDto.is_Success(productResponseDto);
+        }
+        if(wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), product.getId())!=null){
+            productResponseDto.UpdateLike(true);
+        }
+        return ResponseDto.is_Success(productResponseDto);
     }
 
     public ResponseDto<?> getFromCategory(String cateId,String page){

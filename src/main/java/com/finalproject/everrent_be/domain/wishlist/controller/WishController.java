@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class WishController {
     private final WishService wishService;
-
     @PostMapping("/products/wishlists/{productId}")
     public ResponseDto<?> putWishList(@PathVariable String productId)
     {

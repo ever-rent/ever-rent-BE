@@ -21,7 +21,6 @@ public class ProductController {
         return productService.getAllProduct(page);
     }
 
-
     //상세페이지 조회
     @GetMapping("/products/{productId}")
     public ResponseDto<?> getProduct(@PathVariable String productId){
@@ -47,7 +46,6 @@ public class ProductController {
     public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart MultipartFile[] multipartFiles, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
         return productService.updateProduct(productId,multipartFiles,requestDto,request);
     }
-
 
     //상세페이지 삭제
     @DeleteMapping("/products/{productId}")
