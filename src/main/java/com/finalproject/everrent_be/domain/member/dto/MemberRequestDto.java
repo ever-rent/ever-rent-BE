@@ -28,12 +28,11 @@ public class MemberRequestDto {
 
 
 
-    public Member toMember(String imgUrl,PasswordEncoder passwordEncoder) {
+    public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .memberName(memberName)
                 .password(passwordEncoder.encode(password))
                 .email(email)
-                .imgUrl(imgUrl)
                 .mainAddress(mainAddress)
                 .subAddress(subAddress)
                 .authority(Authority.ROLE_USER)

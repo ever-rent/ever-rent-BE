@@ -3,6 +3,7 @@ package com.finalproject.everrent_be.domain.product.model;
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
 import com.finalproject.everrent_be.domain.member.model.Member;
+import com.finalproject.everrent_be.domain.wishlist.model.WishList;
 import com.finalproject.everrent_be.global.common.Status;
 import com.finalproject.everrent_be.global.common.Timestamped;
 import lombok.AllArgsConstructor;
@@ -58,6 +59,8 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private Status status;
 
+    @Column(nullable = false)
+    private int wishNum;
 
 
     public Product(ProductRequestDto productRequestDto,Member member,String imageUrl,LocalDate rentStart,LocalDate rentEnd){
@@ -71,6 +74,7 @@ public class Product extends Timestamped {
         this.location=productRequestDto.getLocation();
         this.status=Status.WAITING;
         this.member=member;
+        this.wishNum=0;
     }
     public void update(ProductRequestDto productRequestDto,Member member, String imgUrl,LocalDate rentStart,LocalDate rentEnd){
         this.productName=productRequestDto.getProductName();
@@ -87,6 +91,10 @@ public class Product extends Timestamped {
     public void updateStatus(Status status)
     {
         this.status=status;
+    }
+
+    public void updateWish(int num){
+        this.wishNum+=num;
     }
 
 

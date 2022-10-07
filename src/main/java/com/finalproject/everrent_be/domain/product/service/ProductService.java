@@ -7,11 +7,9 @@ import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.member.service.MemberService;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.global.common.Status;
-import com.finalproject.everrent_be.domain.wishlist.model.WishList;
 import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
 import com.finalproject.everrent_be.domain.product.dto.ProductResponseDto;
 import com.finalproject.everrent_be.domain.product.repository.ProductRepository;
-import com.finalproject.everrent_be.domain.wishlist.repository.WishListRepository;
 import com.finalproject.everrent_be.domain.imageupload.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -39,8 +37,6 @@ public class ProductService {
     public final MemberRepository memberRepository;
     public final FileUploadService fileUploadService;
     public final TokenProvider tokenProvider;
-
-    public final WishListRepository wishListRepository;
 
     public ResponseDto<?> getAllProduct(String page) {
 
@@ -156,33 +152,6 @@ public class ProductService {
         productRepository.delete(product);
 
         return ResponseDto.is_Success("삭제 완료");
-    }
-    @Transactional
-    public ResponseDto<?> putWishList(String productId)
-    {
-        Member member=memberService.getMemberfromContext();
-        WishList wishList=wishListRepository.findByMemberIdAndProductId(member.getId(), Long.valueOf(productId));
-        Optional<Product> optionalProduct=productRepository.findById(Long.valueOf(productId));
-        Product product=optionalProduct.get();
-        if(product.getMember().equals(member))
-        {
-            return ResponseDto.is_Fail(INVALID_WISH);
-        }
-        if(wishList!=null)
-        {
-            wishListRepository.delete(wishList);
-            return ResponseDto.is_Success("찜 등록이 취소되었습니다.");
-        }
-        else
-        {
-            wishListRepository.save(WishList.builder()
-                    .member(member)
-                    .product(product)
-                    .build());
-            return ResponseDto.is_Success("찜 등록이 완료되었습니다.");
-        }
-
-
     }
 
     /**
