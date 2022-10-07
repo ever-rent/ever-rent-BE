@@ -55,15 +55,6 @@ public class ProductController {
         return productService.deleteProduct(productId,request);
     }
 
-    @PostMapping("/products/wishlists/{productId}")
-    public ResponseDto<?> putWishList(@PathVariable String productId)
-    {
-        return productService.putWishList(productId);
-    }
-
-
-
-
 
 
 }
