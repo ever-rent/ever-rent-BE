@@ -29,11 +29,12 @@ public class ProductResponseDto {
     private String  rentEnd;
     private String location;
     private Status status;
+    private int wishNum;
 
-    private String location;
     private LocalDateTime writeAt;
 
     private String[] imgUrlArray;
+
 
 
 
@@ -52,6 +53,7 @@ public class ProductResponseDto {
         this.rentEnd=LocalDateToStr(product.getRentEnd());
         this.location=product.getLocation();
         this.status=product.getStatus();
+        this.wishNum=product.getWishNum();
     }
 
     public String[] StringUrlToArray(String s){
