@@ -1,5 +1,6 @@
 package com.finalproject.everrent_be.domain.product.dto;
 
+import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.global.common.Status;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,8 @@ public class ProductResponseDto {
 
     private String[] imgUrlArray;
 
+    private boolean isLike=false;
+
 
 
 
@@ -66,7 +69,9 @@ public class ProductResponseDto {
     public String LocalDateToStr(LocalDate localDate){
         return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
-
+    public void UpdateLike(Boolean isLike){
+        this.isLike=isLike;
+    }
 
 
 }
