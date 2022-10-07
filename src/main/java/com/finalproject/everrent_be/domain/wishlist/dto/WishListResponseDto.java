@@ -20,7 +20,7 @@ public class WishListResponseDto {
     private String productName;
     private String price;
     private String[] imgUrlArray;
-
+    private String mapLocation;
     private LocalDateTime productWriteAt;
 
     public WishListResponseDto(WishList wishList)
@@ -30,6 +30,7 @@ public class WishListResponseDto {
         this.memberName=wishList.getMember().getMemberName();
         this.productName=wishList.getProduct().getProductName();
         this.price=wishList.getProduct().getPrice();
+        this.mapLocation=wishList.getProduct().getMapLocation();
         this.imgUrlArray=StringUrlToArray(wishList.getProduct().getImgUrl());
         this.productWriteAt=wishList.getProduct().getModifiedAt();
     }
