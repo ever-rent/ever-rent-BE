@@ -18,5 +18,5 @@ public class ProductRequestDto {
     private String rentStart;
     private String rentEnd;
     private String location;
-
+    private String mapLocation;
 }

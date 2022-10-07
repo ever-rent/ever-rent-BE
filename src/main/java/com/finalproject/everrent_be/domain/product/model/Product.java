@@ -55,6 +55,9 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private String location;
 
+    @Column(nullable = false)
+    private String mapLocation;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
@@ -72,6 +75,7 @@ public class Product extends Timestamped {
         this.rentStart=rentStart;
         this.rentEnd=rentEnd;
         this.location=productRequestDto.getLocation();
+        this.mapLocation=productRequestDto.getMapLocation();
         this.status=Status.WAITING;
         this.member=member;
         this.wishNum=0;
@@ -85,6 +89,7 @@ public class Product extends Timestamped {
         this.rentStart=rentStart;
         this.rentEnd=rentEnd;
         this.location=productRequestDto.getLocation();
+        this.mapLocation=productRequestDto.getMapLocation();
         this.status=Status.WAITING;
         this.member=member;
     }

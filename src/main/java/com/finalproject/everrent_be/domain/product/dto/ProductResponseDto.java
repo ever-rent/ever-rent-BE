@@ -28,6 +28,7 @@ public class ProductResponseDto {
     private String rentStart;
     private String  rentEnd;
     private String location;
+    private String mapLocation;
     private Status status;
     private int wishNum;
 
@@ -49,6 +50,7 @@ public class ProductResponseDto {
         this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
         this.location=product.getLocation();
+        this.mapLocation=product.getMapLocation();
         this.rentStart=LocalDateToStr(product.getRentStart());
         this.rentEnd=LocalDateToStr(product.getRentEnd());
         this.location=product.getLocation();
