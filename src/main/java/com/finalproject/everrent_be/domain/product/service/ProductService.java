@@ -171,7 +171,7 @@ public class ProductService {
         if(wishList!=null)
         {
             wishListRepository.delete(wishList);
-            return ResponseDto.is_Success("찜 등록이 취소되었습니다.");
+            return ResponseDto.is_Success(false);
         }
         else
         {
@@ -179,7 +179,7 @@ public class ProductService {
                     .member(member)
                     .product(product)
                     .build());
-            return ResponseDto.is_Success("찜 등록이 완료되었습니다.");
+            return ResponseDto.is_Success(true);
         }
 
 
