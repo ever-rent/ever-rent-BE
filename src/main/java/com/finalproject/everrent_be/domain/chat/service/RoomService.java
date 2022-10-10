@@ -76,7 +76,7 @@ public class RoomService {
 
     @Transactional
     public void updateLastReadChat(Long roomId, Long memberId, Long productId) {
-        RoomDetail detail = roomDetailsRepository.findByRoomInfo_IdAndMember_MemberIdAndItem_Id(roomId, memberId, productId)
+        RoomDetail detail = roomDetailsRepository.findByRoomInfo_IdAndMember_IdAndProduct_Id(roomId, memberId, productId)
                 .orElseThrow(() -> new IllegalArgumentException("채팅방에 속해있지 않은 회원입니다."));
 
         Chat chat = chatRepository.findFirstByRoomDetail_RoomInfo_IdOrderByCreatedAtDesc(roomId)
@@ -138,7 +138,7 @@ public class RoomService {
         Product product = productRepository.findById(inviteDto.getProductId())
                 .orElseThrow(()-> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
         log.info(product.toString());
-        RoomDetail roomDetail = roomDetailsRepository.findByRoomInfo_IdAndMember_MemberIdAndItem_Id(roomInfoId, inviteDto.getMemberId(),inviteDto.getProductId())
+        RoomDetail roomDetail = roomDetailsRepository.findByRoomInfo_IdAndMember_IdAndProduct_Id(roomInfoId, inviteDto.getMemberId(),inviteDto.getProductId())
                 .orElse(new RoomDetail(roomInfo, member, product));
 
         roomDetailsRepository.save(roomDetail);
