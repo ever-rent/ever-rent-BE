@@ -1,6 +1,7 @@
 package com.finalproject.everrent_be.domain.product.service;
 
 import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
+import com.finalproject.everrent_be.domain.product.dto.ProductMainResponseDto;
 import com.finalproject.everrent_be.domain.wishlist.repository.WishListRepository;
 import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.global.jwt.TokenProvider;
@@ -42,7 +43,7 @@ public class ProductService {
 
     public ResponseDto<?> getAllProduct(String page) {
 
-        List<ProductResponseDto> responseDtos =new ArrayList<>();
+        List<ProductMainResponseDto> responseDtos =new ArrayList<>();
         List<Product> productList;
 
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -64,7 +65,7 @@ public class ProductService {
             lastIdx=productList.size();
         }
         for(int i=startIdx;i<lastIdx;i++){
-            responseDtos.add(new ProductResponseDto(productList.get(i)));
+            responseDtos.add(new ProductMainResponseDto(productList.get(i)));
         }
 
         return ResponseDto.is_Success(responseDtos);
