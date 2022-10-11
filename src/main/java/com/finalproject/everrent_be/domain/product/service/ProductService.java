@@ -45,7 +45,6 @@ public class ProductService {
 
         List<ProductMainResponseDto> responseDtos =new ArrayList<>();
         List<Product> productList;
-
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         //본인지역 기준 조회
@@ -55,6 +54,7 @@ public class ProductService {
         else {
             Optional<Member> optionalMember = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
             Member member=optionalMember.get();
+            System.out.println(member.getId());
             productList=productRepository.findAllByLocationOrLocation(member.getMainAddress(), member.getSubAddress());
 
         }
@@ -66,10 +66,10 @@ public class ProductService {
         }catch (Exception e){
             lastIdx=productList.size();
         }
-        System.out.println("last"+lastIdx);
         for(int i=startIdx;i<lastIdx;i++) {
-            Product product = productList.get(i);
             boolean islike=false;
+            Product product = productList.get(i);
+
             if (userId.equals("anonymousUser")){
                 islike=false;
             }

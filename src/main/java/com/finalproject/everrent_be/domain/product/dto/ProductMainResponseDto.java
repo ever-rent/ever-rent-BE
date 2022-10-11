@@ -16,7 +16,7 @@ public class ProductMainResponseDto {
     private Long id;
     //private String memberName;
     private String productName;
-    private String price;
+    private int price;
     //private String content;
     private String cateId;
     //private String rentStart;
@@ -35,7 +35,7 @@ public class ProductMainResponseDto {
         this.id=product.getId();
         //this.memberName=product.getMember().getMemberName();
         this.productName=product.getProductName();
-        this.price=product.getPrice();
+        this.price=Integer.parseInt(product.getPrice());
         //this.content=product.getContent();
         //this.imgUrlArray=StringUrlToArray(product.getImgUrl());
         this.thumbimgUrl=GetThumnail(product.getImgUrl());

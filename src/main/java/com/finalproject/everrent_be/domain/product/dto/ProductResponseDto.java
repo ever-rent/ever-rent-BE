@@ -20,9 +20,10 @@ public class ProductResponseDto {
 
     private Long id;
 
+    private Long memberId;
     private String memberName;
     private String productName;
-    private String price;
+    private int price;
     private String content;
     private String imgUrl;
     private String cateId;
@@ -45,9 +46,10 @@ public class ProductResponseDto {
     public ProductResponseDto(Product product)
     {
         this.id=product.getId();
+        this.memberId=product.getMember().getId();
         this.memberName=product.getMember().getMemberName();
         this.productName=product.getProductName();
-        this.price=product.getPrice();
+        this.price=Integer.parseInt(product.getPrice());
         this.content=product.getContent();
         this.imgUrlArray=StringUrlToArray(product.getImgUrl());
         this.cateId=product.getCateId();
