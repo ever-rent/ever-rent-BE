@@ -18,7 +18,6 @@ public class ProductMainResponseDto {
     private String productName;
     private String price;
     //private String content;
-    private String imgUrl;
     private String cateId;
     //private String rentStart;
     //private String  rentEnd;
@@ -27,10 +26,11 @@ public class ProductMainResponseDto {
     private Status status;
     private int wishNum;
     private LocalDateTime writeAt;
-    private String[] imgUrlArray;
-    private boolean isLike=false;
+    //private String[] imgUrlArray;
+    private String thumbimgUrl;
+    private boolean islike;
 
-    public ProductMainResponseDto(Product product)
+    public ProductMainResponseDto(Product product,Boolean islike)
     {
         this.id=product.getId();
         //this.memberName=product.getMember().getMemberName();
@@ -38,6 +38,7 @@ public class ProductMainResponseDto {
         this.price=product.getPrice();
         //this.content=product.getContent();
         //this.imgUrlArray=StringUrlToArray(product.getImgUrl());
+        this.thumbimgUrl=GetThumnail(product.getImgUrl());
         this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
         this.location=product.getLocation();
@@ -47,7 +48,15 @@ public class ProductMainResponseDto {
         this.location=product.getLocation();
         this.status=product.getStatus();
         this.wishNum=product.getWishNum();
+        this.islike=islike;
     }
 
+    private String GetThumnail(String s){
+        String[] imgUrlArray=s.split(" ");
+        return imgUrlArray[0];
+    }
+    public void UpdateLike(Boolean isLike){
+        this.islike=isLike;
+    }
 
 }

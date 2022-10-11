@@ -48,6 +48,7 @@ public class ProductService {
 
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        //본인지역 기준 조회
         if (userId.equals("anonymousUser")){
             productList=productRepository.findAll();
         }
@@ -55,6 +56,7 @@ public class ProductService {
             Optional<Member> optionalMember = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
             Member member=optionalMember.get();
             productList=productRepository.findAllByLocationOrLocation(member.getMainAddress(), member.getSubAddress());
+
         }
 
         int startIdx=(Integer.valueOf(page)-1)*12;
@@ -64,15 +66,24 @@ public class ProductService {
         }catch (Exception e){
             lastIdx=productList.size();
         }
-        for(int i=startIdx;i<lastIdx;i++){
-            responseDtos.add(new ProductMainResponseDto(productList.get(i)));
+        System.out.println("last"+lastIdx);
+        for(int i=startIdx;i<lastIdx;i++) {
+            Product product = productList.get(i);
+            boolean islike=false;
+            if (userId.equals("anonymousUser")){
+                islike=false;
+            }
+            if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), product.getId()) != null) {
+                islike = true;
+            }
+            responseDtos.add(new ProductMainResponseDto(product, islike));
         }
 
         return ResponseDto.is_Success(responseDtos);
     }
 
 
-    public ResponseDto<?> getProduct(String productId){
+    public ResponseDto<?> getOneProduct(String productId){
         Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
@@ -89,6 +100,8 @@ public class ProductService {
         }
         return ResponseDto.is_Success(productResponseDto);
     }
+
+
 
     public ResponseDto<?> getFromCategory(String cateId,String page){
         List<Product> productList=productRepository.findAllByCateId(cateId);
