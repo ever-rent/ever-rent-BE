@@ -73,7 +73,7 @@ public class ProductService {
             if (userId.equals("anonymousUser")){
                 islike=false;
             }
-            if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), product.getId()) != null) {
+            else if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), product.getId()) != null) {
                 islike = true;
             }
             responseDtos.add(new ProductMainResponseDto(product, islike));
