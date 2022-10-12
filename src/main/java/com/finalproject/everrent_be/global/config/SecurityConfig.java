@@ -58,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/products",
             "/categories/**",
             "/mailConfirms",
-            "/searchs"
+            "/searchs",
+            "/wss"
     };
     @Override
     protected void configure(HttpSecurity http) throws Exception {
