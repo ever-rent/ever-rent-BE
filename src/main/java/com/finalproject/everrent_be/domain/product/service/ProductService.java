@@ -1,7 +1,6 @@
 package com.finalproject.everrent_be.domain.product.service;
 
 import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
-import com.finalproject.everrent_be.domain.product.dto.ProductMainResponseDto;
 import com.finalproject.everrent_be.domain.wishlist.repository.WishListRepository;
 import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.global.jwt.TokenProvider;
@@ -42,33 +41,19 @@ public class ProductService {
     public final TokenProvider tokenProvider;
 
     public ResponseDto<?> getAllProduct(String page) {
-        List<ProductMainResponseDto> responseDtos =new ArrayList<>();
-        List<ProductMainResponseDto> bestresponseDtos=new ArrayList<>();
+
+        List<ProductResponseDto> responseDtos =new ArrayList<>();
         List<Product> productList;
-        List<Product> bestList;
+
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        //본인지역 기준 조회
         if (userId.equals("anonymousUser")){
-            productList=productRepository.findAllByOrderByCreatedAtDesc();
-            bestList=productRepository.findFirst8ByOrderByWishNumDesc();
+            productList=productRepository.findAll();
         }
         else {
             Optional<Member> optionalMember = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
             Member member=optionalMember.get();
-            System.out.println(member.getId());
-            productList=productRepository.findAllByLocationOrLocationOrderByCreatedAt(member.getMainAddress(), member.getSubAddress());
-            bestList=productRepository.findFirst8ByLocationOrLocationOrderByWishNumDesc(member.getMainAddress(), member.getSubAddress());
-        }
-        for(Product best:bestList){
-            boolean islike=false;
-            if (userId.equals("anonymousUser")){
-                islike=false;
-            }
-            else if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), best.getId()) != null) {
-                islike = true;
-            }
-            bestresponseDtos.add(new ProductMainResponseDto(best,islike));
+            productList=productRepository.findAllByLocationOrLocation(member.getMainAddress(), member.getSubAddress());
         }
 
         int startIdx=(Integer.valueOf(page)-1)*12;
@@ -78,24 +63,15 @@ public class ProductService {
         }catch (Exception e){
             lastIdx=productList.size();
         }
-        for(int i=startIdx;i<lastIdx;i++) {
-            boolean islike=false;
-            Product product = productList.get(i);
-
-            if (userId.equals("anonymousUser")){
-                islike=false;
-            }
-            else if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), product.getId()) != null) {
-                islike = true;
-            }
-            responseDtos.add(new ProductMainResponseDto(product, islike));
+        for(int i=startIdx;i<lastIdx;i++){
+            responseDtos.add(new ProductResponseDto(productList.get(i)));
         }
 
-        return ResponseDto.is_Success(bestresponseDtos,responseDtos);
+        return ResponseDto.is_Success(responseDtos);
     }
 
 
-    public ResponseDto<?> getOneProduct(String productId){
+    public ResponseDto<?> getProduct(String productId){
         Product product = productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
@@ -112,8 +88,6 @@ public class ProductService {
         }
         return ResponseDto.is_Success(productResponseDto);
     }
-
-
 
     public ResponseDto<?> getFromCategory(String cateId,String page){
         List<Product> productList=productRepository.findAllByCateId(cateId);

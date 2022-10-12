@@ -23,8 +23,8 @@ public class ProductController {
 
     //상세페이지 조회
     @GetMapping("/products/{productId}")
-    public ResponseDto<?> getOneProduct(@PathVariable String productId){
-        return productService.getOneProduct(productId);
+    public ResponseDto<?> getProduct(@PathVariable String productId){
+        return productService.getProduct(productId);
     }
 
     //카테고리 별 분류

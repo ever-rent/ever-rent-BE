@@ -20,10 +20,9 @@ public class ProductResponseDto {
 
     private Long id;
 
-    private Long memberId;
     private String memberName;
     private String productName;
-    private int price;
+    private String price;
     private String content;
     private String imgUrl;
     private String cateId;
@@ -32,13 +31,13 @@ public class ProductResponseDto {
     private String location;
     private String mapLocation;
     private Status status;
-    //private int wishNum;
+    private int wishNum;
 
     private LocalDateTime writeAt;
 
     private String[] imgUrlArray;
 
-    private boolean islike;
+    private boolean isLike=false;
 
 
 
@@ -46,10 +45,9 @@ public class ProductResponseDto {
     public ProductResponseDto(Product product)
     {
         this.id=product.getId();
-        this.memberId=product.getMember().getId();
         this.memberName=product.getMember().getMemberName();
         this.productName=product.getProductName();
-        this.price=Integer.parseInt(product.getPrice());
+        this.price=product.getPrice();
         this.content=product.getContent();
         this.imgUrlArray=StringUrlToArray(product.getImgUrl());
         this.cateId=product.getCateId();
@@ -60,8 +58,7 @@ public class ProductResponseDto {
         this.rentEnd=LocalDateToStr(product.getRentEnd());
         this.location=product.getLocation();
         this.status=product.getStatus();
-        this.islike=false;
-        //this.wishNum=product.getWishNum();
+        this.wishNum=product.getWishNum();
     }
 
     public String[] StringUrlToArray(String s){
@@ -73,7 +70,7 @@ public class ProductResponseDto {
         return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
     public void UpdateLike(Boolean isLike){
-        this.islike=isLike;
+        this.isLike=isLike;
     }
 
 
