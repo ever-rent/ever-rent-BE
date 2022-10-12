@@ -42,21 +42,33 @@ public class ProductService {
     public final TokenProvider tokenProvider;
 
     public ResponseDto<?> getAllProduct(String page) {
-
         List<ProductMainResponseDto> responseDtos =new ArrayList<>();
+        List<ProductMainResponseDto> bestresponseDtos=new ArrayList<>();
         List<Product> productList;
+        List<Product> bestList;
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         //본인지역 기준 조회
         if (userId.equals("anonymousUser")){
-            productList=productRepository.findAll();
+            productList=productRepository.findAllByOrderByCreatedAtDesc();
+            bestList=productRepository.findFirst8ByOrderByWishNumDesc();
         }
         else {
             Optional<Member> optionalMember = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
             Member member=optionalMember.get();
             System.out.println(member.getId());
-            productList=productRepository.findAllByLocationOrLocation(member.getMainAddress(), member.getSubAddress());
-
+            productList=productRepository.findAllByLocationOrLocationOrderByCreatedAt(member.getMainAddress(), member.getSubAddress());
+            bestList=productRepository.findFirst8ByLocationOrLocationOrderByWishNumDesc(member.getMainAddress(), member.getSubAddress());
+        }
+        for(Product best:bestList){
+            boolean islike=false;
+            if (userId.equals("anonymousUser")){
+                islike=false;
+            }
+            else if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), best.getId()) != null) {
+                islike = true;
+            }
+            bestresponseDtos.add(new ProductMainResponseDto(best,islike));
         }
 
         int startIdx=(Integer.valueOf(page)-1)*12;
@@ -79,7 +91,7 @@ public class ProductService {
             responseDtos.add(new ProductMainResponseDto(product, islike));
         }
 
-        return ResponseDto.is_Success(responseDtos);
+        return ResponseDto.is_Success(bestresponseDtos,responseDtos);
     }
 
 
