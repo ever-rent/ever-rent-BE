@@ -61,14 +61,14 @@ public class ProductService {
             bestList=productRepository.findFirst8ByLocationOrLocationOrderByWishNumDesc(member.getMainAddress(), member.getSubAddress());
         }
         for(Product best:bestList){
-            boolean islike=false;
+            boolean heart=false;
             if (userId.equals("anonymousUser")){
-                islike=false;
+                heart=false;
             }
             else if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), best.getId()) != null) {
-                islike = true;
+                heart = true;
             }
-            bestresponseDtos.add(new ProductMainResponseDto(best,islike));
+            bestresponseDtos.add(new ProductMainResponseDto(best,heart));
         }
 
         int startIdx=(Integer.valueOf(page)-1)*12;
@@ -79,16 +79,16 @@ public class ProductService {
             lastIdx=productList.size();
         }
         for(int i=startIdx;i<lastIdx;i++) {
-            boolean islike=false;
+            boolean heart=false;
             Product product = productList.get(i);
 
             if (userId.equals("anonymousUser")){
-                islike=false;
+                heart=false;
             }
             else if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), product.getId()) != null) {
-                islike = true;
+                heart = true;
             }
-            responseDtos.add(new ProductMainResponseDto(product, islike));
+            responseDtos.add(new ProductMainResponseDto(product, heart));
         }
 
         return ResponseDto.is_Success(bestresponseDtos,responseDtos);
