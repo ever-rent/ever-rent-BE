@@ -1,52 +1,86 @@
 package com.finalproject.everrent_be.domain.chat.service;
 
-import com.finalproject.everrent_be.domain.chat.dto.ChatDto;
-import com.finalproject.everrent_be.domain.chat.model.Chat;
-import com.finalproject.everrent_be.domain.chat.model.RoomDetail;
-import com.finalproject.everrent_be.domain.chat.model.RoomInfo;
-import com.finalproject.everrent_be.domain.chat.repository.ChatRepository;
-import com.finalproject.everrent_be.domain.chat.repository.RoomDetailRepository;
-import com.finalproject.everrent_be.domain.chat.repository.RoomInfoRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import com.finalproject.everrent_be.domain.chat.dto.ChatMessageDto;
+import com.finalproject.everrent_be.domain.chat.model.ChatMessage;
+import com.finalproject.everrent_be.domain.chat.model.InvitedMembers;
+import com.finalproject.everrent_be.domain.chat.repository.*;
+import com.finalproject.everrent_be.domain.member.model.Member;
+import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Locale;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 public class ChatService {
-    private final RoomDetailRepository roomDetailsRepository;
-    private final RoomInfoRepository roomInfoRepository;
-    private final ChatRepository chatRepository;
+
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatMessageRepository chatMessageRepository;
+    private final MemberRepository memberRepository;
+    private final ChatMessageJpaRepository chatMessageJpaRepository;
+    private final InvitedMembersRepository invitedMembersRepository;
+    private final ChatRoomJpaRepository chatRoomJpaRepository;
+    private final SimpMessageSendingOperations sendingOperations;
 
     @Transactional
-    public ChatDto saveChat(Long roomId, ChatDto message) {
-        RoomDetail roomDetail = roomDetailsRepository.findByRoomInfo_IdAndMember_Id(roomId, message.getMemberId())
-                .orElseThrow(() -> new IllegalArgumentException("채팅방에 관한 정보가 없습니다."));
-        roomDetail.getRoomInfo().updateRecentChat(message.getContent());
-        RoomInfo roomInfo = roomInfoRepository.findById(roomId).orElseThrow(()-> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
-        Chat chat = Chat.builder()
-                .id(message.getChaId())
-                .roomInfoId(roomInfo.getId())
-                .roomDetail(roomDetail)
-                .message(message.getContent())
-                .build();
+    public void save(ChatMessageDto messageDto, Long pk) throws JsonProcessingException {
+        // 토큰에서 유저 아이디 가져오기
+        Member member = memberRepository.findById(pk).orElseThrow(
+                () -> new NullPointerException("존재하지 않는 사용자 입니다!")
+        );
+        LocalDateTime createdAt = LocalDateTime.now();
+        String formatDate = createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.KOREA));
+        messageDto.setSender(member.getMemberName());
+        messageDto.setProfileUrl(member.getImgUrl());
+        messageDto.setCreatedAt(formatDate);
+        messageDto.setMemberId(member.getId());
 
-        ChatDto chatDto = new ChatDto(chatRepository.save(chat));
-        return chatDto;
+        //받아온 메세지의 타입이 ENTER 일때
+        if (ChatMessage.MessageType.ENTER.equals(messageDto.getType())) {
+            String roomId = messageDto.getRoomId();
+
+            List<InvitedMembers> invitedMembersList = invitedMembersRepository.findAllByRoomId(roomId);
+            for (InvitedMembers invitedMembers : invitedMembersList) {
+                if (invitedMembers.getMember().equals(member)) {
+                    invitedMembers.setReadCheck(true);
+                }
+            }
+
+            // 이미 그방에 초대되어 있다면 중복으로 저장을 하지 않게 한다.
+            if (!invitedMembersRepository.existsByMemberIdAndRoomId(member.getId(), roomId)) {
+                InvitedMembers invitedMembers = new InvitedMembers(roomId, member);
+                invitedMembersRepository.save(invitedMembers);
+            }
+            //받아온 메세지 타입이 QUIT 일때
+        } else if (ChatMessage.MessageType.QUIT.equals(messageDto.getType())) {
+            messageDto.setMessage(messageDto.getSender() + "님이 나가셨습니다. ");
+            if (invitedMembersRepository.findAllByRoomId(messageDto.getRoomId()).size() == 1) {
+                invitedMembersRepository.deleteByMemberIdAndRoomId(member.getId(), messageDto.getRoomId());
+                chatRoomJpaRepository.deleteByRoomId(messageDto.getRoomId());
+                chatMessageJpaRepository.deleteByRoomId(messageDto.getRoomId());
+            }
+
+            if (invitedMembersRepository.findAllByRoomId(messageDto.getRoomId()).size() == 2) {
+                invitedMembersRepository.deleteByMemberIdAndRoomId(member.getId(), messageDto.getRoomId());
+            }
+        }
+        chatMessageRepository.save(messageDto); // 캐시에 저장 했다.
+        ChatMessage chatMessage = new ChatMessage(messageDto, createdAt);
+        chatMessageJpaRepository.save(chatMessage); // DB 저장
+        sendingOperations.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
     }
 
-
-    /*채팅 보내기*/
-    @Transactional
-    public List<ChatDto> getChat(RoomInfo roomInfo) {
-        List<Chat> chats = chatRepository.findByRoomDetail_RoomInfo_IdOrderByCreatedAtDesc(roomInfo.getId());
-        return chats.stream()
-                .map(ChatDto::new)
-                .collect(Collectors.toList());
+    public List<ChatMessageDto> getMessages(String roomId) {
+        return chatMessageRepository.findAllMessage(roomId);
     }
+
 }
