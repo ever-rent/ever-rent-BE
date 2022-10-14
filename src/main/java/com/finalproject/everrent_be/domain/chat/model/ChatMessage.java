@@ -36,7 +36,7 @@ public class ChatMessage{
     @Column(nullable = false)
     private String message;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String profileUrl;
 
     @Column(nullable = false)
