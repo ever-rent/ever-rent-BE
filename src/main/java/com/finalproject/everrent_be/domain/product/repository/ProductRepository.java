@@ -12,6 +12,11 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAllByCateId(String cateId);
-    List<Product> findAllByLocationOrLocation(String mainAddress,String subAddress);
+    List<Product> findAllByOrderByCreatedAtDesc();
+    List<Product> findAllByLocationOrLocationOrderByCreatedAt(String mainAddress,String subAddress);
+    List<Product> findFirst8ByOrderByWishNumDesc();
+    List<Product> findFirst8ByLocationOrLocationOrderByWishNumDesc(String mainAddress,String subAddress);
+
+
     //repository명.findAll(Sort.by(Sort.Direction.DESC, "기준컬럼명"));
 }

@@ -71,8 +71,6 @@ public class AuthController {
         return ResponseEntity.ok(authService.reissue(tokenRequestDto));
     }
 
-
-
     @GetMapping("/api/member/{oauth}/callback")
     public ResponseEntity<OauthResponseModel> OauthLogin(@RequestParam(name = "code") String code, HttpServletResponse response,
                                                          @RequestParam(value = "state", required = false) String state , @PathVariable String oauth) throws JsonProcessingException {

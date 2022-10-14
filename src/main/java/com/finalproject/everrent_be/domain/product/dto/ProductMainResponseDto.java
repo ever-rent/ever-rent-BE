@@ -1,6 +1,5 @@
 package com.finalproject.everrent_be.domain.product.dto;
 
-import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.global.common.Status;
 import lombok.AllArgsConstructor;
@@ -8,73 +7,56 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductResponseDto {
-
+public class ProductMainResponseDto {
     private Long id;
-
-    private Long memberId;
-    private String memberName;
+    //private String memberName;
     private String productName;
     private int price;
-    private String content;
-    private String imgUrl;
+    //private String content;
     private String cateId;
-    private String rentStart;
-    private String  rentEnd;
+    //private String rentStart;
+    //private String  rentEnd;
     private String location;
     private String mapLocation;
     private Status status;
-    //private int wishNum;
-
+    private int wishNum;
     private LocalDateTime writeAt;
-
-    private String[] imgUrlArray;
-
+    //private String[] imgUrlArray;
+    private String thumbimgUrl;
     private boolean heart;
 
-
-
-
-    public ProductResponseDto(Product product)
+    public ProductMainResponseDto(Product product,Boolean heart)
     {
         this.id=product.getId();
-        this.memberId=product.getMember().getId();
-        this.memberName=product.getMember().getMemberName();
+        //this.memberName=product.getMember().getMemberName();
         this.productName=product.getProductName();
         this.price=Integer.parseInt(product.getPrice());
-        this.content=product.getContent();
-        this.imgUrlArray=StringUrlToArray(product.getImgUrl());
+        //this.content=product.getContent();
+        //this.imgUrlArray=StringUrlToArray(product.getImgUrl());
+        this.thumbimgUrl=GetThumnail(product.getImgUrl());
         this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
         this.location=product.getLocation();
         this.mapLocation=product.getMapLocation();
-        this.rentStart=LocalDateToStr(product.getRentStart());
-        this.rentEnd=LocalDateToStr(product.getRentEnd());
+        //this.rentStart=LocalDateToStr(product.getRentStart());
+        //this.rentEnd=LocalDateToStr(product.getRentEnd());
         this.location=product.getLocation();
         this.status=product.getStatus();
-        this.heart=false;
-        //this.wishNum=product.getWishNum();
+        this.wishNum=product.getWishNum();
+        this.heart=heart;
     }
 
-    public String[] StringUrlToArray(String s){
-        imgUrlArray=s.split(" ");
-        return imgUrlArray;
-    }
-
-    public String LocalDateToStr(LocalDate localDate){
-        return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    private String GetThumnail(String s){
+        String[] imgUrlArray=s.split(" ");
+        return imgUrlArray[0];
     }
     public void UpdateLike(Boolean heart){
         this.heart=heart;
     }
-
 
 }

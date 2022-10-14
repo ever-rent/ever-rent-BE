@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @Builder
 @AllArgsConstructor
-public class Product extends Timestamped {
+public class Product extends Timestamped  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -101,6 +101,7 @@ public class Product extends Timestamped {
     public void updateWish(int num){
         this.wishNum+=num;
     }
+
 
 
 }
