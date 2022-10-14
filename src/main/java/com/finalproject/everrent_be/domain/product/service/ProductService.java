@@ -41,6 +41,8 @@ public class ProductService {
     public final FileUploadService fileUploadService;
     public final TokenProvider tokenProvider;
 
+    public boolean is_lastpage;
+
     public ResponseDto<?> getAllProduct(String page) {
         List<ProductMainResponseDto> responseDtos =new ArrayList<>();
         List<ProductMainResponseDto> bestresponseDtos=new ArrayList<>();
@@ -77,6 +79,7 @@ public class ProductService {
             Product product=productList.get(lastIdx);
         }catch (Exception e){
             lastIdx=productList.size();
+            is_lastpage=true;
         }
         for(int i=startIdx;i<lastIdx;i++) {
             boolean heart=false;
@@ -91,7 +94,7 @@ public class ProductService {
             responseDtos.add(new ProductMainResponseDto(product, heart));
         }
 
-        return ResponseDto.is_Success(bestresponseDtos,responseDtos);
+        return ResponseDto.is_Success(bestresponseDtos,responseDtos,is_lastpage);
     }
 
 
@@ -121,11 +124,17 @@ public class ProductService {
 
         int startIdx=(Integer.valueOf(page)-1)*12;
         int lastIdx=Integer.valueOf(page)*12;
+        try{
+            Product product=productList.get(lastIdx);
+        }catch (Exception e){
+            lastIdx=productList.size();
+            is_lastpage=true;
+        }
         for(int i=startIdx;i<lastIdx;i++){
             responseDtos.add(new ProductResponseDto(productList.get(i)));
         }
 
-        return ResponseDto.is_Success(responseDtos);
+        return ResponseDto.is_Success(null,responseDtos,is_lastpage);
     }
 
 

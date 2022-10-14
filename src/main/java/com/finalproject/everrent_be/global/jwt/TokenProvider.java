@@ -104,6 +104,7 @@ public class TokenProvider {
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             throw new IllegalArgumentException("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
+
             throw new IllegalArgumentException("만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {
             throw new IllegalArgumentException("지원되지 않는 JWT 토큰입니다.");
