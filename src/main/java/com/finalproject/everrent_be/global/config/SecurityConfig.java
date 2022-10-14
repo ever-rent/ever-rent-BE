@@ -1,5 +1,7 @@
 package com.finalproject.everrent_be.global.config;
 
+import com.finalproject.everrent_be.domain.auth.service.AuthService;
+import com.finalproject.everrent_be.global.common.Reissue;
 import com.finalproject.everrent_be.global.jwt.JwtAccessDeniedHandler;
 import com.finalproject.everrent_be.global.jwt.JwtAuthenticationEntryPoint;
 import com.finalproject.everrent_be.global.jwt.TokenProvider;
@@ -21,8 +23,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final Reissue reissue;
     private final CorsConfigurationSource corsConfigurationSource;
     private final RedisTemplate redisTemplate;
 
@@ -95,6 +96,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider,reissue));
     }
 }

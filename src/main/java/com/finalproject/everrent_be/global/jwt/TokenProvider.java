@@ -1,6 +1,8 @@
 package com.finalproject.everrent_be.global.jwt;
 
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
+import com.finalproject.everrent_be.domain.token.dto.TokenRequestDto;
+import com.finalproject.everrent_be.domain.token.model.RefreshToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -10,10 +12,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,10 +28,11 @@ public class TokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분 30
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 1;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
 
     private final Key key;
+
 
     public TokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -102,17 +107,17 @@ public class TokenProvider {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            throw new IllegalArgumentException("잘못된 JWT 서명입니다.");
+            log.info("Invalid JWT signature, 잘못된 JWT 토큰 입니다.");
         } catch (ExpiredJwtException e) {
-
-            throw new IllegalArgumentException("만료된 JWT 토큰입니다.");
+            log.info("Expired JWT token, 만료된 JWT token 입니다.");
         } catch (UnsupportedJwtException e) {
-            throw new IllegalArgumentException("지원되지 않는 JWT 토큰입니다.");
+            log.info("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
+            log.info("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
         }
+        return false;
     }
-
+    
     /*public Member getMemberFromAuthentication() {
         System.out.println("3-1");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
