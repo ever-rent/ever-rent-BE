@@ -54,6 +54,11 @@ public class AuthController {
         return authService.emailCheck(checkRequestDto);
     }
 
+    /*@PutMapping("/emailchecks")
+    public ResponseDto<?> updateMyInfo(@RequestBody MemberRequestDto memberRequestDto)
+    {
+        return authService.updateMyInfo(memberRequestDto);
+    }*/
     // 로그인
     @PostMapping("/logins")
     public ResponseDto<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
@@ -66,11 +71,11 @@ public class AuthController {
     }
 
     //토큰 재발급
-    @PostMapping("/reissues")
+    /*@PostMapping("/reissues")
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(authService.reissue(tokenRequestDto));
     }
-
+*/
     @GetMapping("/api/member/{oauth}/callback")
     public ResponseEntity<OauthResponseModel> OauthLogin(@RequestParam(name = "code") String code, HttpServletResponse response,
                                                          @RequestParam(value = "state", required = false) String state , @PathVariable String oauth) throws JsonProcessingException {
@@ -94,6 +99,7 @@ public class AuthController {
         System.out.println("인증코드 : "+code);
         return code;
     }
+
 
 
 }

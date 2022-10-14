@@ -56,7 +56,6 @@ public class ProductService {
         else {
             Optional<Member> optionalMember = memberRepository.findById(Long.valueOf(userId));  //Long.valueOf(userId)
             Member member=optionalMember.get();
-            System.out.println(member.getId());
             productList=productRepository.findAllByLocationOrLocationOrderByCreatedAt(member.getMainAddress(), member.getSubAddress());
             bestList=productRepository.findFirst8ByLocationOrLocationOrderByWishNumDesc(member.getMainAddress(), member.getSubAddress());
         }
