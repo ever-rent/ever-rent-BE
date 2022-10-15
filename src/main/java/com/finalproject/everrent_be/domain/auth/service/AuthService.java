@@ -6,6 +6,7 @@ import com.finalproject.everrent_be.domain.auth.dto.EmailCheckRequestDto;
 import com.finalproject.everrent_be.domain.auth.dto.LoginRequestDto;
 import com.finalproject.everrent_be.domain.imageupload.service.AWSS3UploadService;
 import com.finalproject.everrent_be.domain.imageupload.service.FileUploadService;
+import com.finalproject.everrent_be.domain.member.service.MemberService;
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenRequestDto;
 import com.finalproject.everrent_be.global.common.ResponseDto;
@@ -36,7 +37,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final FileUploadService fileUploadService;
+    private final MemberService memberService;
     private final RefreshTokenRepository refreshTokenRepository;
 
 
@@ -85,8 +86,24 @@ public class AuthService {
 
         return ResponseDto.is_Success(memberResponseDto);
     }
+    @Transactional
+    public ResponseDto updateMyInfo(MemberRequestDto memberRequestDto) {
+
+        Member member=memberService.getMemberfromContext();
+
+        if(!(Pattern.matches("[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]*$",memberRequestDto.getMemberName()) && (memberRequestDto.getMemberName().length() > 1 && memberRequestDto.getMemberName().length() <15)
+                && Pattern.matches("[a-zA-Z0-9]*$",memberRequestDto.getPassword()) && (memberRequestDto.getPassword().length() > 7 && memberRequestDto.getPassword().length() <33))){
+
+            throw new IllegalArgumentException("닉네임 혹은 비밀번호 조건을 확인해주세요.");
+        }
+
+        member.update(memberRequestDto,passwordEncoder);
+
+        MemberResponseDto memberResponseDto=new MemberResponseDto(member);
 
 
+        return ResponseDto.is_Success(memberResponseDto);
+    }
     @Transactional
     public TokenDto login(LoginRequestDto loginRequestDto) {
 //        if (!memberRepository.existsByNickname(memberRequestDto.getNickname()) ||
