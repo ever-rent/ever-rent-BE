@@ -54,10 +54,23 @@ public class AuthController {
         return authService.emailCheck(checkRequestDto);
     }
 
+    //이미지 전송
+    @PostMapping("/updateInfo/image")
+    public void postImage(@RequestPart MultipartFile multipartFile){
+        authService.postImage(multipartFile);
+    }
+
     @PutMapping("/updateInfo")
     public ResponseDto<?> updateMyInfo(@RequestBody MemberRequestDto memberRequestDto)
     {
         return authService.updateMyInfo(memberRequestDto);
+    }
+
+    //다른회원정보 조회
+    @GetMapping("/updateInfo/{memberId}")
+    public ResponseDto<?> getOtherInfo(@PathVariable String memberId)
+    {
+        return authService.getOtherInfo(memberId);
     }
     // 로그인
     @PostMapping("/logins")
