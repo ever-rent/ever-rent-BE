@@ -108,14 +108,18 @@ public class TokenProvider {
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature, 잘못된 JWT 토큰 입니다.");
+            return false;
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT token, 만료된 JWT token 입니다.");
+            return false;
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
+            return false;
         } catch (IllegalArgumentException e) {
             log.info("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
+            return false;
         }
-        return false;
+
     }
     /*public TokenDto reissueRefreshToken(String token,String jwt) {
         Claims claims;
