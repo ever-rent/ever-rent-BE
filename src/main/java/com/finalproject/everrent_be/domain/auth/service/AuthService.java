@@ -138,4 +138,13 @@ public class AuthService {
         }
     }
 
+    public ResponseDto<?> getOtherInfo(String memberId) {
+        Member member=memberRepository.findById(Long.valueOf(memberId)).orElseThrow(
+                () -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다.")
+        );
+        MemberResponseDto memberResponseDto=new MemberResponseDto(member);
+
+        return ResponseDto.is_Success(memberResponseDto);
+
+    }
 }

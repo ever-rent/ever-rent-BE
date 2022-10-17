@@ -59,6 +59,13 @@ public class AuthController {
     {
         return authService.updateMyInfo(memberRequestDto);
     }
+
+    //다른회원정보 조회
+    @GetMapping("/updateInfo/{memberId}")
+    public ResponseDto<?> getOtherInfo(@PathVariable String memberId)
+    {
+        return authService.getOtherInfo(memberId);
+    }
     // 로그인
     @PostMapping("/logins")
     public ResponseDto<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
