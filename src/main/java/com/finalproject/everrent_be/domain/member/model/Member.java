@@ -109,4 +109,8 @@ public class Member extends Timestamped {
         this.provider = provider;
 
     }
+
+    public void imgUpdate(String imgUrl) {
+        this.imgUrl=imgUrl;
+    }
 }

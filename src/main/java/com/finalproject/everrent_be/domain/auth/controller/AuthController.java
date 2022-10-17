@@ -54,6 +54,12 @@ public class AuthController {
         return authService.emailCheck(checkRequestDto);
     }
 
+    //이미지 전송
+    @PostMapping("/updateInfo/image")
+    public void postImage(@RequestPart MultipartFile multipartFile){
+        authService.postImage(multipartFile);
+    }
+
     @PutMapping("/updateInfo")
     public ResponseDto<?> updateMyInfo(@RequestBody MemberRequestDto memberRequestDto)
     {
