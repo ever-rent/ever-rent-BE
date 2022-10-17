@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.finalproject.everrent_be.domain.auth.dto.EmailCheckRequestDto;
 import com.finalproject.everrent_be.domain.auth.dto.LoginRequestDto;
 import com.finalproject.everrent_be.domain.member.dto.MemberCheckRequestDto;
+import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenRequestDto;
 import com.finalproject.everrent_be.domain.auth.emailverified.service.RegisterMail;
@@ -22,7 +23,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 //회원가입 로그인 로그아웃
@@ -66,12 +69,14 @@ public class AuthController {
         return authService.updateMyInfo(memberRequestDto);
     }
 
+
     //다른회원정보 조회
     @GetMapping("/updateInfo/{memberId}")
     public ResponseDto<?> getOtherInfo(@PathVariable String memberId)
     {
         return authService.getOtherInfo(memberId);
     }
+
     // 로그인
     @PostMapping("/logins")
     public ResponseDto<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {

@@ -1,9 +1,12 @@
 package com.finalproject.everrent_be.global.jwt;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import com.finalproject.everrent_be.domain.token.dto.TokenRequestDto;
 import com.finalproject.everrent_be.global.common.Reissue;
+import com.finalproject.everrent_be.global.common.ResponseDto;
+import com.finalproject.everrent_be.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -51,11 +54,16 @@ public class JwtFilter extends OncePerRequestFilter {
                     .refreshToken(refreshToken)
                     .accessToken(jwt)
                     .build();
-            TokenDto tokenDto=reissue.reissue(tokenRequestDto);
 
+            TokenDto tokenDto=reissue.reissue(tokenRequestDto,response);
             response.addHeader("Authorization", "Bearer " + tokenDto.getAccessToken());
-            response.addHeader("Refresh-Token", tokenDto.getRefreshToken());
+            //response.addHeader("Refresh-Token", tokenDto.getRefreshToken());
             response.addHeader("Access-Token-Expire-Time", tokenDto.getAccessTokenExpiresIn().toString());
+
+        }
+        else if(!tokenProvider.validateToken(refreshToken))
+        {
+            response.addHeader("Message", "INVALID REFRESH");
 
         }
         filterChain.doFilter(request, response);

@@ -50,6 +50,8 @@ public class ProductController {
         return productService.createProduct(multipartFiles, requestDto, request);
     }
 
+
+
     //상세페이지 수정
     @PutMapping("/products/{productId}")
     public ResponseDto<?> updateProduct(@PathVariable String productId,@RequestPart MultipartFile[] multipartFiles, @RequestPart ProductRequestDto requestDto, HttpServletRequest request){
