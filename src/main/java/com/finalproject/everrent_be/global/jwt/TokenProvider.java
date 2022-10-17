@@ -121,31 +121,7 @@ public class TokenProvider {
         }
 
     }
-    /*public TokenDto reissueRefreshToken(String token,String jwt) {
-        Claims claims;
-        try {
-            claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
-        } catch (ExpiredJwtException e) {
-            claims = e.getClaims();
-        }
-
-        Authentication refreshAuth = getAuthentication(token);
-
-        TokenDto tokenDto = generateTokenDto(refreshAuth); //token 재발금
-        String subject = claims.getSubject();
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
-
-        UserDetails principal = userDetailsService.loadUserByUsername(subject);
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(principal, jwt, authorities);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return tokenDto;
-    }*/
-
-
+    
     /*public Member getMemberFromAuthentication() {
         System.out.println("3-1");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

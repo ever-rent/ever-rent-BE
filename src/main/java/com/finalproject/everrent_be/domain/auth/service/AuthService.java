@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,9 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final MemberService memberService;
     private final RefreshTokenRepository refreshTokenRepository;
+
+    public final FileUploadService fileUploadService;
+
 
 
 
@@ -98,10 +102,7 @@ public class AuthService {
         }
 
         member.update(memberRequestDto,passwordEncoder);
-
         MemberResponseDto memberResponseDto=new MemberResponseDto(member);
-
-
         return ResponseDto.is_Success(memberResponseDto);
     }
 
@@ -141,4 +142,19 @@ public class AuthService {
         }
     }
 
+    public ResponseDto<?> getOtherInfo(String memberId) {
+        Member member=memberRepository.findById(Long.valueOf(memberId)).orElseThrow(
+                () -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다.")
+        );
+        MemberResponseDto memberResponseDto=new MemberResponseDto(member);
+
+        return ResponseDto.is_Success(memberResponseDto);
+
+    }
+    public void postImage(MultipartFile multipartFile) {
+        String imgUrl= fileUploadService.uploadImage(multipartFile);
+        Member member= memberService.getMemberfromContext();
+        member.imgUpdate(imgUrl);
+        memberRepository.save(member);
+    }
 }
