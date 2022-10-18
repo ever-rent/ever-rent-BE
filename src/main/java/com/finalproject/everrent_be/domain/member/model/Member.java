@@ -3,12 +3,14 @@ package com.finalproject.everrent_be.domain.member.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.finalproject.everrent_be.domain.member.dto.MemberRequestDto;
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.domain.wishlist.model.WishList;
 import com.finalproject.everrent_be.global.common.Timestamped;
 import com.finalproject.everrent_be.domain.oauth.dto.GoogleUser;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -78,7 +80,25 @@ public class Member extends Timestamped {
         this.subAddress=subAddress;
         this.policy = policy;
     }
+    public void update(MemberRequestDto memberRequestDto, PasswordEncoder passwordEncoder)
+    {
+        this.memberName = memberRequestDto.getMemberName();
+        this.password=passwordEncoder.encode(memberRequestDto.getPassword());
+        //this.email = memberRequestDto.getEmail();
+        this.mainAddress = memberRequestDto.getMainAddress();
+        this.subAddress=memberRequestDto.getSubAddress();
+        //this.imgUrl=memberRequestDto.getImgUrl();
+    }
 
+    //패스워드 변경 안하는 경우
+    public void notPWupdate(MemberRequestDto memberRequestDto) {
+        this.memberName = memberRequestDto.getMemberName();
+        //this.password=passwordEncoder.encode(memberRequestDto.getPassword());
+        //this.email = memberRequestDto.getEmail();
+        this.mainAddress = memberRequestDto.getMainAddress();
+        this.subAddress=memberRequestDto.getSubAddress();
+        //this.imgUrl=memberRequestDto.getImgUrl();
+    }
 
     private String provider;// oauth2를 이용할 경우 어떤 플랫폼을 이용하는지
     //private String providerId;// oauth2를 이용할 경우 아이디값
@@ -98,5 +118,9 @@ public class Member extends Timestamped {
         this.email = email;
         this.provider = provider;
 
+    }
+
+    public void imgUpdate(String imgUrl) {
+        this.imgUrl=imgUrl;
     }
 }

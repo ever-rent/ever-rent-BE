@@ -38,7 +38,7 @@ public class ProductResponseDto {
 
     private String[] imgUrlArray;
 
-    private boolean islike;
+    private boolean heart;
 
 
 
@@ -60,7 +60,7 @@ public class ProductResponseDto {
         this.rentEnd=LocalDateToStr(product.getRentEnd());
         this.location=product.getLocation();
         this.status=product.getStatus();
-        this.islike=false;
+        this.heart=false;
         //this.wishNum=product.getWishNum();
     }
 
@@ -72,8 +72,8 @@ public class ProductResponseDto {
     public String LocalDateToStr(LocalDate localDate){
         return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
-    public void UpdateLike(Boolean isLike){
-        this.islike=isLike;
+    public void UpdateLike(Boolean heart){
+        this.heart=heart;
     }
 
 

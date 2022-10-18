@@ -32,7 +32,7 @@ public class RegisterMail {
         message.setSubject("Everrent 인증 코드입니다.");
         message.setText("이메일 인증코드: "+ePw);
 
-        message.setFrom(new InternetAddress("bsj9254@naver.com","Everrent_Admin"));
+        message.setFrom(new InternetAddress("lwb00078@naver.com","EVERRENT_Admin"));
 
         return  message;
     }

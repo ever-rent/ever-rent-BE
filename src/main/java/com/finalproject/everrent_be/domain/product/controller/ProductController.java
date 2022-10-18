@@ -1,5 +1,6 @@
 package com.finalproject.everrent_be.domain.product.controller;
 
+import com.finalproject.everrent_be.domain.product.repository.ProductRepository;
 import com.finalproject.everrent_be.domain.product.service.ProductService;
 import com.finalproject.everrent_be.domain.product.dto.ProductRequestDto;
 import com.finalproject.everrent_be.global.common.ResponseDto;
@@ -14,10 +15,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+    private final ProductRepository productRepository;
+
 
     //메인페이지
     @GetMapping("/products")
     public ResponseDto<?> getAllProduct(@RequestParam String page){
+        if(Integer.valueOf(page)*12>productRepository.findAll().size()){
+        page= String.valueOf(((productRepository.findAll().size()/12)+1));
+        }
         return productService.getAllProduct(page);
     }
 
@@ -31,6 +37,9 @@ public class ProductController {
     @GetMapping("/categories/{categoryId}")
     public ResponseDto<?> getFromCategory(@PathVariable String categoryId,@RequestParam String page)
     {
+        if(Integer.valueOf(page)*12>productRepository.findAllByCateId(categoryId).size()){
+            page= String.valueOf(((productRepository.findAllByCateId(categoryId).size()/12)+1));
+        }
         return productService.getFromCategory(categoryId,page);
     }
 
@@ -40,6 +49,8 @@ public class ProductController {
                                         HttpServletRequest request) {
         return productService.createProduct(multipartFiles, requestDto, request);
     }
+
+
 
     //상세페이지 수정
     @PutMapping("/products/{productId}")

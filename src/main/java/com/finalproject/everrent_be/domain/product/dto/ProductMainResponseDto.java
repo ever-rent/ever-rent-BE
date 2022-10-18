@@ -28,9 +28,9 @@ public class ProductMainResponseDto {
     private LocalDateTime writeAt;
     //private String[] imgUrlArray;
     private String thumbimgUrl;
-    private boolean islike;
+    private boolean heart;
 
-    public ProductMainResponseDto(Product product,Boolean islike)
+    public ProductMainResponseDto(Product product,Boolean heart)
     {
         this.id=product.getId();
         //this.memberName=product.getMember().getMemberName();
@@ -48,15 +48,15 @@ public class ProductMainResponseDto {
         this.location=product.getLocation();
         this.status=product.getStatus();
         this.wishNum=product.getWishNum();
-        this.islike=islike;
+        this.heart=heart;
     }
 
     private String GetThumnail(String s){
         String[] imgUrlArray=s.split(" ");
         return imgUrlArray[0];
     }
-    public void UpdateLike(Boolean isLike){
-        this.islike=isLike;
+    public void UpdateLike(Boolean heart){
+        this.heart=heart;
     }
 
 }
