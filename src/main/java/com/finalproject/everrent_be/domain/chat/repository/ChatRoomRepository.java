@@ -8,6 +8,7 @@ import com.finalproject.everrent_be.domain.chat.model.ChatRoom;
 import com.finalproject.everrent_be.domain.chat.model.InvitedMembers;
 import com.finalproject.everrent_be.domain.member.model.Member;
 import com.finalproject.everrent_be.domain.member.service.MemberService;
+import com.finalproject.everrent_be.domain.product.model.Product;
 import com.finalproject.everrent_be.global.util.Check;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -66,12 +67,13 @@ public class ChatRoomRepository {
                     chatRoomResponseDto.setProfileUrl(otherMemberProfileUrl);
                 }
             }
-            //List<PostImgUrl> postImgUrlList = postImgUrlRepository.findAllByProduct(chatRoom.getProduct());
 
+            String s=chatRoom.getProduct().getImgUrl();
+            String[] imgUrlArray=s.split(" ");
             chatRoomResponseDto.setLastMessageTime(createdAtString);
             chatRoomResponseDto.setMemberName(member.getMemberName());
             chatRoomResponseDto.setProductId(chatRoom.getProduct().getId());
-            //chatRoomResponseDto.setPostImgUrl(postImgUrlList.get(0).getImgUrl());
+            chatRoomResponseDto.setProductImgUrl(imgUrlArray[0]);
             chatRoomResponseDto.setRoomId(chatRoom.getRoomId());
             chatRoomResponseDtoList.add(chatRoomResponseDto);
         }
