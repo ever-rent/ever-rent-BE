@@ -69,7 +69,6 @@ public class Member extends Timestamped {
     private Authority authority;
 
 
-
     public Member(String memberName, String password, String email, String mainAddress,String subAddress,
                    boolean policy) {
 
@@ -124,6 +123,4 @@ public class Member extends Timestamped {
     public void imgUpdate(String imgUrl) {
         this.imgUrl=imgUrl;
     }
-
-
 }

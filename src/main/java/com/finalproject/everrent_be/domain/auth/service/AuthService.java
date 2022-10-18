@@ -110,6 +110,9 @@ public class AuthService {
         MemberResponseDto memberResponseDto=new MemberResponseDto(member);
         return ResponseDto.is_Success(memberResponseDto);
     }
+
+
+
     @Transactional
     public TokenDto login(LoginRequestDto loginRequestDto) {
 //        if (!memberRepository.existsByNickname(memberRequestDto.getNickname()) ||
