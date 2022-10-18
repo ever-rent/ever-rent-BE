@@ -69,6 +69,7 @@ public class Member extends Timestamped {
     private Authority authority;
 
 
+
     public Member(String memberName, String password, String email, String mainAddress,String subAddress,
                    boolean policy) {
 
@@ -84,10 +85,20 @@ public class Member extends Timestamped {
     {
         this.memberName = memberRequestDto.getMemberName();
         this.password=passwordEncoder.encode(memberRequestDto.getPassword());
-        this.email = memberRequestDto.getEmail();
+        //this.email = memberRequestDto.getEmail();
         this.mainAddress = memberRequestDto.getMainAddress();
         this.subAddress=memberRequestDto.getSubAddress();
-        this.imgUrl=memberRequestDto.getImgUrl();
+        //this.imgUrl=memberRequestDto.getImgUrl();
+    }
+
+    //패스워드 변경 안하는 경우
+    public void notPWupdate(MemberRequestDto memberRequestDto) {
+        this.memberName = memberRequestDto.getMemberName();
+        //this.password=passwordEncoder.encode(memberRequestDto.getPassword());
+        //this.email = memberRequestDto.getEmail();
+        this.mainAddress = memberRequestDto.getMainAddress();
+        this.subAddress=memberRequestDto.getSubAddress();
+        //this.imgUrl=memberRequestDto.getImgUrl();
     }
 
     private String provider;// oauth2를 이용할 경우 어떤 플랫폼을 이용하는지
@@ -113,4 +124,6 @@ public class Member extends Timestamped {
     public void imgUpdate(String imgUrl) {
         this.imgUrl=imgUrl;
     }
+
+
 }

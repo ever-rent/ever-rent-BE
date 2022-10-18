@@ -60,6 +60,7 @@ public class AuthController {
         authService.postImage(multipartFile);
     }
 
+    //회원정보 수정
     @PutMapping("/updateInfo")
     public ResponseDto<?> updateMyInfo(@RequestBody MemberRequestDto memberRequestDto)
     {
