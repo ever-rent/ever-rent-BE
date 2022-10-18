@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+application.properties
+src/main/java/com/finalproject/everrent_be/domain/auth/emailverified/service/RegisterMail.java
