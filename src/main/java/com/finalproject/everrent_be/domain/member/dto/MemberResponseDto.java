@@ -17,7 +17,7 @@ public class MemberResponseDto {
 
     private String email;
     private String memberName;
-    private String password;
+    //private String password;
     private String imgUrl;
     private String maidAddress;
     private String subAddress;

@@ -25,6 +25,7 @@ public class MemberRequestDto {
     private String mainAddress;
 
     private String subAddress;
+    //private String imgUrl;
 
 
     public Member toMember(PasswordEncoder passwordEncoder) {

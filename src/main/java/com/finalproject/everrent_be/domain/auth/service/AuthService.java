@@ -94,14 +94,19 @@ public class AuthService {
     public ResponseDto updateMyInfo(MemberRequestDto memberRequestDto) {
 
         Member member=memberService.getMemberfromContext();
+        if(memberRequestDto.getPassword().equals("수정없음")){
+            if(!(Pattern.matches("[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]*$",memberRequestDto.getMemberName()) && (memberRequestDto.getMemberName().length() > 1 && memberRequestDto.getMemberName().length() <15))){
+                throw new IllegalArgumentException("닉네임 조건을 확인해주세요.");
+            }
+            member.notPWupdate(memberRequestDto);
 
+        }else{
         if(!(Pattern.matches("[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]*$",memberRequestDto.getMemberName()) && (memberRequestDto.getMemberName().length() > 1 && memberRequestDto.getMemberName().length() <15)
                 && Pattern.matches("[a-zA-Z0-9]*$",memberRequestDto.getPassword()) && (memberRequestDto.getPassword().length() > 7 && memberRequestDto.getPassword().length() <33))){
 
             throw new IllegalArgumentException("닉네임 혹은 비밀번호 조건을 확인해주세요.");
         }
-
-        member.update(memberRequestDto,passwordEncoder);
+        member.update(memberRequestDto,passwordEncoder);}
         MemberResponseDto memberResponseDto=new MemberResponseDto(member);
         return ResponseDto.is_Success(memberResponseDto);
     }
@@ -151,6 +156,24 @@ public class AuthService {
         return ResponseDto.is_Success(memberResponseDto);
 
     }
+
+    @Transactional
+    public ResponseDto<?> pwChange(LoginRequestDto loginRequestDto)
+    {
+        if(!Pattern.matches("[a-zA-Z0-9]*$",loginRequestDto.getPassword()) && (loginRequestDto.getPassword().length() > 7 && loginRequestDto.getPassword().length() <33)){
+
+            throw new IllegalArgumentException("비밀번호 조건을 확인해주세요.");
+        }
+
+        Member member=memberRepository.findMemberByEmail(loginRequestDto.getEmail());
+        member.pwUpdate(loginRequestDto.getPassword(),passwordEncoder);
+
+        return ResponseDto.is_Success("변경 완료");
+
+
+    }
+
+
     public void postImage(MultipartFile multipartFile) {
         String imgUrl= fileUploadService.uploadImage(multipartFile);
         Member member= memberService.getMemberfromContext();

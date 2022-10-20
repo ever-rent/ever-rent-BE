@@ -119,7 +119,9 @@ public class ProductService {
 
     public ResponseDto<?> getFromCategory(String cateId,String page){
         List<Product> productList=productRepository.findAllByCateId(cateId);
-        List<ProductResponseDto> responseDtos =new ArrayList<>();
+        List<ProductMainResponseDto> responseDtos =new ArrayList<>();
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+
 
         int startIdx=(Integer.valueOf(page)-1)*12;
         int lastIdx=Integer.valueOf(page)*12;
@@ -129,8 +131,17 @@ public class ProductService {
             lastIdx=productList.size();
             is_lastpage=true;
         }
-        for(int i=startIdx;i<lastIdx;i++){
-            responseDtos.add(new ProductResponseDto(productList.get(i)));
+        for(int i=startIdx;i<lastIdx;i++) {
+            boolean heart=false;
+            Product product = productList.get(i);
+
+            if (userId.equals("anonymousUser")){
+                heart=false;
+            }
+            else if (wishListRepository.findByMemberIdAndProductId(Long.valueOf(userId), product.getId()) != null) {
+                heart = true;
+            }
+            responseDtos.add(new ProductMainResponseDto(product, heart));
         }
 
         return ResponseDto.is_Success(null,responseDtos,is_lastpage);
