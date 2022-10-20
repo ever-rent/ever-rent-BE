@@ -156,6 +156,24 @@ public class AuthService {
         return ResponseDto.is_Success(memberResponseDto);
 
     }
+
+    @Transactional
+    public ResponseDto<?> pwChange(LoginRequestDto loginRequestDto)
+    {
+        if(!Pattern.matches("[a-zA-Z0-9]*$",loginRequestDto.getPassword()) && (loginRequestDto.getPassword().length() > 7 && loginRequestDto.getPassword().length() <33)){
+
+            throw new IllegalArgumentException("비밀번호 조건을 확인해주세요.");
+        }
+
+        Member member=memberRepository.findMemberByEmail(loginRequestDto.getEmail());
+        member.pwUpdate(loginRequestDto.getPassword(),passwordEncoder);
+
+        return ResponseDto.is_Success("변경 완료");
+
+
+    }
+
+
     public void postImage(MultipartFile multipartFile) {
         String imgUrl= fileUploadService.uploadImage(multipartFile);
         Member member= memberService.getMemberfromContext();

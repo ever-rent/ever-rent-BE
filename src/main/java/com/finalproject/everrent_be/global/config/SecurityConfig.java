@@ -91,6 +91,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PERMIT_URL_SWAGGER).permitAll()
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
                 .antMatchers("/wss/chat/**").permitAll()
+                //.anyRequest().authenticated()
+
                 .and()
                 .oauth2Login()
 

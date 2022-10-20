@@ -3,6 +3,7 @@ package com.finalproject.everrent_be.domain.member.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.finalproject.everrent_be.domain.auth.dto.LoginRequestDto;
 import com.finalproject.everrent_be.domain.member.dto.MemberRequestDto;
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.model.Product;
@@ -98,6 +99,11 @@ public class Member extends Timestamped {
         this.mainAddress = memberRequestDto.getMainAddress();
         this.subAddress=memberRequestDto.getSubAddress();
         //this.imgUrl=memberRequestDto.getImgUrl();
+    }
+
+    public void pwUpdate(String password, PasswordEncoder passwordEncoder)
+    {
+        this.password=passwordEncoder.encode(password);
     }
 
     private String provider;// oauth2를 이용할 경우 어떤 플랫폼을 이용하는지

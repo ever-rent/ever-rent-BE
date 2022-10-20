@@ -114,6 +114,11 @@ public class AuthController {
         return code;
     }
 
+    @PutMapping("/pwChanges")
+    public ResponseDto<?> pwChange(@RequestBody LoginRequestDto loginRequestDto)
+    {
+        return authService.pwChange(loginRequestDto);
+    }
 
 
 }
