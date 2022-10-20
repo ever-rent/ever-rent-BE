@@ -19,7 +19,7 @@ public class MemberResponseDto {
     private String memberName;
     //private String password;
     private String imgUrl;
-    private String maidAddress;
+    private String mainAddress;
     private String subAddress;
     private boolean policy;
 
@@ -29,7 +29,7 @@ public class MemberResponseDto {
         this.memberName=member.getMemberName();
         this.email=member.getEmail();
         this.imgUrl=member.getImgUrl();
-        this.maidAddress=member.getMainAddress();
+        this.mainAddress=member.getMainAddress();
         this.subAddress=member.getSubAddress();
         this.policy= member.isPolicy();
     }
