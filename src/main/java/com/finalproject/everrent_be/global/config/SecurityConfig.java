@@ -60,7 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/categories/**",
             "/mailConfirms",
             "/searchs",
-            "/wss"
+            "/wss",
+            "/wss/chat/**",
+            "/pwChanges",
+            "/logins",
+            "/signups","/idchecks","/emailchecks",
+            "/updateInfo/**"
     };
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -90,11 +95,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(PERMIT_URL_SWAGGER).permitAll()
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
-                .antMatchers("/wss/chat/**").permitAll()
-                //.anyRequest().authenticated()
+                .anyRequest().authenticated()
 
-                .and()
-                .oauth2Login()
+                //.and()
+                //.oauth2Login()
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()

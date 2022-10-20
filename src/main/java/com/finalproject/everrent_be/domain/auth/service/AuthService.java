@@ -173,6 +173,13 @@ public class AuthService {
 
     }
 
+    @Transactional
+    public ResponseDto<?> deleteMember()
+    {
+        Member member=memberService.getMemberfromContext();
+        memberRepository.delete(member);
+        return ResponseDto.is_Success("삭제가 완료되었습니다.");
+    }
 
     public void postImage(MultipartFile multipartFile) {
         String imgUrl= fileUploadService.uploadImage(multipartFile);

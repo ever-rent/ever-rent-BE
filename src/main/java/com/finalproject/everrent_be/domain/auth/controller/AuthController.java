@@ -120,5 +120,11 @@ public class AuthController {
         return authService.pwChange(loginRequestDto);
     }
 
+    @DeleteMapping("/deleteMembers")
+    public ResponseDto<?> deleteMember()
+    {
+        return authService.deleteMember();
+    }
+
 
 }
