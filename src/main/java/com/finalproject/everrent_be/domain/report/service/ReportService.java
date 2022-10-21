@@ -15,6 +15,9 @@ import com.finalproject.everrent_be.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReportService {
@@ -32,8 +35,16 @@ public class ReportService {
         Product product=productRepository.findById(Long.valueOf(productId)).orElseThrow(
                 () -> new IllegalArgumentException("해당 상품이 존재하지 않습니다.")
         );
+
         RpPost rpPost =new RpPost(product,requestDto.getRpreason(),whoisRpId);
         rpPostRepository.save(rpPost);
+
+        //뱃지7-신고1회 이상
+        List<RpPost> mypost =rpPostRepository.findAllByWhoisRpId(whoisRpId);
+        if(mypost.size()==1){
+            Member who=memberRepository.findMemberById(whoisRpId);
+            who.setBadges(7,"1");
+        }
         RpResponseDto rpResponseDto=new RpResponseDto(rpPost);
         return ResponseDto.is_Success(rpResponseDto);
 

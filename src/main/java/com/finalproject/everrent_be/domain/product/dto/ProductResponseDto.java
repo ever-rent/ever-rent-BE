@@ -20,6 +20,7 @@ public class ProductResponseDto {
 
     private Long id;
     private Long memberId;
+    private String badges;
     private String memberName;
     private String productName;
     private int price;
@@ -45,6 +46,7 @@ public class ProductResponseDto {
     {
         this.id=product.getId();
         this.memberId=product.getMember().getId();
+        this.badges=product.getMember().getBadges();
         this.memberName=product.getMember().getMemberName();
         this.productName=product.getProductName();
         this.price=Integer.parseInt(product.getPrice());

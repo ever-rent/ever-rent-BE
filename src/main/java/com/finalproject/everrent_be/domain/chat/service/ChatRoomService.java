@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -54,10 +55,15 @@ public class ChatRoomService {
             if (invitedMembers.isPresent()) {
                 return ResponseDto.is_Success(chatRoom.get().getRoomId());
             }
-        }
 
+        }
         ChatRoom createChatRoom = ChatRoom.create(product, member);
         chatRoomRepository.createChatRoom(createChatRoom);
+        //뱃지5-채팅50회이상
+        List<ChatRoom> mychat=chatRoomJpaRepository.findAllByMemberId(member.getId());
+        if(mychat.size()==50){
+            member.setBadges(5,"1");
+        }
         return ResponseDto.is_Success(createChatRoom.getRoomId());
     }
 }
