@@ -35,6 +35,7 @@ public class MemberRequestDto {
                 .email(email)
                 .mainAddress(mainAddress)
                 .subAddress(subAddress)
+                .rating(36.5f)
                 .authority(Authority.ROLE_USER)
                 .build();
     }
