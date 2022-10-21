@@ -14,6 +14,7 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -71,6 +72,8 @@ public class Member extends Timestamped {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    @Column
+    private String badges;
 
     public Member(String memberName, String password, String email, String mainAddress,String subAddress,
                    boolean policy) {
@@ -135,5 +138,14 @@ public class Member extends Timestamped {
 
     public void imgUpdate(String imgUrl) {
         this.imgUrl=imgUrl;
+    }
+
+    public void setBadges(int index,String b){
+        StringBuffer bf=new StringBuffer();
+        bf.append(this.badges);
+        //바꾸기
+        bf.replace(index,index+1,b);//01000000000
+        //다시 저장
+        this.badges=bf.toString();
     }
 }

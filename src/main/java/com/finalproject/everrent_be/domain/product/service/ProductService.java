@@ -42,6 +42,7 @@ public class ProductService {
     public final TokenProvider tokenProvider;
 
     public boolean is_lastpage;
+    public StringBuffer bf;
 
     public ResponseDto<?> getAllProduct(String page) {
         List<ProductMainResponseDto> responseDtos =new ArrayList<>();
@@ -151,8 +152,17 @@ public class ProductService {
     @Transactional
     public ResponseDto<?> createProduct(List<MultipartFile> multipartFiles, ProductRequestDto requestDto, HttpServletRequest request){
 
-
         Member member= memberService.getMemberfromContext();
+        Long memberid=member.getId();
+        //내가 쓴 게시글 개수
+        List<Product> mypros=productRepository.findAllByMemberId(memberid);
+        //뱃지0-첫게시글, 뱃지1-5번째 게시글
+        if(mypros.size()==0){
+            member.setBadges(0,"1");
+        }else if((mypros.size()==4)){
+            member.setBadges(1,"1");
+        }
+
         if(member==null)
         {
             return ResponseDto.is_Fail(NULL_TOKEN);
@@ -163,8 +173,10 @@ public class ProductService {
             String onestr=fileUploadService.uploadImage(multipartFile);
             sb.append(onestr.substring(onestr.lastIndexOf("/")+1)+' ');
         }
-        Product product=new Product(requestDto,member,sb.toString(),StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
+        Product product=new Product(requestDto,member,sb.toString(), strToLocalDate(requestDto.getRentStart()), strToLocalDate(requestDto.getRentEnd()));
         productRepository.save(product);
+
+
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }
@@ -188,7 +200,11 @@ public class ProductService {
             String onestr=fileUploadService.uploadImage(multipartFile);
             sb.append(onestr.substring(onestr.lastIndexOf("/")+1)+' ');
         }
-        product.update(requestDto,member,sb.toString(),StrToLocalDate(requestDto.getRentStart()),StrToLocalDate(requestDto.getRentEnd()));
+        //뱃지8-10개사진 업로드
+        if(multipartFiles.length==10){
+            member.setBadges(8,"1");
+        }
+        product.update(requestDto,member,sb.toString(), strToLocalDate(requestDto.getRentStart()), strToLocalDate(requestDto.getRentEnd()));
         ProductResponseDto productResponseDto=new ProductResponseDto(product);
         return ResponseDto.is_Success(productResponseDto);
     }
@@ -227,12 +243,12 @@ public class ProductService {
         }
         return true;
     }
-    public LocalDate StrToLocalDate(String string){
+    public LocalDate strToLocalDate(String string){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(string,formatter);
         return date;
     }
-    public String LocalDateToStr(LocalDate localDate){
+    public String localDateToStr(LocalDate localDate){
         return localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
