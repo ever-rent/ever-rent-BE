@@ -18,6 +18,7 @@ public class MemberResponseDto {
     private String email;
     private String memberName;
     //private String password;
+    private String badges;
     private String imgUrl;
     private String mainAddress;
     private String subAddress;
@@ -27,6 +28,7 @@ public class MemberResponseDto {
     {
         this.id=member.getId();
         this.memberName=member.getMemberName();
+        this.badges=member.getBadges();
         this.email=member.getEmail();
         this.imgUrl=member.getImgUrl();
         this.mainAddress=member.getMainAddress();
