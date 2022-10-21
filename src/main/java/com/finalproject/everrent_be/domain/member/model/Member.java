@@ -59,6 +59,8 @@ public class Member extends Timestamped {
     @Column
     private String imgUrl;
 
+    @Column(nullable = false)
+    private float rating;
     @Column
     private String mainAddress;
     @Column
@@ -123,6 +125,11 @@ public class Member extends Timestamped {
         this.password = password;
         this.email = email;
         this.provider = provider;
+
+    }
+    public void updateRating(Long num)
+    {
+        this.rating=this.rating-0.3f+(num*0.1f);
 
     }
 

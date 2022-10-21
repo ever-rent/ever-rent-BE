@@ -17,11 +17,13 @@ public class MypageResponseDto {
     private String memberName;
     private String mainAddress;
     private String subAddress;
+    private float rating;
     private String imgUrl;
     public MypageResponseDto(Member member)
     {
         this.id= member.getId();
         this.email=member.getEmail();
+        this.rating= member.getRating();
         this.memberName=member.getMemberName();
         this.mainAddress=member.getMainAddress();
         this.subAddress=member.getSubAddress();
