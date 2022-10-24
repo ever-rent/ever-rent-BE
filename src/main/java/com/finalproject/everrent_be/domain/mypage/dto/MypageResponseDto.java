@@ -18,7 +18,7 @@ public class MypageResponseDto {
     private String badges;
     private String mainAddress;
     private String subAddress;
-    private float rating;
+    private String rating;
     private String imgUrl;
     public MypageResponseDto(Member member)
     {

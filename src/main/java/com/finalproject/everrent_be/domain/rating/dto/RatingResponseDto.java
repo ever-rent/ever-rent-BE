@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RatingResponseDto {
 
-    private float rating;
+    private String rating;
 }

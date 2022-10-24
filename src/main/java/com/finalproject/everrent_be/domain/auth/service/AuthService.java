@@ -55,9 +55,9 @@ public class AuthService {
         return true;
     }
 
-    public boolean emailCheck(EmailCheckRequestDto checkRequestDto)
+    public boolean emailCheck(String email)
     {
-        if(memberRepository.existsByEmail(checkRequestDto.getEmail()))
+        if(memberRepository.existsByEmail(email))
         {
             return false;
         }

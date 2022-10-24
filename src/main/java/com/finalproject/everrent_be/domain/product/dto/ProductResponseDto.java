@@ -32,7 +32,7 @@ public class ProductResponseDto {
     private String mapLocation;
     private Status status;
     //private int wishNum;
-
+    private String rating;
     private LocalDateTime writeAt;
 
     private String[] imgUrlArray;
