@@ -54,6 +54,7 @@ public class ProductResponseDto {
         this.imgUrlArray=StringUrlToArray(product.getImgUrl());
         this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
+        this.rating=product.getMember().getRating();
         this.location=product.getLocation();
         this.mapLocation=product.getMapLocation();
         this.rentStart=LocalDateToStr(product.getRentStart());
