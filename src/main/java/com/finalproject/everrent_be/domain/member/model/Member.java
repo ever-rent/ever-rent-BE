@@ -61,7 +61,7 @@ public class Member extends Timestamped {
     private String imgUrl;
 
     @Column(nullable = false)
-    private float rating;
+    private String rating; //String으로 변환시켜서 보내기 productResponse에서도
     @Column
     private String mainAddress;
     @Column
@@ -132,7 +132,7 @@ public class Member extends Timestamped {
     }
     public void updateRating(Long num)
     {
-        this.rating=this.rating-0.3f+(num*0.1f);
+        this.rating=String.valueOf(Double.valueOf(this.rating)-0.3+(num*0.1f));
 
     }
 

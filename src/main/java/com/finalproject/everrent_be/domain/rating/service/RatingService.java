@@ -32,7 +32,7 @@ public class RatingService {
         othermember.updateRating(Long.valueOf(ratingRequestDto.getRating()));
 
         //뱃지4-매너온도37이상
-        float hisrate=othermember.getRating();
+        double hisrate=Double.valueOf(othermember.getRating());
         if(hisrate>=37){
             othermember.setBadges(4,"1");
         }

@@ -66,7 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/logins",
             "/signups","/idchecks","/emailchecks",
             "/updateInfo/**",
-            "/ratings/{memberId}"
+            "/ratings/{memberId}",
+            "/pwMailConfirms"
     };
     @Override
     protected void configure(HttpSecurity http) throws Exception {
