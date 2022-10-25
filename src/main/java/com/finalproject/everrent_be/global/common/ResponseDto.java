@@ -17,11 +17,9 @@ public class ResponseDto<T> {
 
     public static <T> ResponseDto<T> is_Success(T data)
     {
-        System.out.println((111111));
         return new ResponseDto<T>(true,data,null);
     }
     public static <T> ResponseDto<T> is_Success(T best,T data,boolean is_lastpage){
-        System.out.println((222222));
         return new ResponseDto<T>(true,is_lastpage,best,data,null);
     }
     public ResponseDto(boolean is_success, T data, ErrorCode errorCode){
