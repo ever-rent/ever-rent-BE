@@ -37,7 +37,7 @@ public class MemberRequestDto {
                 .subAddress(subAddress)
                 .rating("36.5")
                 .authority(Authority.ROLE_USER)
-                .badges("0000000000")
+                .badges("000000000")
                 .build();
     }
 
