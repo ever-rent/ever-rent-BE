@@ -91,7 +91,7 @@ public class AuthController {
     }
 
 
-    @GetMapping("/api/member/{oauth}/callback")
+    @GetMapping("/oauth/{oauth}/callback")
     public ResponseEntity<OauthResponseModel> OauthLogin(@RequestParam(name = "code") String code, HttpServletResponse response,
                                                          @RequestParam(value = "state", required = false) String state , @PathVariable String oauth) throws JsonProcessingException {
         if(oauth.equals("google"))
