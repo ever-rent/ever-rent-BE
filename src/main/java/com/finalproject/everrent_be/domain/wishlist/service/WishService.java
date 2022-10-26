@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 import static com.finalproject.everrent_be.global.error.ErrorCode.INVALID_WISH;
@@ -48,11 +47,6 @@ public class WishService {
                     .member(member)
                     .product(product)
                     .build());
-            //뱃지6-찜10개 이상
-            List<WishList> mylist=wishListRepository.findAllByMember(member);
-            if(mylist.size()==10){
-                member.setBadges(6,"1");
-            }
             return ResponseDto.is_Success(true);
         }
 

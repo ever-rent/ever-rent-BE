@@ -14,7 +14,6 @@ public class ResponseDto<T> {
     public ErrorCode errorCode;
     public T best;
 
-
     public static <T> ResponseDto<T> is_Success(T data)
     {
         return new ResponseDto<T>(true,data,null);

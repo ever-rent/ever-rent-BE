@@ -3,7 +3,6 @@ package com.finalproject.everrent_be.domain.member.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.finalproject.everrent_be.domain.auth.dto.LoginRequestDto;
 import com.finalproject.everrent_be.domain.member.dto.MemberRequestDto;
 import com.finalproject.everrent_be.domain.order.model.OrderList;
 import com.finalproject.everrent_be.domain.product.model.Product;
@@ -14,7 +13,6 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -60,8 +58,6 @@ public class Member extends Timestamped {
     @Column
     private String imgUrl;
 
-    @Column(nullable = false)
-    private String rating; //String으로 변환시켜서 보내기 productResponse에서도
     @Column
     private String mainAddress;
     @Column
@@ -72,8 +68,6 @@ public class Member extends Timestamped {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    @Column
-    private String badges;
 
     public Member(String memberName, String password, String email, String mainAddress,String subAddress,
                    boolean policy) {
@@ -106,11 +100,6 @@ public class Member extends Timestamped {
         //this.imgUrl=memberRequestDto.getImgUrl();
     }
 
-    public void pwUpdate(String password, PasswordEncoder passwordEncoder)
-    {
-        this.password=passwordEncoder.encode(password);
-    }
-
     private String provider;// oauth2를 이용할 경우 어떤 플랫폼을 이용하는지
     //private String providerId;// oauth2를 이용할 경우 아이디값
 
@@ -130,22 +119,8 @@ public class Member extends Timestamped {
         this.provider = provider;
 
     }
-    public void updateRating(Long num)
-    {
-        this.rating=String.valueOf(Double.valueOf(this.rating)-0.3+(num*0.1f));
-
-    }
 
     public void imgUpdate(String imgUrl) {
         this.imgUrl=imgUrl;
-    }
-
-    public void setBadges(int index,String b){
-        StringBuffer bf=new StringBuffer();
-        bf.append(this.badges);
-        //바꾸기
-        bf.replace(index,index+1,b);//01000000000
-        //다시 저장
-        this.badges=bf.toString();
     }
 }

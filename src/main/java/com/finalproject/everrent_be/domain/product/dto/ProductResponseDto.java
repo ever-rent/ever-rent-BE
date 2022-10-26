@@ -19,20 +19,21 @@ import java.time.format.DateTimeFormatter;
 public class ProductResponseDto {
 
     private Long id;
+
     private Long memberId;
-    private String badges;
     private String memberName;
     private String productName;
     private int price;
     private String content;
+    private String imgUrl;
     private String cateId;
     private String rentStart;
-    private String rentEnd;
+    private String  rentEnd;
     private String location;
     private String mapLocation;
     private Status status;
     //private int wishNum;
-    private String rating;
+
     private LocalDateTime writeAt;
 
     private String[] imgUrlArray;
@@ -46,7 +47,6 @@ public class ProductResponseDto {
     {
         this.id=product.getId();
         this.memberId=product.getMember().getId();
-        this.badges=product.getMember().getBadges();
         this.memberName=product.getMember().getMemberName();
         this.productName=product.getProductName();
         this.price=Integer.parseInt(product.getPrice());
@@ -54,7 +54,6 @@ public class ProductResponseDto {
         this.imgUrlArray=StringUrlToArray(product.getImgUrl());
         this.cateId=product.getCateId();
         this.writeAt=product.getModifiedAt();
-        this.rating=product.getMember().getRating();
         this.location=product.getLocation();
         this.mapLocation=product.getMapLocation();
         this.rentStart=LocalDateToStr(product.getRentStart());

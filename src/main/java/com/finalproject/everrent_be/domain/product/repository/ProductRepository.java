@@ -17,8 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findFirst8ByOrderByWishNumDesc();
     List<Product> findFirst8ByLocationOrLocationOrderByWishNumDesc(String mainAddress,String subAddress);
 
-    List<Product> findAllByMemberId(Long id);
-
 
     //repository명.findAll(Sort.by(Sort.Direction.DESC, "기준컬럼명"));
 }
