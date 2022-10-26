@@ -17,7 +17,6 @@ import com.finalproject.everrent_be.domain.oauth.model.OauthResponseModel;
 import com.finalproject.everrent_be.domain.oauth.service.GoogleService;
 import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
 import com.finalproject.everrent_be.domain.auth.service.AuthService;
-import com.finalproject.everrent_be.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,11 +51,11 @@ public class AuthController {
     }
 
     // 이메일 중복검사
-//    @PostMapping("/emailchecks")
-//    public boolean emailCheck(@RequestBody EmailCheckRequestDto checkRequestDto)
-//    {
-//        return authService.emailCheck(checkRequestDto);
-//    }
+    @PostMapping("/emailchecks")
+    public boolean emailCheck(@RequestBody EmailCheckRequestDto checkRequestDto)
+    {
+        return authService.emailCheck(checkRequestDto);
+    }
 
     //이미지 전송
     @PostMapping("/updateInfo/image")
@@ -109,42 +108,12 @@ public class AuthController {
     }
 
     @PostMapping("/mailConfirms")
-    public ResponseDto<?> mailConfirm(@RequestParam("email") String email)throws Exception{
-        if(authService.emailCheck(email))
-        {
-            String code=registerMail.sendSimpleMessage(email);
-            System.out.println("인증코드 : "+code);
-            return ResponseDto.is_Success(code);
-        }
-        else{
-            return ResponseDto.is_Fail(ErrorCode.DUPLICATE_EMAIL);
-        }
+    String mailConfirm(@RequestParam("email") String email)throws Exception{
+        String code=registerMail.sendSimpleMessage(email);
+        System.out.println("인증코드 : "+code);
+        return code;
     }
 
-    @PostMapping("/pwMailConfirms")
-    public ResponseDto<?> mailConfirmPw(@RequestParam("email") String email)throws Exception{
-        if(!authService.emailCheck(email))
-        {
-            String code=registerMail.sendSimpleMessage(email);
-            System.out.println("인증코드 : "+code);
-            return ResponseDto.is_Success(code);
-        }
-        else{
-            return ResponseDto.is_Fail(ErrorCode.DUPLICATE_EMAIL);
-        }
-    }
-
-    @PutMapping("/pwChanges")
-    public ResponseDto<?> pwChange(@RequestBody LoginRequestDto loginRequestDto)
-    {
-        return authService.pwChange(loginRequestDto);
-    }
-
-    @DeleteMapping("/deleteMembers")
-    public ResponseDto<?> deleteMember()
-    {
-        return authService.deleteMember();
-    }
 
 
 }
