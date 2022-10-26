@@ -60,7 +60,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/categories/**",
             "/mailConfirms",
             "/searchs",
-            "/wss"
+            "/wss",
+            "/wss/chat/**",
+            "/pwChanges",
+            "/logins",
+            "/signups","/idchecks","/emailchecks",
+            "/updateInfo/**",
+            "/ratings/{memberId}",
+            "/pwMailConfirms",
+            "/oauth","/oauth/**"
     };
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -90,7 +98,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(PERMIT_URL_SWAGGER).permitAll()
                 .antMatchers(PERMIT_URL_ARRAY).permitAll()
-                .antMatchers("/wss/chat/**").permitAll()
+                .anyRequest().authenticated()
+
                 .and()
                 .oauth2Login()
 

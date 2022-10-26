@@ -107,6 +107,7 @@ public class Member extends Timestamped {
     {
         this.memberName=googleUser.getName();
         this.email=googleUser.getEmail();
+        this.rating="36.5";
         this.password="googlelogin";
         this.provider="Google";
     }
