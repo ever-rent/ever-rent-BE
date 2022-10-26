@@ -53,8 +53,8 @@ public class OrderService {
 
         LocalDate rentStart=product.getRentStart();
         LocalDate rentEnd=product.getRentEnd();
-        LocalDate buyStart=productService.StrToLocalDate(orderRequestDto.getBuyStart());
-        LocalDate buyEnd=productService.StrToLocalDate(orderRequestDto.getBuyEnd());
+        LocalDate buyStart=productService.strToLocalDate(orderRequestDto.getBuyStart());
+        LocalDate buyEnd=productService.strToLocalDate(orderRequestDto.getBuyEnd());
 
         //판매자가 작성한 렌트가능시간과 order시간과 맞지 않을 때
         if(!rentStart.isBefore(buyStart)||!rentEnd.isAfter(buyEnd)){
@@ -77,7 +77,7 @@ public class OrderService {
             }
         }
 
-        OrderList orderList = new OrderList(member,product,productService.StrToLocalDate(orderRequestDto.getBuyStart()),productService.StrToLocalDate(orderRequestDto.getBuyEnd()),Status.WAITING);
+        OrderList orderList = new OrderList(member,product,productService.strToLocalDate(orderRequestDto.getBuyStart()),productService.strToLocalDate(orderRequestDto.getBuyEnd()),Status.WAITING);
 
 
         orderListRepository.save(orderList);

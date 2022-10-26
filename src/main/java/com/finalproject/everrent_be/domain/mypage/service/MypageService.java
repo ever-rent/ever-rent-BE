@@ -138,6 +138,15 @@ public class MypageService {
     @Transactional
     public ResponseDto<?> allowOrder(String orderId)
     {
+        //뱃지3-빌린물건 5이상
+        OrderList order=orderListRepository.findById(orderId);
+        Member hismem=order.getMember();
+        Long hisId=order.getMember().getId(); //그물건 빌린사람 id
+        List<OrderList> myords=orderListRepository.findAllByMemberId(hisId);
+        if(myords.size()==4){
+            hismem.setBadges(3,"1");
+        }
+
         Optional<OrderList> optionalOrderList=orderListRepository.findById(Long.valueOf(orderId));
         OrderList orderList=optionalOrderList.get();
         orderList.updateStatus(Status.CONFIRMATION);
