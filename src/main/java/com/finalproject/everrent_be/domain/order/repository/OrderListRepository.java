@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface OrderListRepository extends JpaRepository<OrderList, Long> {
-
+    void deleteAllByProductId(Long product_id);
     List<OrderList> findAllByMember(Member member);
 }

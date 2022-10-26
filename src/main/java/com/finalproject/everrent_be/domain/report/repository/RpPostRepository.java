@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RpPostRepository extends JpaRepository<RpPost, Long> {
+    //void deleteAllByProductId(Long product_id);
 
 }

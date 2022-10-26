@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface ChatRoomJpaRepository extends JpaRepository<ChatRoom, Long> {
     ChatRoom findByRoomId(String roomId);
     void deleteByRoomId(String roomId);
+
+    void deleteAllByProductId(Long product_id);
     Optional<ChatRoom> findByMemberAndProduct(Member member, Product product);
 
     List<ChatRoom> findAllByMemberId(Long memberId);

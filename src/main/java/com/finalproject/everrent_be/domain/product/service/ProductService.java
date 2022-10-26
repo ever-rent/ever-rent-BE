@@ -1,7 +1,11 @@
 package com.finalproject.everrent_be.domain.product.service;
 
+import com.finalproject.everrent_be.domain.chat.repository.ChatRoomJpaRepository;
 import com.finalproject.everrent_be.domain.member.repository.MemberRepository;
+import com.finalproject.everrent_be.domain.order.repository.OrderListRepository;
 import com.finalproject.everrent_be.domain.product.dto.ProductMainResponseDto;
+import com.finalproject.everrent_be.domain.report.repository.RpMemberRepository;
+import com.finalproject.everrent_be.domain.report.repository.RpPostRepository;
 import com.finalproject.everrent_be.domain.wishlist.repository.WishListRepository;
 import com.finalproject.everrent_be.global.common.ResponseDto;
 import com.finalproject.everrent_be.global.jwt.TokenProvider;
@@ -41,6 +45,10 @@ public class ProductService {
     public final FileUploadService fileUploadService;
     public final TokenProvider tokenProvider;
 
+    public final ChatRoomJpaRepository chatRoomJpaRepository;
+    public final RpPostRepository rpPostRepository;
+    public final RpMemberRepository rpMemberRepository;
+    public final OrderListRepository orderListRepository;
     public boolean is_lastpage;
 
     public ResponseDto<?> getAllProduct(String page) {
@@ -202,6 +210,14 @@ public class ProductService {
         if(!verifiedMember(request,member)){
             return ResponseDto.is_Fail(MEMBER_NOT_ALLOWED);
         }
+
+        //productId 외래키 관련 먼저 삭제
+        chatRoomJpaRepository.deleteAllByProductId(Long.valueOf(productId));
+        wishListRepository.deleteAllByProductId(Long.valueOf(productId));
+       // rpPostRepository.deleteAllByProductId(Long.valueOf(productId));
+        //rpMemberRepository.deleteAllByProductId(Long.valueOf(productId));
+        orderListRepository.deleteAllByProductId(Long.valueOf(productId));
+
 
         productRepository.delete(product);
 

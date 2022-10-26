@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RpMemberRepository extends JpaRepository<RpUser,Long> {
+    //void deleteAllByProductId(Long product_id);
 
 }
