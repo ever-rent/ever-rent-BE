@@ -13,5 +13,6 @@ import java.util.List;
 public interface OrderListRepository extends JpaRepository<OrderList, Long> {
 
     List<OrderList> findAllByMember(Member member);
+    void deleteAllByProductId(Long product_id);
     List<OrderList> findAllByMemberId(Long id);
 }
