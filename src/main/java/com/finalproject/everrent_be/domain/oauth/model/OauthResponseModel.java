@@ -1,6 +1,7 @@
 package com.finalproject.everrent_be.domain.oauth.model;
 
 
+import com.finalproject.everrent_be.domain.token.dto.TokenDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,5 @@ public class OauthResponseModel {
     private HttpStatus httpStatus;
     private String message;
     private List<?> data;
+    private TokenDto tokenDto;
 }

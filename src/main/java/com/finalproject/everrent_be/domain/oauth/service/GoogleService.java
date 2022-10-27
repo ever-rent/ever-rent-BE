@@ -34,16 +34,12 @@ public class GoogleService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     public ResponseEntity<OauthResponseModel> oauthLogin(String code, HttpServletResponse response) {
-
         // 이해하기 -------------------------------------------------------
         ResponseEntity<String> accessTokenResponse = oAuthService.createPostRequest(code);
         OAuthToken oAuthToken = oAuthService.getAccessToken(accessTokenResponse);
-
         ResponseEntity<String> userInfoResponse = oAuthService.createGetRequest(oAuthToken);
         GoogleUser googleUser = oAuthService.getUserInfo(userInfoResponse);
-
         // 이해하기 -------------------------------------------------------
-
         if (!isJoinedUser(googleUser)) {
             signUp(googleUser);
         }
@@ -80,7 +76,10 @@ public class GoogleService {
                     .code(HttpStatus.OK.value())
                     .httpStatus(HttpStatus.OK)
                     .message("구글 로그인 완료")
-                    .data(list).build();
+                    .data(list)
+                    .tokenDto(tokenDto)
+                    .build();
+            System.out.println("도달함");
             return new ResponseEntity<>(responseModel, responseModel.getHttpStatus());
 
         }catch (Exception e){
