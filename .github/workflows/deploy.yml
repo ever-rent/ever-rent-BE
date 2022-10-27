@@ -9,9 +9,9 @@ on:
 # 리전, 버킷 이름, CodeDeploy 앱 이름, CodeDeploy 배포 그룹 이름
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET_NAME: myprojectbucket00
-  CODE_DEPLOY_APPLICATION_NAME: week06
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: week06-release-group
+  S3_BUCKET_NAME: davidsone
+  CODE_DEPLOY_APPLICATION_NAME: everrent
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: everrent-release-group
 
 permissions:
   contents: read
@@ -44,8 +44,8 @@ jobs:
         
     - name: Zip build file and deploy sh
       run: |
-        mv ./build/libs/week06_be-0.0.1-SNAPSHOT.jar ./
-        zip buildFile.zip .scripts/start.sh .scripts/stop.sh ./appspec.yml ./week06_be-0.0.1-SNAPSHOT.jar
+        mv ./build/libs/everrent_be-0.0.1-SNAPSHOT.jar ./
+        zip buildFile.zip .scripts/start.sh .scripts/stop.sh ./appspec.yml .everrent_be-0.0.1-SNAPSHOT.jar
     # (3) Gradle build (Test 제외)
     #- name: Build with Gradle
      # uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
