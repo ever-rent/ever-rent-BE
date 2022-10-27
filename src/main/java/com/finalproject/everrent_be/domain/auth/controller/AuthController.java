@@ -59,7 +59,7 @@ public class AuthController {
 //    }
 
     //이미지 전송
-    @PostMapping("/updateInfo/image")
+    @PutMapping("/updateInfo/image")
     public void postImage(@RequestPart MultipartFile multipartFile){
         authService.postImage(multipartFile);
     }
