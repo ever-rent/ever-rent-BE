@@ -43,18 +43,15 @@ public class ChatService {
         messageDto.setProfileUrl(member.getImgUrl());
         messageDto.setCreatedAt(formatDate);
         messageDto.setMemberId(member.getId());
-
         //받아온 메세지의 타입이 ENTER 일때
         if (ChatMessage.MessageType.ENTER.equals(messageDto.getType())) {
             String roomId = messageDto.getRoomId();
-
             List<InvitedMembers> invitedMembersList = invitedMembersRepository.findAllByRoomId(roomId);
             for (InvitedMembers invitedMembers : invitedMembersList) {
                 if (invitedMembers.getMember().equals(member)) {
                     invitedMembers.setReadCheck(true);
                 }
             }
-
             // 이미 그방에 초대되어 있다면 중복으로 저장을 하지 않게 한다.
             if (!invitedMembersRepository.existsByMemberIdAndRoomId(member.getId(), roomId)) {
                 InvitedMembers invitedMembers = new InvitedMembers(roomId, member);

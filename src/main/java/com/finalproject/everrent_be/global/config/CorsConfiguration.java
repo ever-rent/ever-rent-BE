@@ -17,7 +17,7 @@ public class CorsConfiguration implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("*")
                 .allowedHeaders("*")
-                .allowedOrigins("http://localhost:3000","https://ever-rent.vercel.app","http://ever-rent.s3-website.ap-northeast-2.amazonaws.com")
+                .allowedOrigins("http://localhost:3000","https://ever-rent.vercel.app","http://ever-rent.s3-website.ap-northeast-2.amazonaws.com","https://davidsone.s3.ap-northeast-2.amazonaws.com/**")
                 //.allowedOriginPatterns("*")
                 .exposedHeaders("*")
                 .allowCredentials(true); // 내 서버가 응답할 때 json을 자바스크립트에서 처리할 수 있게 할지를 설정하는 것. false로 하면 자바스크립트로 요청했을때 오지 않음.
