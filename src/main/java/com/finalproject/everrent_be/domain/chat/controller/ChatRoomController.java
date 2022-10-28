@@ -23,6 +23,7 @@ public class ChatRoomController {
     // 내 채팅방 목록 반환
     @GetMapping("/chat/rooms")
     public ChatListMessageDto room() {
+
         return chatRoomRepository.findAllRoom();
     }
 

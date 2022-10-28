@@ -33,23 +33,20 @@ public class ChatRoomRepository {
     @Transactional
     public ChatListMessageDto findAllRoom() {
         Member member = memberService.getMemberfromContext();
+
         List<InvitedMembers> invitedMembers = invitedMembersRepository.findAllByMemberId(member.getId());
         if (invitedMembers.isEmpty()) { throw new IllegalArgumentException(); }
-
         List<ChatRoomResponseDto> chatRoomResponseDtoList = new ArrayList<>();
         for (InvitedMembers invitedMember : invitedMembers) {
             if (invitedMember.getReadCheck()) {
                 invitedMember.setReadCheck(false);
                 invitedMember.setReadCheckTime(LocalDateTime.now());
             }
-
             //채팅방 있는지 확인
             ChatRoom chatRoom = chatRoomJpaRepository.findByRoomId(invitedMember.getRoomId());
-
             ChatMessage lastMessage = chatMessageJpaRepository.findTop1ByRoomIdOrderByCreatedAtDesc(invitedMember.getRoomId());
             ChatMessage lastTalkMessage = chatMessageJpaRepository.findTop1ByRoomIdAndTypeOrderByCreatedAtDesc(invitedMember.getRoomId(), ChatMessage.MessageType.TALK);
             ChatRoomResponseDto chatRoomResponseDto = new ChatRoomResponseDto();
-
             if (lastMessage.getMessage().isEmpty()) {
                 chatRoomResponseDto.setLastMessage(lastTalkMessage.getMessage());
             } else {
@@ -57,8 +54,7 @@ public class ChatRoomRepository {
             }
             LocalDateTime createdAt = lastMessage.getCreatedAt();
             String createdAtString = createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.KOREA));
-            List<InvitedMembers> twoInvitedMembers = invitedMembersRepository.findByRoomId(chatRoom.getRoomId());
-
+            List<InvitedMembers> twoInvitedMembers = invitedMembersRepository.findAllByRoomId(chatRoom.getRoomId());
             for (InvitedMembers otherMember : twoInvitedMembers) {
                 if (!otherMember.getMember().equals(member)) {
                     String otherMembername = otherMember.getMember().getMemberName();
@@ -67,7 +63,6 @@ public class ChatRoomRepository {
                     chatRoomResponseDto.setProfileUrl(otherMemberProfileUrl);
                 }
             }
-
             String s=chatRoom.getProduct().getImgUrl();
             String[] imgUrlArray=s.split(" ");
             chatRoomResponseDto.setLastMessageTime(createdAtString);
