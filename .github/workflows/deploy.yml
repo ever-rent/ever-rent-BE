@@ -9,9 +9,9 @@ on:
 # 리전, 버킷 이름, CodeDeploy 앱 이름, CodeDeploy 배포 그룹 이름
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET_NAME: davidsone
-  CODE_DEPLOY_APPLICATION_NAME: everrent
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: everrent-release-group
+  S3_BUCKET_NAME: everrent-githubaction
+  CODE_DEPLOY_APPLICATION_NAME: everrent-codedeploy-appli
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: everrent-codedeploy-group
 
 permissions:
   contents: read
